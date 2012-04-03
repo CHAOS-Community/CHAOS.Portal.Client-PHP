@@ -1,0 +1,20 @@
+<?php
+	/**
+	 * Created: Jacob Poul Richardt
+	 * Email: jacob@geckon.com
+	 * Date: 03-04-12
+	 */
+	namespace CHAOS\Portal\Client\Extensions\MCM;
+	use CHAOS\Portal\Client\Extensions\AExtension;
+	use \CHAOS\Portal\Client\IServiceCaller;
+
+	class ObjectExtension extends AExtension implements IObjectExtension
+	{
+		protected function GetExtensionPath() { return "Object"; }
+
+		public function Get($query, $sort, $includeMetadata, $includeFiles, $includeObjectRelations, $pageIndex, $pageSize)
+		{
+			// TODO: Implement Get() method.
+		}
+	}
+?>
