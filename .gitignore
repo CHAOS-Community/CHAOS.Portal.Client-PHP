@@ -1,0 +1,9 @@
+_ReSharper*
+bin
+!/bin
+obj
+.DS_Store
+Thumbs.db
+*.user
+*.suo
+*.xap
