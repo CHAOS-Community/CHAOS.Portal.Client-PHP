@@ -14,7 +14,7 @@
 
 		public function Get($query, $sort, $includeMetadata, $includeFiles, $includeObjectRelations, $pageIndex, $pageSize)
 		{
-			// TODO: Implement Get() method.
+			return $this->CallService("Get", IServiceCaller::GET, array("query" => $query, "sort" => $sort, "includeMetadata" => $includeMetadata, "includeFiles" => $includeFiles, "includeObjectRelations" => $includeObjectRelations, "pageIndex" => $pageIndex, "pageSize" => $pageSize));
 		}
 	}
 ?>

@@ -45,6 +45,16 @@
 
 			foreach($data->ModuleResults as $moduleResult)
 			{
+				if(is_array($moduleResult->Results) && count($moduleResult->Results) == 1 && isset($moduleResult->Results[0]->Fullname) && strrpos($moduleResult->Results[0]->Fullname, "Exception") !== false)
+				{
+					$this->_wasSuccess = false;
+
+					//$moduleResult->Results[0]->Fullname;
+					//$moduleResult->Results[0]->Message;
+
+					continue;
+				}
+
 				switch($moduleResult->Fullname)
 				{
 					case "Geckon.Portal":
@@ -52,6 +62,9 @@
 						break;
 					case "CHAOS.Portal.EmailPasswordModule.Standard.EmailPasswordModule":
 						$this->_emailPassword = new ModuleResult($moduleResult);
+						break;
+					case "CHAOS.MCM.Module.Standard.MCMModule":
+						$this->_mcm = new ModuleResult($moduleResult);
 						break;
 				}
 			}

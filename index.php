@@ -29,6 +29,20 @@
 				$user = $client->EmailPassword()->Login($_POST["email"], $_POST["password"])->EmailPassword()->Results();
 
 				echo "UserGUID: " . $user[0]->GUID . "<br />";
+
+				$objectResult = $client->Object()->Get("test", null, true, false, false, 0, 10);
+
+				if($objectResult->WasSuccess())
+				{
+					$objects = $objectResult->Results();
+
+					foreach($objects as $object)
+					{
+						echo json_encode($object) . "<br />";
+					}
+				}
+				else
+					echo "Object/Get failed<br />";
 		?>
 		<?php
 			} else {
