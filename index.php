@@ -9,10 +9,7 @@
 
 	use CHAOS\Portal\Client\PortalClient;
 
-	$url = "http://api.chaos-systems.com/";
 	$clientGUID = "B9CBFFDD-3F73-48FC-9D5D-3802FBAD4CBD";
-	$email = "***";
-	$password = "***";
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -23,13 +20,27 @@
 	<body>
 		<h1>CHAOS.Portal.Client Example</h1>
 		<?php
-			$client = new PortalClient($url, $clientGUID);
+			if(isset($_POST["url"]) && isset($_POST["email"]) && isset($_POST["password"]))
+			{
+				$client = new PortalClient($_POST["url"], $clientGUID);
 
-			echo json_encode($client->GetCurrentSessionGUID()) . "\n\n";
+				echo "SessionGUID: " . $client->GetCurrentSessionGUID() . "<br />";
 
-			$result = $client->EmailPassword()->Login($email, $password)->Portal->Results;
+				$user = $client->EmailPassword()->Login($_POST["email"], $_POST["password"])->EmailPassword()->Results();
 
-			echo json_encode($result[0]);
+				echo "UserGUID: " . $user[0]->GUID . "<br />";
 		?>
+		<?php
+			} else {
+		?>
+		<form action="" method="post">
+			<div>
+				<p><label>URL: <input name="url" type="text" size="50" /></label></p>
+				<p><label>Email: <input name="email" type="text" size="30" /></label></p>
+				<p><label>Password: <input name="password" type="password" size="30"  /></label></p>
+				<input type="submit"/>
+			</div>
+		</form>
+		<?php } ?>
 	</body>
 </html>

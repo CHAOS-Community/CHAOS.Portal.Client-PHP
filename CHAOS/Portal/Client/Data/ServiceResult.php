@@ -19,8 +19,14 @@
 		 */
 		public function WasSuccess() { return $this->_wasSuccess; }
 
+		private $_duration;
+		public function Duration() { return $this->_duration; }
+
 		private $_portal;
 		public function Portal() { return $this->_portal; }
+
+		private $_emailPassword;
+		public function EmailPassword() { return $this->_emailPassword; }
 
 		private $_mcm;
 		public function MCM() { return $this->_mcm; }
@@ -30,9 +36,6 @@
 
 		private $_statistics;
 		public function Statistics() { return $this->_statistics; }
-
-		private $_duration;
-		public function Duration() { return $this->_duration; }
 
 		function __construct(stdClass $data)
 		{
@@ -47,10 +50,11 @@
 					case "Geckon.Portal":
 						$this->_portal = new ModuleResult($moduleResult);
 						break;
+					case "CHAOS.Portal.EmailPasswordModule.Standard.EmailPasswordModule":
+						$this->_emailPassword = new ModuleResult($moduleResult);
+						break;
 				}
 			}
-
-			echo(json_encode($data));
 		}
 	}
 ?>

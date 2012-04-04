@@ -11,28 +11,39 @@
 		private $_duration;
 		public function  Duration() { return $this->_duration; }
 
-		private $_count;
+		private $_count = 0;
 		public function  Count() { return $this->_count; }
 
-		private $_totalCount;
+		private $_totalCount = 0;
 		public function  TotalCount() { return $this->_totalCount; }
 
-		private $_pageIndex;
+		private $_pageIndex = 0;
 		public function PageIndex() { return $this->_pageIndex; }
 
-		private $_totalPages;
+		private $_totalPages = 0;
 		public function TotalPages() { return $this->_totalPages; }
 
-		private $_results;
+		private $_results = array();
 		public function Results() { return $this->_results; }
 
 		function __construct($moduleResult)
 		{
 			$this->_duration = $moduleResult->Duration;
 			$this->_count = $moduleResult->Count;
-			$this->_totalCount = $moduleResult->TotalCount;
-			$this->_pageIndex = $moduleResult->PageIndex;
-			$this->_totalPages = $moduleResult->TotalPages;
+
+			if(is_null($moduleResult->TotalCount))
+				$this->_totalCount = $this->_count;
+			else
+				$this->_totalCount = $moduleResult->TotalCount;
+
+			if(!is_null($moduleResult->PageIndex))
+				$this->_pageIndex = $moduleResult->PageIndex;
+
+			if(is_null($moduleResult->TotalPages))
+				$this->_totalPages = $this->_count == 0 ? 0 : 1;
+			else
+				$this->_totalPages = $moduleResult->TotalPages;
+
 			$this->_results = $moduleResult->Results;
 		}
 	}

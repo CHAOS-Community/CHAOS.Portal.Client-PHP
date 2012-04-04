@@ -4,7 +4,7 @@
 	 * Email: jacob@geckon.com
 	 * Date: 03-04-12
 	 */
-	namespace CHAOS\Portal\Client\Extensions\Portal;
+	namespace CHAOS\Portal\Client\Extensions\EmailPassword;
 	use \CHAOS\Portal\Client\Extensions\AExtension;
 	use \CHAOS\Portal\Client\IServiceCaller;
 
