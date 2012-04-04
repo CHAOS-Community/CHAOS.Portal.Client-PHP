@@ -11,6 +11,9 @@
 	 */
 	interface IPortalClient
 	{
+		public function SetCurrentSessionGUID($value);
+		public function GetCurrentSessionGUID();
+
 		public function Session();
 		public function EmailPassword();
 

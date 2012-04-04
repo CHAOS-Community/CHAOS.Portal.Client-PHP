@@ -16,13 +16,16 @@
 		private $_servicePath = null;
 		private $_clientGUID = null;
 
-		private $_currentSession = null;
+		private $_currentSessionGUID = null;
+		public function SetCurrentSessionGUID($value) { $this->_currentSessionGUID = $value; }
+		public function GetCurrentSessionGUID() { return $this->_currentSessionGUID; }
 
 		/**
 		 * @param String $servicePath The URL of the Portal service.
 		 * @param String $clientGUID The GUID by which the client is identified.
+		 * @param Bool $autoCreateSession If true a session will be created in the constructor call.
 		 */
-		public function __construct($servicePath, $clientGUID)
+		public function __construct($servicePath, $clientGUID, $autoCreateSession = true)
 		{
 			if(!isset($servicePath))
 				throw new Exception("Parameter servicePath must be set");
@@ -32,20 +35,26 @@
 
 			$this->_servicePath = $servicePath;
 			$this->_clientGUID = $clientGUID;
+
+			$this->Session()->Create();
 		}
 
 		public function CallService($path, $method, array $parameters, $requiresSession)
 		{
 			if($requiresSession)
 			{
-				if($this->_currentSession == null)
+				if($this->GetCurrentSessionGUID() == null)
 					throw new Exception("Session was not created");
 
-				$parameters["SessionGUID"] = $this->_currentSession->GUID;
+				$parameters["SessionGUID"] = $this->GetCurrentSessionGUID();
 			}
 
 			$parameters["format"] = self::FORMAT;
 			$parameters["useHTTPStatusCodes"] = self::USE_HTTP_STATUS_CODES;
+
+			foreach($parameters as $name => $value)
+				if(is_bool($value))
+					$parameters[$name] = $value ? "true" : "false";
 
 			$path = $this->_servicePath . $path;
 
@@ -60,23 +69,26 @@
 				$path .= "?" . http_build_query($parameters);
 
 			curl_setopt($call, CURLOPT_URL, $path);
+			curl_setopt($call, CURLOPT_RETURNTRANSFER, true);
 
-			$data = json_encode(curl_exec($call));
+			$data = json_decode(iconv( "UTF-16LE", "UTF-8", curl_exec($call)));
 			curl_close($call);
 
-			return new ServiceResult(true, $data);
-		}
-
-		private function SessionCreated($session)
-		{
-			$this->_currentSession = $session;
+			return new ServiceResult($data);
 		}
 
 		private $_session = null;
 		public function Session()
 		{
 			if($this->_session == null)
-				$this->_session = new SessionExtension($this, self::PROTOCOL_VERSION, $this->SessionCreated);
+			{
+				$client = $this; //Used for closure
+				$this->_session = new SessionExtension($this, self::PROTOCOL_VERSION, function($result) use ($client)
+				{
+					$sessions = $result->Portal()->Results();
+					$client->SetCurrentSessionGUID($sessions[0]->SessionGUID);
+				});
+			}
 
 			return $this->_session;
 		}
@@ -87,7 +99,7 @@
 			if($this->_emailPassword == null)
 				$this->_emailPassword = new EmailPasswordExtension($this);
 
-			return $this->_session;
+			return $this->_emailPassword;
 		}
 
 		private $_object = null;

@@ -15,18 +15,18 @@
 
 		protected function GetExtensionPath() { return "Session"; }
 
-		function __construct(IServiceCaller $serviceCaller, $protocolVersion, $callback)
+		public function __construct(IServiceCaller $serviceCaller, $protocolVersion, $callback)
 		{
 			parent::__construct($serviceCaller);
 			$this->_protocolVersion = $protocolVersion;
 			$this->_callback = $callback;
 		}
 
-		function Create()
+		public function Create()
 		{
 			$result = $this->CallService("Create", IServiceCaller::GET, array("ProtocolVersion" => $this->_protocolVersion), false);
 
-			$this->_callback($result->Data);
+			$this->_callback->__invoke($result);
 
 			return $result;
 		}

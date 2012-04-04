@@ -18,9 +18,9 @@
 			$this->_serviceCaller = $serviceCaller;
 		}
 
-		protected function CallService($method, array $parameters, $requiresSession = true)
+		protected function CallService($extensionMethod, $httpMethod, array $parameters, $requiresSession = true)
 		{
-			return $this->_serviceCaller->CallService($this->GetExtensionPath() . "/" . $method, $parameters, $requiresSession);
+			return $this->_serviceCaller->CallService($this->GetExtensionPath() . "/" . $extensionMethod, $httpMethod, $parameters, $requiresSession);
 		}
 	}
 ?>
