@@ -6,7 +6,6 @@
 	 */
 	interface IPortalClient
 	{
-
 		/**
 		 * Sets a session GUID to use.
 		 * @param $value string The GUID to use.

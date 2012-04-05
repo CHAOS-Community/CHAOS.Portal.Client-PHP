@@ -15,8 +15,16 @@
 
 		public function __construct(stdClass $data)
 		{
-			$this->_name = $data->Fullname;
-			$this->_message = $data->Message;
+			if(is_a($data, "Exception"))
+			{
+				$this->_name = "ServiceCallFailedException";
+				$this->_message = $data->getMessage();
+			}
+			else
+			{
+				$this->_name = $data->Fullname;
+				$this->_message = $data->Message;
+			}
 		}
 
 		public static function IsError(stdClass $data)
@@ -26,12 +34,20 @@
 
 		public static function HasError(array $data)
 		{
-			return is_array($data) && count($data) == 1 && static::IsError($data[0]);
+			return count($data) == 1 && static::IsError($data[0]);
 		}
 
-		public static function GetError(array $data)
+		public static function GetError($data)
 		{
-			return static::HasError($data) ? new ServiceError($data[0]) : null;
+			if(is_array($data))
+			{
+				if(static::HasError($data))
+					return new ServiceError($data[0]);
+			}
+			else if(static::IsError($data))
+				return new ServiceError($data);
+
+			return null;
 		}
 	}
 ?>

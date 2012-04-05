@@ -58,25 +58,32 @@
 
 		function __construct(stdClass $data)
 		{
-			$this->_duration = $data->Duration;
-
-			$this->_error = ServiceError::GetError($data->ModuleResults);
-
-			if($this->WasSuccess())
+			if(is_a($data, "Exception"))
 			{
-				foreach($data->ModuleResults as $moduleResult)
+				$this->_error = new ServiceError($data);
+			}
+			else
+			{
+				$this->_error = ServiceError::GetError($data);
+
+				if($this->WasSuccess())
 				{
-					switch($moduleResult->Fullname)
+					$this->_duration = $data->Duration;
+
+					foreach($data->ModuleResults as $moduleResult)
 					{
-						case "Geckon.Portal":
-							$this->_portal = new ModuleResult($moduleResult);
-							break;
-						case "CHAOS.Portal.EmailPasswordModule.Standard.EmailPasswordModule":
-							$this->_emailPassword = new ModuleResult($moduleResult);
-							break;
-						case "CHAOS.MCM.Module.Standard.MCMModule":
-							$this->_mcm = new ModuleResult($moduleResult);
-							break;
+						switch($moduleResult->Fullname)
+						{
+							case "Geckon.Portal":
+								$this->_portal = new ModuleResult($moduleResult);
+								break;
+							case "CHAOS.Portal.EmailPasswordModule.Standard.EmailPasswordModule":
+								$this->_emailPassword = new ModuleResult($moduleResult);
+								break;
+							case "CHAOS.MCM.Module.Standard.MCMModule":
+								$this->_mcm = new ModuleResult($moduleResult);
+								break;
+						}
 					}
 				}
 			}

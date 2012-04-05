@@ -4,7 +4,7 @@
 
 	use CHAOS\Portal\Client\PortalClient;
 
-	$clientGUID = "B9CBFFDD-3F73-48FC-9D5D-3802FBAD4CBD";
+	$clientGUID = "B9CBFFDD-3F73-48FC-9D5D-3802FBAD4CBD"; //Client GUID should be unique for each application, any GIUD can be used.
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -17,41 +17,41 @@
 		<?php
 			if(isset($_POST["url"]) && isset($_POST["email"]) && isset($_POST["password"]))
 			{
-				$client = new PortalClient($_POST["url"], $clientGUID);
+				$client = new PortalClient($_POST["url"], $clientGUID); //Create a new client, a session is automaticly created.
 
 				echo "SessionGUID: " . $client->GetCurrentSessionGUID() . "<br />";
 
-				$user = $client->EmailPassword()->Login($_POST["email"], $_POST["password"])->EmailPassword()->Results();
+				$user = $client->EmailPassword()->Login($_POST["email"], $_POST["password"])->EmailPassword()->Results(); //Login using email/password combination.
 
 				echo "UserGUID: " . $user[0]->GUID . "<br />";
 
-				$objectResult = $client->Object()->Get("(FolderTree:212)", null, true, false, false, 0, 3);
+				$objectResult = $client->Object()->Get("(FolderTree:212)", null, true, false, false, 0, 3); //Get three objects with metadata from folder with ID 212.
 
-				echo "Objects in folder 212: <br />";
+				echo "First three Objects in folder 212: <br />";
 
-				if($objectResult->WasSuccess() && $objectResult->MCM()->WasSuccess())
+				if($objectResult->WasSuccess() && $objectResult->MCM()->WasSuccess()) //If the service call was successful and the module processed the call successfully.
 				{
-					$objects = $objectResult->MCM()->Results();
+					$objects = $objectResult->MCM()->Results(); //Get the objects from the MCM module
 
-					foreach($objects as $object)
+					foreach($objects as $object) //Loop through the returned objects
 					{
 						echo "<p>" . htmlspecialchars(json_encode($object)) . "</p>";
 					}
 				}
 				else
 				{
-					$error = $objectResult->WasSuccess() ? $objectResult->MCM()->Error() : $objectResult->Error();
+					$error = $objectResult->WasSuccess() ? $objectResult->MCM()->Error() : $objectResult->Error(); //If there was an error, print it out.
 
 					echo "Object/Get failed with error: " . $error->Message() . "<br />";
 				}
 
-				$folderResult = $client->Folder()->Get(null, null, null);
+				$folderResult = $client->Folder()->Get(null, null, null); //Get the top folders
 
 				echo "Top folders: <br />";
 
-				$folders = $folderResult->MCM()->Results();
+				$folders = $folderResult->MCM()->Results(); //Get the folder returned from the MCM module
 
-				foreach($folders as $folder)
+				foreach($folders as $folder) //Loop through the returned the folders
 				{
 					echo "<p>" . htmlspecialchars(json_encode($folder)) . "</p>";
 				}

@@ -42,40 +42,47 @@
 
 		public function CallService($path, $method, array $parameters, $requiresSession)
 		{
-			if($requiresSession)
+			try
 			{
-				if($this->GetCurrentSessionGUID() == null)
-					throw new Exception("Session was not created");
+				if($requiresSession)
+				{
+					if($this->GetCurrentSessionGUID() == null)
+						throw new Exception("Session was not created");
 
-				$parameters["SessionGUID"] = $this->GetCurrentSessionGUID();
+					$parameters["SessionGUID"] = $this->GetCurrentSessionGUID();
+				}
+
+				$parameters["format"] = self::FORMAT;
+				$parameters["useHTTPStatusCodes"] = self::USE_HTTP_STATUS_CODES;
+
+				foreach($parameters as $name => $value)
+					if(is_bool($value))
+						$parameters[$name] = $value ? "true" : "false";
+
+				$path = $this->_servicePath . $path;
+
+				$call = curl_init();
+
+				if($method == IServiceCaller::POST)
+				{
+					curl_setopt($call, CURLOPT_POST, true);
+					curl_setopt($call, CURLOPT_POSTFIELDS, http_build_query($parameters)); //Remove http_build_query call to use "multipart/form-data"
+				}
+				else
+					$path .= "?" . http_build_query($parameters);
+
+				curl_setopt($call, CURLOPT_URL, $path);
+				curl_setopt($call, CURLOPT_RETURNTRANSFER, true);
+
+				$data = json_decode(iconv( "UTF-16LE", "UTF-8", curl_exec($call)));
+				curl_close($call);
+
+				return new ServiceResult($data);
 			}
-
-			$parameters["format"] = self::FORMAT;
-			$parameters["useHTTPStatusCodes"] = self::USE_HTTP_STATUS_CODES;
-
-			foreach($parameters as $name => $value)
-				if(is_bool($value))
-					$parameters[$name] = $value ? "true" : "false";
-
-			$path = $this->_servicePath . $path;
-
-			$call = curl_init();
-
-			if($method == IServiceCaller::POST)
+			catch(Exception $e)
 			{
-				curl_setopt($call, CURLOPT_POST, true);
-				curl_setopt($call, CURLOPT_POSTFIELDS, http_build_query($parameters)); //Remove http_build_query call to use "multipart/form-data"
+				return new ServiceResult($e);
 			}
-			else
-				$path .= "?" . http_build_query($parameters);
-
-			curl_setopt($call, CURLOPT_URL, $path);
-			curl_setopt($call, CURLOPT_RETURNTRANSFER, true);
-
-			$data = json_decode(iconv( "UTF-16LE", "UTF-8", curl_exec($call)));
-			curl_close($call);
-
-			return new ServiceResult($data);
 		}
 
 		private $_session = null;

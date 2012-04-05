@@ -8,7 +8,6 @@
 	{
 
 		/**
-		 * @abstract
 		 * @param $id int The ID of the folder to retrieve
 		 * @param $folderTypeID int The ID of the foldertype to retrieve
 		 * @param $parentID int The ID of the parent of the folders to retrieve

@@ -9,9 +9,7 @@
 		const POST = "post";
 		const GET = "get";
 
-
 		/**
-		 * @abstract
 		 * @param $path
 		 * @param $method
 		 * @param array $parameters
