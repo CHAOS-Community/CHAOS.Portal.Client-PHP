@@ -10,11 +10,20 @@
 
 	class StatsObjectExtension extends AExtension implements IStatsObjectExtension
 	{
-		protected function GetExtensionPath() { return "StatsObject"; }
-
 		public function Set($repositoryIdentifier, $objectIdentifier, $objectTypeID, $objectCollectionID, $channelIdentifier, $channelTypeID, $eventTypeID, $objectTitle, $ip, $city, $country, $userSessionID)
 		{
-			// TODO: Implement Set() method.
+			return $this->CallService("Set", IServiceCaller::GET, array("repositoryIdentifier" => $repositoryIdentifier,
+																		"objectIdentifier" => $objectIdentifier,
+																		"objectTypeID" => $objectTypeID,
+																		"objectCollectionID" => $objectCollectionID,
+																		"channelIdentifier" => $channelIdentifier,
+																		"channelTypeID" => $channelTypeID,
+																		"eventTypeID" => $eventTypeID,
+																		"objectTitle" => $objectTitle,
+																		"ip" => $ip,
+																		"city" => $city,
+																		"country" => $country,
+																		"userSessionID" => $userSessionID));
 		}
 	}
 ?>

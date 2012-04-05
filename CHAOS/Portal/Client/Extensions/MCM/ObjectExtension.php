@@ -10,11 +10,15 @@
 
 	class ObjectExtension extends AExtension implements IObjectExtension
 	{
-		protected function GetExtensionPath() { return "Object"; }
-
 		public function Get($query, $sort, $includeMetadata, $includeFiles, $includeObjectRelations, $pageIndex, $pageSize)
 		{
-			return $this->CallService("Get", IServiceCaller::GET, array("query" => $query, "sort" => $sort, "includeMetadata" => $includeMetadata, "includeFiles" => $includeFiles, "includeObjectRelations" => $includeObjectRelations, "pageIndex" => $pageIndex, "pageSize" => $pageSize));
+			return $this->CallService("Get", IServiceCaller::GET, array("query" => $query,
+																		"sort" => $sort,
+																		"includeMetadata" => $includeMetadata,
+																		"includeFiles" => $includeFiles,
+																		"includeObjectRelations" => $includeObjectRelations,
+																		"pageIndex" => $pageIndex,
+																		"pageSize" => $pageSize));
 		}
 	}
 ?>

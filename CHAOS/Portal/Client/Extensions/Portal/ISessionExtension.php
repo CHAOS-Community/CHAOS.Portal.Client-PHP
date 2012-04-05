@@ -14,7 +14,7 @@
 
 		/**
 		 * Creates a Session
-		 * @return ServiceResult
+		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
 		public function Create();
 	}

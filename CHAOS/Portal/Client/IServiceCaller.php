@@ -14,6 +14,15 @@
 		const POST = "post";
 		const GET = "get";
 
-		function CallService($path, $method, array $parameters, $requiresSession);
+
+		/**
+		 * @abstract
+		 * @param $path
+		 * @param $method
+		 * @param array $parameters
+		 * @param $requiresSession
+		 * @return \CHAOS\Portal\Client\Data\ServiceResult
+		 */
+		public function CallService($path, $method, array $parameters, $requiresSession);
 	}
 ?>

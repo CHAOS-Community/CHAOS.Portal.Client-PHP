@@ -10,8 +10,6 @@
 
 	class EmailPasswordExtension extends AExtension implements IEMailPasswordExtension
 	{
-		protected function GetExtensionPath() { return "EmailPassword"; }
-
 		public function Login($email, $password)
 		{
 			return $this->CallService("Login", IServiceCaller::GET, array("email" => $email, "password" => $password));

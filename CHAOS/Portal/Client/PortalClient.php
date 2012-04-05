@@ -3,8 +3,9 @@
 	use Exception;
 	use \CHAOS\Portal\Client\Data\ServiceResult;
 	use \CHAOS\Portal\Client\Extensions\Portal\SessionExtension;
-	use \CHAOS\Portal\Client\Extensions\Portal\EmailPasswordExtension;
+	use \CHAOS\Portal\Client\Extensions\EmailPassword\EmailPasswordExtension;
 	use \CHAOS\Portal\Client\Extensions\MCM\ObjectExtension;
+	use \CHAOS\Portal\Client\Extensions\MCM\FolderExtension;
 	use \CHAOS\Portal\Client\Extensions\Statistics\StatsObjectExtension;
 
 	class PortalClient implements IPortalClient, IServiceCaller
@@ -78,6 +79,9 @@
 		}
 
 		private $_session = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\Portal\ISessionExtension
+		 */
 		public function Session()
 		{
 			if($this->_session == null)
@@ -94,6 +98,9 @@
 		}
 
 		private $_emailPassword = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\EmailPassword\IEmailPasswordExtension
+		 */
 		public function EmailPassword()
 		{
 			if($this->_emailPassword == null)
@@ -103,6 +110,9 @@
 		}
 
 		private $_object = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\IObjectExtension
+		 */
 		public function Object()
 		{
 			if($this->_object == null)
@@ -111,7 +121,22 @@
 			return $this->_object;
 		}
 
+		private $_folder = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\IFolderExtension
+		 */
+		public function Folder()
+		{
+			if($this->_folder == null)
+				$this->_folder = new FolderExtension($this);
+
+			return $this->_folder;
+		}
+
 		private $_statsObject = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\Statistics\IStatsObjectExtension
+		 */
 		public function StatsObject()
 		{
 			if($this->_statsObject == null)
