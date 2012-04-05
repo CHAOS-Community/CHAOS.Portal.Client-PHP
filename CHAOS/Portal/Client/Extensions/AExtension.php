@@ -1,9 +1,4 @@
 <?php
-	/**
-	 * Created: Jacob Poul Richardt
-	 * Email: jacob@geckon.com
-	 * Date: 03-04-12
-	 */
 	namespace CHAOS\Portal\Client\Extensions;
 	use \CHAOS\Portal\Client\IServiceCaller;
 

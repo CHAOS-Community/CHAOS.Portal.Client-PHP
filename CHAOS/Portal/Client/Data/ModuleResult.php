@@ -1,9 +1,4 @@
 <?php
-	/**
-	 * Created: Jacob Poul Richardt
-	 * Email: jacob@geckon.com
-	 * Date: 04-04-12
-	 */
 	namespace CHAOS\Portal\Client\Data;
 
 	class ModuleResult

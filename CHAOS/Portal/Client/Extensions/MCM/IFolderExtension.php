@@ -1,9 +1,4 @@
 <?php
-	/**
-	 * Created: Jacob Poul Richardt
-	 * Email: jacob@geckon.com
-	 * Date: 05-04-12
-	 */
 	namespace CHAOS\Portal\Client\Extensions\MCM;
 
 	/**
