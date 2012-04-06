@@ -6,13 +6,15 @@ PHP 5.3.8+ is required.
 The CURL plugin must be enabled in PHP.  
 
 ##Code
-The code is located in the CHAOS folder.  
-The file structure matches the namesspaces used and should be preserved for easy use (see examples).
-
-##Examples
-For now there is only one example, the index.php file, which demonstrates how to connect to a Portal API and retrieve data.  
+The code is located in the *src* folder.  
+The file structure matches the namesspaces used and should be preserved for easy use (see examples).  
 All public functions and classes have been documented in-code with [PHPDoc](http://www.phpdoc.de/) syntax,  
 which should enable code completion and type hinting in most modern code IDE's.
+
+##Examples
+The examples are located in the *examples* folder. To run the examples copy the contents of the src folder  
+to any path where PHP is configured to look for classes. The easiest solution is to copy the source files  
+to the same folder as the example you want to run.
 
 ##Reporting problems
 If you encounter any problems using this project, please report them using the "Issues" section of the projects Github page.
