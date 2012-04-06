@@ -5,6 +5,7 @@
 	use \CHAOS\Portal\Client\Extensions\Portal\SessionExtension;
 	use \CHAOS\Portal\Client\Extensions\EmailPassword\EmailPasswordExtension;
 	use \CHAOS\Portal\Client\Extensions\MCM\ObjectExtension;
+	use \CHAOS\Portal\Client\Extensions\MCM\ObjectRelationExtension;
 	use \CHAOS\Portal\Client\Extensions\MCM\FolderExtension;
 	use \CHAOS\Portal\Client\Extensions\Statistics\StatsObjectExtension;
 
@@ -28,8 +29,7 @@
 		 */
 		public function __construct($servicePath, $clientGUID, $autoCreateSession = true)
 		{
-			if(!isset($servicePath))
-				throw new Exception("Parameter servicePath must be set");
+			$servicePath = $this->ValidateServicePath($servicePath);
 
 			if(!isset($clientGUID))
 				throw new Exception("Parameter clientGUID must be set");
@@ -38,6 +38,17 @@
 			$this->_clientGUID = $clientGUID;
 
 			$this->Session()->Create();
+		}
+
+		private function ValidateServicePath($servicePath)
+		{
+			if(!isset($servicePath))
+				throw new Exception("Parameter servicePath must be set");
+
+			if(substr($servicePath, -1, 1) != "/")
+				$servicePath .= "/";
+
+			return $servicePath;
 		}
 
 		public function CallService($path, $method, array $parameters, $requiresSession)
@@ -126,6 +137,18 @@
 				$this->_object = new ObjectExtension($this);
 
 			return $this->_object;
+		}
+
+		private $_objectRelation = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\IObjectRelationExtension
+		 */
+		public function ObjectRelation()
+		{
+			if($this->_objectRelation == null)
+				$this->_objectRelation = new ObjectExtensionRelation($this);
+
+			return $this->_objectRelation;
 		}
 
 		private $_folder = null;

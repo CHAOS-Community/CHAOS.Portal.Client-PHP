@@ -15,5 +15,20 @@
 																		"pageIndex" => $pageIndex,
 																		"pageSize" => $pageSize));
 		}
+
+		public function GetByFolderID($folderID, $includeChildFolders, $includeMetadata, $includeFiles, $includeObjectRelations, $pageIndex, $pageSize)
+		{
+			return $this->Get($includeChildFolders ? "(FolderTree:$folderID)" : "(FolderID:$folderID)", null, $includeMetadata, $includeFiles, $includeObjectRelations, $pageIndex, $pageSize);
+		}
+
+		public function GetByObjectGUID($objectGUID, $includeMetadata, $includeFiles, $includeObjectRelations)
+		{
+			return $this->Get("(GUID:$objectGUID)", null, $includeMetadata, $includeFiles, $includeObjectRelations, 0, 1);
+		}
+
+		public function Create($objectTypeID, $folderID)
+		{
+			throw new \Exception("Method not implemented");
+		}
 	}
 ?>

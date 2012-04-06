@@ -25,7 +25,7 @@
 
 				echo "UserGUID: " . $user[0]->GUID . "<br />";
 
-				$objectResult = $client->Object()->Get("(FolderTree:212)", null, true, false, false, 0, 3); //Get three objects with metadata from folder with ID 212.
+				$objectResult = $client->Object()->GetByFolderID(212, true, true, false, false, 0, 3); //Get three objects with metadata from folder with ID 212.
 
 				echo "First three Objects in folder 212: <br />";
 

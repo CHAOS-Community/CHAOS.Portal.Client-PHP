@@ -32,6 +32,12 @@
 		 * @return \CHAOS\Portal\Client\Extensions\MCM\IObjectExtension
 		 */
 		public function Object();
+
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\IObjectRelationExtension
+		 */
+		public function ObjectRelation();
+
 		/**
 		 * @return \CHAOS\Portal\Client\Extensions\MCM\IFolderExtension
 		 */
