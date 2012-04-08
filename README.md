@@ -6,7 +6,7 @@ PHP 5.3.8+ is required.
 The CURL plugin must be enabled in PHP.  
 
 ##Code
-The code is located in the *src* folder.  
+The source code is located in the *src* folder.  
 The file structure matches the namesspaces used and should be preserved for easy use (see examples).  
 All public functions and classes have been documented in-code with [PHPDoc](http://www.phpdoc.de/) syntax,  
 which should enable code completion and type hinting in most modern code IDE's.
@@ -20,8 +20,9 @@ to the same folder as the example you want to run.
 If you encounter any problems using this project, please report them using the "Issues" section of the projects Github page.
 
 ##Links
-This project is hosted on Github at this address: [https://github.com/CHAOS-Community/CHAOS.Portal.Client-PHP](https://github.com/CHAOS-Community/CHAOS.Portal.Client-PHP)  
-See also [https://github.com/CHAOS-Community/Portal](https://github.com/CHAOS-Community/Portal) for more information on Portal.
+This project is hosted on Github here: [https://github.com/CHAOS-Community/CHAOS.Portal.Client-PHP](https://github.com/CHAOS-Community/CHAOS.Portal.Client-PHP)  
+See also [https://github.com/CHAOS-Community/Portal](https://github.com/CHAOS-Community/Portal) for more information on Portal.  
+[JavaScript client](https://github.com/CHAOS-Community/CHAOS.Portal.Client-JavaScript)
 
 ##License  
 This program is free software: you can redistribute it and/or modify  
