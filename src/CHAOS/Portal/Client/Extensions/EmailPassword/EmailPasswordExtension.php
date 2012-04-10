@@ -10,9 +10,9 @@
 			return $this->CallService("Login", IServiceCaller::GET, array("email" => $email, "password" => $password));
 		}
 
-		public function CreatePassword($userGUID, $password)
+		public function ChangePasswordRequest($userGUID, $password, $url)
 		{
-			return $this->CallService("CreatePassword", IServiceCaller::GET, array("userGUID" => $userGUID, "password" => $password));
+			return $this->CallService("CreatePassword", IServiceCaller::GET, array("userGUID" => $userGUID, "password" => $password, "url" => $url));
 		}
 	}
 ?>

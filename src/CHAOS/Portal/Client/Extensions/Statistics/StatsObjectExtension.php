@@ -1,12 +1,14 @@
 <?php
 	namespace CHAOS\Portal\Client\Extensions\Statistics;
-	use CHAOS\Portal\Client\Extensions\AExtension;
+	use \CHAOS\Portal\Client\Extensions\AExtension;
 	use \CHAOS\Portal\Client\IServiceCaller;
 
 	class StatsObjectExtension extends AExtension implements IStatsObjectExtension
 	{
 		public function Set($repositoryIdentifier, $objectIdentifier, $objectTypeID, $objectCollectionID, $channelIdentifier, $channelTypeID, $eventTypeID, $objectTitle, $ip, $city, $country, $userSessionID)
 		{
+			throw new \Exception("Method not implemented");
+			
 			return $this->CallService("Set", IServiceCaller::GET, array("repositoryIdentifier" => $repositoryIdentifier,
 																		"objectIdentifier" => $objectIdentifier,
 																		"objectTypeID" => $objectTypeID,

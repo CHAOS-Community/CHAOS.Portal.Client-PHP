@@ -25,9 +25,9 @@
 
 				echo "UserGUID: " . $user[0]->GUID . "<br />";
 
-				$objectResult = $client->Object()->GetByFolderID(212, true, true, false, false, 0, 3); //Get three objects with metadata from folder with ID 212.
+				$objectResult = $client->Object()->GetByFolderID(218, true, 0, 3, true, false, false); //Get three objects with metadata from folder with ID 212.
 
-				echo "First three Objects in folder 212: <br />";
+				echo "First three Objects in folder 218: <br />";
 
 				if($objectResult->WasSuccess() && $objectResult->MCM()->WasSuccess()) //If the service call was successful and the module processed the call successfully.
 				{

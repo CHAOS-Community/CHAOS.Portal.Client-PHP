@@ -24,7 +24,7 @@
 		 * @param bool $requiresSession
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
-		protected function CallService($extensionMethod, $httpMethod, array $parameters, $requiresSession = true)
+		protected function CallService($extensionMethod, $httpMethod, array $parameters = null, $requiresSession = true)
 		{
 			return $this->_serviceCaller->CallService($this->GetExtensionPath() . "/" . $extensionMethod, $httpMethod, $parameters, $requiresSession);
 		}

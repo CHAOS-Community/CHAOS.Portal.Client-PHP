@@ -7,6 +7,11 @@
 	use \CHAOS\Portal\Client\Extensions\MCM\ObjectExtension;
 	use \CHAOS\Portal\Client\Extensions\MCM\ObjectRelationExtension;
 	use \CHAOS\Portal\Client\Extensions\MCM\FolderExtension;
+	use \CHAOS\Portal\Client\Extensions\MCM\FolderTypeExtension;
+	use \CHAOS\Portal\Client\Extensions\MCM\MetadataSchemaExtension;
+	use \CHAOS\Portal\Client\Extensions\MCM\MetadataExtension;
+	use \CHAOS\Portal\Client\Extensions\MCM\ObjectRelationTypeExtension;
+	use \CHAOS\Portal\Client\Extensions\MCM\LanguageExtension;
 	use \CHAOS\Portal\Client\Extensions\Statistics\StatsObjectExtension;
 
 	class PortalClient implements IPortalClient, IServiceCaller
@@ -55,6 +60,9 @@
 		{
 			try
 			{
+				if(is_null($parameters))
+					$parameters = array();
+				
 				if($requiresSession)
 				{
 					if($this->GetCurrentSessionGUID() == null)
@@ -146,7 +154,7 @@
 		public function ObjectRelation()
 		{
 			if($this->_objectRelation == null)
-				$this->_objectRelation = new ObjectExtensionRelation($this);
+				$this->_objectRelation = new ObjectRelationExtension($this);
 
 			return $this->_objectRelation;
 		}
@@ -161,6 +169,66 @@
 				$this->_folder = new FolderExtension($this);
 
 			return $this->_folder;
+		}
+
+		private $_folderType = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\IFolderTypeExtension
+		 */
+		public function FolderType()
+		{
+			if($this->_folderType == null)
+				$this->_folderType = new \CHAOS\Portal\Client\Extensions\MCM\FolderTypeExtension($this);
+
+			return $this->_folderType;
+		}
+
+		private $_language = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\LanguageExtension
+		 */
+		public function Language()
+		{
+			if($this->_language == null)
+				$this->_language = new LanguageExtension($this);
+
+			return $this->_language;
+		}
+
+		private $_metadata = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\MetadataExtension
+		 */
+		public function Metadata()
+		{
+			if($this->_metadata == null)
+				$this->_metadata = new MetadataExtension($this);
+
+			return $this->_metadata;
+		}
+
+		private $_metadataSchema = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\MetadataSchemaExtension
+		 */
+		public function MetadataSchema()
+		{
+			if($this->_metadataSchema == null)
+				$this->_metadataSchema = new MetadataSchemaExtension($this);
+
+			return $this->_metadataSchema;
+		}
+
+		private $_objectRelationType = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\ObjectRelationTypeExtension
+		 */
+		public function ObjectRelationType()
+		{
+			if($this->_objectRelationType == null)
+				$this->_objectRelationType = new ObjectRelationTypeExtension($this);
+
+			return $this->_objectRelationType;
 		}
 
 		private $_statsObject = null;
