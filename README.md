@@ -20,9 +20,10 @@ to the same folder as the example you want to run.
 If you encounter any problems using this project, please report them using the "Issues" section of the projects Github page.
 
 ##Links
-This project is hosted on Github here: [https://github.com/CHAOS-Community/CHAOS.Portal.Client-PHP](https://github.com/CHAOS-Community/CHAOS.Portal.Client-PHP)  
-See also [https://github.com/CHAOS-Community/Portal](https://github.com/CHAOS-Community/Portal) for more information on Portal.  
-[JavaScript client](https://github.com/CHAOS-Community/CHAOS.Portal.Client-JavaScript)
+[Official CHAOS Community website](http://www.chaos-community.org/)  
+[This project on GitHub](https://github.com/CHAOS-Community/CHAOS.Portal.Client-PHP)  
+[Portal project on GitHub](https://github.com/CHAOS-Community/Portal)  
+[JavaScript client on GitHub](https://github.com/CHAOS-Community/CHAOS.Portal.Client-JavaScript)
 
 ##License  
 This program is free software: you can redistribute it and/or modify  

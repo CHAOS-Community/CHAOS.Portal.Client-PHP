@@ -5,7 +5,7 @@
 
 	class ObjectExtension extends AExtension implements IObjectExtension
 	{
-		public function Get($query, $sort, $includeMetadata, $includeFiles, $includeObjectRelations, $pageIndex, $pageSize)
+		public function Get($query, $sort, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false)
 		{
 			return $this->CallService("Get", IServiceCaller::GET, array("query" => $query,
 																		"sort" => $sort,
@@ -16,7 +16,7 @@
 																		"pageSize" => $pageSize));
 		}
 
-		public function GetByFolderID($folderID, $includeChildFolders, $includeMetadata, $includeFiles, $includeObjectRelations, $pageIndex, $pageSize)
+		public function GetByFolderID($folderID, $includeChildFolders, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false)
 		{
 			return $this->Get($includeChildFolders ? "(FolderTree:$folderID)" : "(FolderID:$folderID)", null, $includeMetadata, $includeFiles, $includeObjectRelations, $pageIndex, $pageSize);
 		}
