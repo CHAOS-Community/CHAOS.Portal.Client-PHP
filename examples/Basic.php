@@ -25,35 +25,46 @@
 
 				echo "UserGUID: " . $user[0]->GUID . "<br />";
 
-				$objectResult = $client->Object()->GetByFolderID(218, true, 0, 3, true, false, false); //Get three objects with metadata from folder with ID 212.
-
-				echo "First three Objects in folder 218: <br />";
-
-				if($objectResult->WasSuccess() && $objectResult->MCM()->WasSuccess()) //If the service call was successful and the module processed the call successfully.
-				{
-					$objects = $objectResult->MCM()->Results(); //Get the objects from the MCM module
-
-					foreach($objects as $object) //Loop through the returned objects
-					{
-						echo "<p>" . htmlspecialchars(json_encode($object)) . "</p>";
-					}
-				}
-				else
-				{
-					$error = $objectResult->WasSuccess() ? $objectResult->MCM()->Error() : $objectResult->Error(); //If there was an error, print it out.
-
-					echo "Object/Get failed with error: " . $error->Message() . "<br />";
-				}
-
-				$folderResult = $client->Folder()->Get(null, null, null); //Get the top folders
-
 				echo "Top folders: <br />";
 
+				$folderResult = $client->Folder()->Get(null, null, null); //Get the top folders
+				
 				$folders = $folderResult->MCM()->Results(); //Get the folder returned from the MCM module
+				$folderID = null;
 
 				foreach($folders as $folder) //Loop through the returned the folders
 				{
+					if(is_null($folderID))
+						$folderID = $folder->ID;
+					
 					echo "<p>" . htmlspecialchars(json_encode($folder)) . "</p>";
+				}
+				
+				if(is_null($folderID))
+				{
+					echo "<p>No folder found, so no objects retrieved.</p>";
+				}
+				else
+				{
+					$objectResult = $client->Object()->GetByFolderID($folderID, true, 0, 3, true, false, false); //Get three objects with metadata from folder with ID 212.
+
+					echo "First three Objects in folder $folderID: <br />";
+
+					if($objectResult->WasSuccess() && $objectResult->MCM()->WasSuccess()) //If the service call was successful and the module processed the call successfully.
+					{
+						$objects = $objectResult->MCM()->Results(); //Get the objects from the MCM module
+
+						foreach($objects as $object) //Loop through the returned objects
+						{
+							echo "<p>" . htmlspecialchars(json_encode($object)) . "</p>";
+						}
+					}
+					else
+					{
+						$error = $objectResult->WasSuccess() ? $objectResult->MCM()->Error() : $objectResult->Error(); //If there was an error, print it out.
+
+						echo "Object/Get failed with error: " . $error->Message() . "<br />";
+					}
 				}
 		?>
 		<?php

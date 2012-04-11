@@ -93,8 +93,13 @@
 				curl_setopt($call, CURLOPT_URL, $path);
 				curl_setopt($call, CURLOPT_RETURNTRANSFER, true);
 
-				$data = json_decode(iconv( "UTF-16LE", "UTF-8", curl_exec($call)));
+				$data = curl_exec($call);
 				curl_close($call);
+				
+				if($data == null)
+					$data = new Exception("No data returned from service");
+				else
+					$data = json_decode(iconv( "UTF-16LE", "UTF-8", $data));
 
 				return new ServiceResult($data);
 			}
