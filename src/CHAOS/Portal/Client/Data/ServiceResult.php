@@ -1,6 +1,5 @@
 <?php
 	namespace CHAOS\Portal\Client\Data;
-	use stdClass;
 
 	/**
 	 * Represents the data returned from a service call.
@@ -56,7 +55,7 @@
 		 */
 		public function Statistics() { return $this->_statistics; }
 
-		function __construct(stdClass $data)
+		function __construct($data)
 		{
 			if(is_a($data, "Exception"))
 			{
