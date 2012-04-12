@@ -39,6 +39,9 @@
 
 		public static function GetError($data)
 		{
+			if(is_null($data))
+				return null;
+			
 			if(is_array($data))
 			{
 				if(static::HasError($data))

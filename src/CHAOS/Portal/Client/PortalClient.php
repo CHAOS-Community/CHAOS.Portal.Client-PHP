@@ -99,7 +99,20 @@
 				if($data == null)
 					$data = new Exception("No data returned from service");
 				else
-					$data = json_decode(iconv( "UTF-16LE", "UTF-8", $data));
+				{
+					$data = iconv( "UTF-16LE", "UTF-8", $data);
+
+					if($data === false)
+						$data = new Exception("Invalid data returned from service");
+					else
+					{
+						$data = json_decode($data);
+						
+						if($data == null)
+							$data = new Exception("Invalid data returned from service");
+					}
+						
+				}
 
 				return new ServiceResult($data);
 			}

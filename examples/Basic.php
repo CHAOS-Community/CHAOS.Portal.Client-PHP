@@ -10,10 +10,10 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>CHAOS.Portal.Client Example</title>
+		<title>CHAOS.Portal.Client Basic Example</title>
 	</head>
 	<body>
-		<h1>CHAOS.Portal.Client Example</h1>
+		<h1>CHAOS.Portal.Client Basic Example</h1>
 		<?php
 			if(isset($_POST["url"]) && isset($_POST["email"]) && isset($_POST["password"]))
 			{

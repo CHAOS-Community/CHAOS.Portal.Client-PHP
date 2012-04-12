@@ -2,7 +2,7 @@
 This is a PHP Portal API Client. It enables easy communication with a CHAOS Portal API (protocol version 4).
 
 ##Requirements
-PHP 5.3.8+ is required.  
+PHP 5.3.5+ is required.  
 The CURL plugin must be enabled in PHP.  
 
 ##Code
@@ -13,7 +13,7 @@ which should enable code completion and type hinting in most modern code IDE's.
 
 ##Examples
 The examples are located in the *examples* folder. To run the examples copy the contents of the src folder  
-to any path where PHP is configured to look for classes. The easiest solution is to copy the source files  
+to any path where PHP is configured to look for classes. The easiest solution is to copy the contents of the src folder  
 to the same folder as the example you want to run.
 
 ##Reporting problems

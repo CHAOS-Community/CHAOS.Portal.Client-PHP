@@ -82,6 +82,9 @@
 							case "CHAOS.MCM.Module.Standard.MCMModule":
 								$this->_mcm = new ModuleResult($moduleResult);
 								break;
+							case "CHAOS.Statistics.Module.Standard.StatisticsModule":
+								$this->_statistics = new ModuleResult($moduleResult);
+								break;
 						}
 					}
 				}

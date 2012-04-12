@@ -7,18 +7,18 @@
 	interface IStatsObjectExtension
 	{
 		/**
-		 * @param $repositoryIdentifier
-		 * @param $objectIdentifier
-		 * @param $objectTypeID
-		 * @param $objectCollectionID
-		 * @param $channelIdentifier
-		 * @param $channelTypeID
-		 * @param $eventTypeID
-		 * @param $objectTitle
-		 * @param $ip
-		 * @param $city
-		 * @param $country
-		 * @param $userSessionID
+		 * @param $repositoryIdentifier string
+		 * @param $objectIdentifier string
+		 * @param $objectTypeID int
+		 * @param $objectCollectionID int
+		 * @param $channelIdentifier string
+		 * @param $channelTypeID int
+		 * @param $eventTypeID int
+		 * @param $objectTitle string
+		 * @param $ip string
+		 * @param $city string
+		 * @param $country string
+		 * @param $userSessionID int
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
 		public function Set($repositoryIdentifier, $objectIdentifier, $objectTypeID, $objectCollectionID, $channelIdentifier, $channelTypeID, $eventTypeID, $objectTitle, $ip, $city, $country, $userSessionID);
