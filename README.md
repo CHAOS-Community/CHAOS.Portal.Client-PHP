@@ -4,6 +4,7 @@ This is a PHP Portal API Client. It enables easy communication with a CHAOS Port
 ##Requirements
 PHP 5.3.5+ is required.  
 The CURL plugin must be enabled in PHP.  
+The iconv plugun must be enables in PHP (it is by default).
 
 ##Code
 The source code is located in the *src* folder.  

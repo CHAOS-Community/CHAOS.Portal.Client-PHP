@@ -24,8 +24,9 @@
 				$user = $client->EmailPassword()->Login($_POST["email"], $_POST["password"])->EmailPassword()->Results(); //Login using email/password combination.
 		
 				echo "UserGUID: " . $user[0]->GUID . "<br />";
-		
-				$StatsResult = $client->StatsObject()->Set($_POST["repositoryName"], "TestObject1", "1", "1", "TestChannel1", "1", "1", "Test Object 1", $_SERVER['REMOTE_ADDR'], "Test City", "Test Country", 0);
+				
+				//For the meaning of the hardcoded values in the StatsObject/Set call, please see the documentation for Portal/Statistics.
+				$StatsResult = $client->StatsObject()->Set($_POST["repositoryName"], "TestObject1", 1, 1, "TestChannel1", 1, 1, "Test Object 1", $_SERVER['REMOTE_ADDR'], "Test City", "Test Country", 0);
 				
 				echo "Stats result:<br />";
 				
