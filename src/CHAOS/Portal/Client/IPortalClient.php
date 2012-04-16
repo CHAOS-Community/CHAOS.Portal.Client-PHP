@@ -47,17 +47,22 @@
 		public function FolderType();
 
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\LanguageExtension
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\ILanguageExtension
 		 */
 		public function Language();
 
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\MetadataExtension
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\ILinkExtension
+		 */
+		public function Link();
+
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\IMetadataExtension
 		 */
 		public function Metadata();
 
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\MetadataSchemaExtension
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\IMetadataSchemaExtension
 		 */
 		public function MetadataSchema();
 		

@@ -7,7 +7,7 @@
 	interface IObjectTypeExtension
 	{
 		/**
-		 * @param $name string
+		 * @param string $name
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
 		public function Create($name);
@@ -18,14 +18,14 @@
 		public function Get();
 
 		/**
-		 * @param $id int
-		 * @param $newName string
+		 * @param int $id
+		 * @param string $newName
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
 		public function Update($id, $newName);
 
 		/**
-		 * @param $id int
+		 * @param int $id
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
 		public function Delete($id);

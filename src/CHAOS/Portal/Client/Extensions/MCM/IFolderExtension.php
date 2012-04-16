@@ -7,32 +7,32 @@
 	interface IFolderExtension
 	{
 		/**
-		 * @param $subscriptionGUID string
-		 * @param $title string
-		 * @param $parentID int
-		 * @param $folderTypeID int
+		 * @param string $subscriptionGUID
+		 * @param string $title
+		 * @param int $parentID
+		 * @param int $folderTypeID
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
 		public function Create($subscriptionGUID, $title, $parentID, $folderTypeID);
 
 		/**
-		 * @param $id int The ID of the folder to retrieve
-		 * @param $folderTypeID int The ID of the foldertype to retrieve
-		 * @param $parentID int The ID of the parent of the folders to retrieve
+		 * @param int $id The ID of the folder to retrieve
+		 * @param int $folderTypeID The ID of the foldertype to retrieve
+		 * @param int $parentID The ID of the parent of the folders to retrieve
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
 		public function Get($id, $folderTypeID, $parentID);
 
 		/**
-		 * @param $id int
-		 * @param $newTitle string
-		 * @param $newFolderTypeID int
+		 * @param int $id
+		 * @param string $newTitle
+		 * @param int $newFolderTypeID
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
 		public function Update($id, $newTitle, $newFolderTypeID);
 
 		/**
-		 * @param $id int
+		 * @param int $id
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
 		public function Delete($id);

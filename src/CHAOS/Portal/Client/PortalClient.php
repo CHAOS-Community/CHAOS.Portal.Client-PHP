@@ -13,6 +13,7 @@
 	use \CHAOS\Portal\Client\Extensions\MCM\MetadataExtension;
 	use \CHAOS\Portal\Client\Extensions\MCM\ObjectRelationTypeExtension;
 	use \CHAOS\Portal\Client\Extensions\MCM\LanguageExtension;
+	use \CHAOS\Portal\Client\Extensions\MCM\LinkExtension;
 	use \CHAOS\Portal\Client\Extensions\Statistics\StatsObjectExtension;
 
 	class PortalClient implements IPortalClient, IServiceCaller
@@ -216,7 +217,7 @@
 
 		private $_language = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\LanguageExtension
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\ILanguageExtension
 		 */
 		public function Language()
 		{
@@ -226,9 +227,21 @@
 			return $this->_language;
 		}
 
+		private $_link = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\ILinkExtension
+		 */
+		public function Link()
+		{
+			if($this->_link == null)
+				$this->_link = new LinkExtension($this);
+
+			return $this->_link;
+		}
+
 		private $_metadata = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\MetadataExtension
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\IMetadataExtension
 		 */
 		public function Metadata()
 		{
@@ -240,7 +253,7 @@
 
 		private $_metadataSchema = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\MetadataSchemaExtension
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\IMetadataSchemaExtension
 		 */
 		public function MetadataSchema()
 		{
@@ -252,7 +265,7 @@
 
 		private $_objectRelationType = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\ObjectRelationTypeExtension
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\IObjectRelationTypeExtension
 		 */
 		public function ObjectRelationType()
 		{

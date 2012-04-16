@@ -8,13 +8,13 @@
 	{
 		/**
 		 * Creates a new file reference.
-		 * @param $objectGUID string
-		 * @param $parentFileID int|null The FileID of an original file this file was created from, otherwise null.
-		 * @param $formatID int
-		 * @param $destinationID int
-		 * @param $filename string
-		 * @param $originalFilename string
-		 * @param $folderPath string
+		 * @param string $objectGUID
+		 * @param int|null $parentFileID The FileID of an original file this file was created from, otherwise null.
+		 * @param int $formatID
+		 * @param int $destinationID
+		 * @param string $filename
+		 * @param string $originalFilename
+		 * @param string $folderPath
 		 */
 		public function Create($objectGUID, $parentFileID, $formatID, $destinationID, $filename, $originalFilename, $folderPath);
 	}

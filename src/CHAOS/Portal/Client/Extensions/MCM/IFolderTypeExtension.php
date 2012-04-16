@@ -7,8 +7,8 @@
 	interface IFolderTypeExtension
 	{
 		/**
-		 * @param $id int|null
-		 * @param $name string|null
+		 * @param int|null $id
+		 * @param string|null $name
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
 		public function Get($id = null, $name = null);

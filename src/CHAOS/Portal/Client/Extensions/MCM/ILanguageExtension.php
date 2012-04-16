@@ -7,28 +7,28 @@
 	interface ILanguageExtension
 	{
 		/**
-		 * @param $name string
-		 * @param $languageCode string
+		 * @param string $name
+		 * @param string $languageCode
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
 		public function Create($name, $languageCode);
 		
 		/**
-		 * @param $name string
-		 * @param $languageCode string
+		 * @param string $name
+		 * @param string $languageCode
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
 		public function Get($name, $languageCode);
 
 		/**
-		 * @param $languageCode string
-		 * @param $newName string
+		 * @param string $languageCode
+		 * @param string $newName
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
 		public function Update($languageCode, $newName);
 
 		/**
-		 * @param $languageCode string
+		 * @param string $languageCode
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
 		public function Delete($languageCode);

@@ -26,6 +26,20 @@
 			return $this->Get("(GUID:$objectGUID)", null, 0, 1, $includeMetadata, $includeFiles, $includeObjectRelations);
 		}
 
+		public function GetSearchSchema($query, $schemaGUID, $languageCode, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false)
+		{
+			return $this->GetSearchSchemas($query, array($schemaGUID), $languageCode, $pageIndex, $pageSize, $includeMetadata, $includeFiles, $includeObjectRelations);
+		}
+
+		public function GetSearchSchemas($query, $schemaGUIDs, $languageCode, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false)
+		{
+			$searchStrings = array();
+			foreach($schemaGUIDs as $guid)
+				$searchStrings[] = "(m$guid" . "_$languageCode" . "_all:$query)";
+			
+			return $this->Get(implode("+OR+", $searchStrings), null, $pageIndex, $pageSize, $includeMetadata, $includeFiles, $includeObjectRelations);
+		}
+
 		public function Create($objectTypeID, $folderID, $guid = null)
 		{
 			return $this->CallService("Get", IServiceCaller::GET, array("objectTypeID" => $objectTypeID,

@@ -13,7 +13,7 @@
 		private $_message;
 		public function Message() { return $this->_message; }
 
-		public function __construct(stdClass $data)
+		public function __construct($data)
 		{
 			if(is_a($data, "Exception"))
 			{

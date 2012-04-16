@@ -7,18 +7,18 @@
 	interface IObjectRelationExtension
 	{
 		/**
-		 * @param $object1GUID string
-		 * @param $object2GUID string
-		 * @param $objectRelationTypeID int
-		 * @param null $sequence int|null
+		 * @param string $object1GUID
+		 * @param string $object2GUID
+		 * @param int $objectRelationTypeID
+		 * @param int|null $sequence
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
 		public function Create($object1GUID, $object2GUID, $objectRelationTypeID, $sequence = null);
 
 		/**
-		 * @param $object1GUID string
-		 * @param $object2GUID string
-		 * @param $objectRelationTypeID int
+		 * @param string $object1GUID
+		 * @param string $object2GUID
+		 * @param int $objectRelationTypeID
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
 		public function Delete($object1GUID, $object2GUID, $objectRelationTypeID);
