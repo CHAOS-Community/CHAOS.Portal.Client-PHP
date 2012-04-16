@@ -32,6 +32,11 @@
 
 
 		/**
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\IFileExtension
+		 */
+		public function File();
+		
+		/**
 		 * @return \CHAOS\Portal\Client\Extensions\MCM\IFolderExtension
 		 */
 		public function Folder();

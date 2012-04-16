@@ -6,6 +6,7 @@
 	use \CHAOS\Portal\Client\Extensions\EmailPassword\EmailPasswordExtension;
 	use \CHAOS\Portal\Client\Extensions\MCM\ObjectExtension;
 	use \CHAOS\Portal\Client\Extensions\MCM\ObjectRelationExtension;
+	use \CHAOS\Portal\Client\Extensions\MCM\FileExtension;
 	use \CHAOS\Portal\Client\Extensions\MCM\FolderExtension;
 	use \CHAOS\Portal\Client\Extensions\MCM\FolderTypeExtension;
 	use \CHAOS\Portal\Client\Extensions\MCM\MetadataSchemaExtension;
@@ -175,6 +176,18 @@
 				$this->_objectRelation = new ObjectRelationExtension($this);
 
 			return $this->_objectRelation;
+		}
+
+		private $_file = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\IFileExtension
+		 */
+		public function File()
+		{
+			if($this->_file == null)
+				$this->_file = new FileExtension($this);
+
+			return $this->_file;
 		}
 
 		private $_folder = null;
