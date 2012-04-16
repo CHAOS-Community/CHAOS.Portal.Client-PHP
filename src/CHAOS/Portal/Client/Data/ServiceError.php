@@ -27,12 +27,12 @@
 			}
 		}
 
-		public static function IsError(stdClass $data)
+		private static function IsError(stdClass $data)
 		{
 			return isset($data->Fullname) && strrpos($data->Fullname, "Exception") !== false;
 		}
 
-		public static function HasError(array $data)
+		private static function HasError(array $data)
 		{
 			return count($data) == 1 && static::IsError($data[0]);
 		}

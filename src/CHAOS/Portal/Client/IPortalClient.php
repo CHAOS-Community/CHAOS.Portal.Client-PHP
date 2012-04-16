@@ -47,6 +47,11 @@
 		public function FolderType();
 
 		/**
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\IFormatExtension
+		 */
+		public function Format();
+
+		/**
 		 * @return \CHAOS\Portal\Client\Extensions\MCM\ILanguageExtension
 		 */
 		public function Language();

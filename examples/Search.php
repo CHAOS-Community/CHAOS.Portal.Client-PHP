@@ -33,13 +33,13 @@
 				{
 					$schemaGUIDs[] = $schema->GUID;
 					
-					if(count($schemaGUIDs) == 3) //Limit our search to the first 3 schemas available on the service.
+					if(count($schemaGUIDs) == 10) //Limit our search to the first 10 schemas available on the service.
 						break;
 				}
 
-				$objects = $client->Object()->GetSearchSchemas("test", $schemaGUIDs, "da", 0, 5, true)->MCM()->Results(); //Login using email/password combination.
+				$objects = $client->Object()->GetSearchSchemas("test", $schemaGUIDs, "da", 0, 10, true)->MCM()->Results(); //Login using email/password combination.
 				
-				echo "First 5 objects that matches &quot;test&quot; in the metadata for the first 3 schemas in Danish:<br />";
+				echo "First 10 objects that matches &quot;test&quot; in the metadata in Danish:<br />";
 
 				foreach($objects as $object)
 				{

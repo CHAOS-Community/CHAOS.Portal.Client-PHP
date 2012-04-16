@@ -9,6 +9,7 @@
 	use \CHAOS\Portal\Client\Extensions\MCM\FileExtension;
 	use \CHAOS\Portal\Client\Extensions\MCM\FolderExtension;
 	use \CHAOS\Portal\Client\Extensions\MCM\FolderTypeExtension;
+	use \CHAOS\Portal\Client\Extensions\MCM\FormatExtension;
 	use \CHAOS\Portal\Client\Extensions\MCM\MetadataSchemaExtension;
 	use \CHAOS\Portal\Client\Extensions\MCM\MetadataExtension;
 	use \CHAOS\Portal\Client\Extensions\MCM\ObjectRelationTypeExtension;
@@ -113,7 +114,6 @@
 						if($data == null)
 							$data = new Exception("Invalid data returned from service");
 					}
-						
 				}
 
 				return new ServiceResult($data);
@@ -210,9 +210,21 @@
 		public function FolderType()
 		{
 			if($this->_folderType == null)
-				$this->_folderType = new \CHAOS\Portal\Client\Extensions\MCM\FolderTypeExtension($this);
+				$this->_folderType = new FolderTypeExtension($this);
 
 			return $this->_folderType;
+		}
+
+		private $_format = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\MCM\IFormatExtension
+		 */
+		public function Format()
+		{
+			if($this->_format == null)
+				$this->_format = new FormatExtension($this);
+
+			return $this->_format;
 		}
 
 		private $_language = null;
