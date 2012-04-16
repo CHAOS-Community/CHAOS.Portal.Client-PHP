@@ -7,12 +7,12 @@
 	{
 		public function Create($object1GUID, $object2GUID, $objectRelationTypeID, $sequence = null)
 		{
-			throw new \Exception("Method not implemented");
+			return $this->CallService("Create", IServiceCaller::GET, array("object1GUID" => $object1GUID, "object2GUID" => $object2GUID, "objectRelationTypeID" => $objectRelationTypeID, "sequence" => $sequence));
 		}
 
 		public function Delete($object1GUID, $object2GUID, $objectRelationTypeID)
 		{
-			throw new \Exception("Method not implemented");
+			return $this->CallService("Delete", IServiceCaller::GET, array("object1GUID" => $object1GUID, "object2GUID" => $object2GUID, "objectRelationTypeID" => $objectRelationTypeID));
 		}
 	}
 ?>
