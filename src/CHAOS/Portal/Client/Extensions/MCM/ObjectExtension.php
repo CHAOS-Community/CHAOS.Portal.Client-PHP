@@ -21,7 +21,7 @@
 			return $this->Get($includeChildFolders ? "(FolderTree:$folderID)" : "(FolderID:$folderID)", null, $pageIndex, $pageSize, $includeMetadata, $includeFiles, $includeObjectRelations);
 		}
 
-		public function GetByObjectGUID($objectGUID, $includeMetadata, $includeFiles, $includeObjectRelations)
+		public function GetByObjectGUID($objectGUID, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false)
 		{
 			return $this->Get("(GUID:$objectGUID)", null, 0, 1, $includeMetadata, $includeFiles, $includeObjectRelations);
 		}
@@ -42,7 +42,7 @@
 
 		public function Create($objectTypeID, $folderID, $guid = null)
 		{
-			return $this->CallService("Get", IServiceCaller::GET, array("objectTypeID" => $objectTypeID,
+			return $this->CallService("Create", IServiceCaller::GET, array("objectTypeID" => $objectTypeID,
 																		"folderID" => $folderID,
 																		"guid" => $guid));
 		}

@@ -37,7 +37,7 @@
 		 * @param bool $includeObjectRelations
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
-		public function GetByObjectGUID($objectGUID, $includeMetadata, $includeFiles, $includeObjectRelations);
+		public function GetByObjectGUID($objectGUID, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false);
 
 		/**
 		 * Searches the metadata in the specified schema.

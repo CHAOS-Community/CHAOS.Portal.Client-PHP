@@ -5,10 +5,10 @@
 
 	class MetadataExtension extends AExtension implements IMetadataExtension
 	{
-		public function Set($objectGUID, $metadataSchemaID, $languageCode, $revisionID, $metadataXML)
+		public function Set($objectGUID, $metadataSchemaGUID, $languageCode, $revisionID, $metadataXML)
 		{
 			return $this->CallService("Set", IServiceCaller::POST, array("objectGUID" => $objectGUID,
-																		"metadataSchemaID" => $metadataSchemaID,
+																		"metadataSchemaGUID" => $metadataSchemaGUID,
 																		"languageCode" => $languageCode,
 																		"revisionID" => $revisionID,
 																		"metadataXML" => $metadataXML));
