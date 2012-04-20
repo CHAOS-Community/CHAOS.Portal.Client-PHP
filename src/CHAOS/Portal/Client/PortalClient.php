@@ -2,20 +2,20 @@
 	namespace CHAOS\Portal\Client;
 	use Exception;
 	use \CHAOS\Portal\Client\Data\ServiceResult;
-	use \CHAOS\Portal\Client\Extensions\Portal\SessionExtension;
-	use \CHAOS\Portal\Client\Extensions\EmailPassword\EmailPasswordExtension;
-	use \CHAOS\Portal\Client\Extensions\MCM\ObjectExtension;
-	use \CHAOS\Portal\Client\Extensions\MCM\ObjectRelationExtension;
-	use \CHAOS\Portal\Client\Extensions\MCM\FileExtension;
-	use \CHAOS\Portal\Client\Extensions\MCM\FolderExtension;
-	use \CHAOS\Portal\Client\Extensions\MCM\FolderTypeExtension;
-	use \CHAOS\Portal\Client\Extensions\MCM\FormatExtension;
-	use \CHAOS\Portal\Client\Extensions\MCM\MetadataSchemaExtension;
-	use \CHAOS\Portal\Client\Extensions\MCM\MetadataExtension;
-	use \CHAOS\Portal\Client\Extensions\MCM\ObjectRelationTypeExtension;
-	use \CHAOS\Portal\Client\Extensions\MCM\LanguageExtension;
-	use \CHAOS\Portal\Client\Extensions\MCM\LinkExtension;
-	use \CHAOS\Portal\Client\Extensions\Statistics\StatsObjectExtension;
+	use \CHAOS\Portal\Client\Extensions\SessionExtension;
+	use \CHAOS\Portal\Client\Extensions\EmailPasswordExtension;
+	use \CHAOS\Portal\Client\Extensions\ObjectExtension;
+	use \CHAOS\Portal\Client\Extensions\ObjectRelationExtension;
+	use \CHAOS\Portal\Client\Extensions\FileExtension;
+	use \CHAOS\Portal\Client\Extensions\FolderExtension;
+	use \CHAOS\Portal\Client\Extensions\FolderTypeExtension;
+	use \CHAOS\Portal\Client\Extensions\FormatExtension;
+	use \CHAOS\Portal\Client\Extensions\MetadataSchemaExtension;
+	use \CHAOS\Portal\Client\Extensions\MetadataExtension;
+	use \CHAOS\Portal\Client\Extensions\ObjectRelationTypeExtension;
+	use \CHAOS\Portal\Client\Extensions\LanguageExtension;
+	use \CHAOS\Portal\Client\Extensions\LinkExtension;
+	use \CHAOS\Portal\Client\Extensions\StatsObjectExtension;
 
 	class PortalClient implements IPortalClient, IServiceCaller
 	{
@@ -126,7 +126,7 @@
 
 		private $_session = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\Portal\ISessionExtension
+		 * @return \CHAOS\Portal\Client\Extensions\ISessionExtension
 		 */
 		public function Session()
 		{
@@ -135,8 +135,13 @@
 				$client = $this; //Used for closure
 				$this->_session = new SessionExtension($this, self::PROTOCOL_VERSION, function($result) use ($client)
 				{
-					$sessions = $result->Portal()->Results();
-					$client->SetCurrentSessionGUID($sessions[0]->SessionGUID);
+					if($result->WasSuccess() && $result->Portal() != null && $result->Portal()->WasSuccess())
+					{
+						$sessions = $result->Portal()->Results();
+						
+						if(count($sessions) == 1 && isset($sessions[0]->SessionGUID))
+							$client->SetCurrentSessionGUID($sessions[0]->SessionGUID);
+					}
 				});
 			}
 
@@ -145,7 +150,7 @@
 
 		private $_emailPassword = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\EmailPassword\IEmailPasswordExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IEmailPasswordExtension
 		 */
 		public function EmailPassword()
 		{
@@ -157,7 +162,7 @@
 
 		private $_object = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\IObjectExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IObjectExtension
 		 */
 		public function Object()
 		{
@@ -169,7 +174,7 @@
 
 		private $_objectRelation = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\IObjectRelationExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IObjectRelationExtension
 		 */
 		public function ObjectRelation()
 		{
@@ -181,7 +186,7 @@
 
 		private $_file = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\IFileExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IFileExtension
 		 */
 		public function File()
 		{
@@ -193,7 +198,7 @@
 
 		private $_folder = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\IFolderExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IFolderExtension
 		 */
 		public function Folder()
 		{
@@ -205,7 +210,7 @@
 
 		private $_folderType = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\IFolderTypeExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IFolderTypeExtension
 		 */
 		public function FolderType()
 		{
@@ -217,7 +222,7 @@
 
 		private $_format = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\IFormatExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IFormatExtension
 		 */
 		public function Format()
 		{
@@ -229,7 +234,7 @@
 
 		private $_language = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\ILanguageExtension
+		 * @return \CHAOS\Portal\Client\Extensions\ILanguageExtension
 		 */
 		public function Language()
 		{
@@ -241,7 +246,7 @@
 
 		private $_link = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\ILinkExtension
+		 * @return \CHAOS\Portal\Client\Extensions\ILinkExtension
 		 */
 		public function Link()
 		{
@@ -253,7 +258,7 @@
 
 		private $_metadata = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\IMetadataExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IMetadataExtension
 		 */
 		public function Metadata()
 		{
@@ -265,7 +270,7 @@
 
 		private $_metadataSchema = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\IMetadataSchemaExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IMetadataSchemaExtension
 		 */
 		public function MetadataSchema()
 		{
@@ -277,7 +282,7 @@
 
 		private $_objectRelationType = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\IObjectRelationTypeExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IObjectRelationTypeExtension
 		 */
 		public function ObjectRelationType()
 		{
@@ -289,7 +294,7 @@
 
 		private $_statsObject = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\Statistics\IStatsObjectExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IStatsObjectExtension
 		 */
 		public function StatsObject()
 		{

@@ -20,75 +20,75 @@
 
 		
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\Portal\ISessionExtension
+		 * @return \CHAOS\Portal\Client\Extensions\ISessionExtension
 		 */
 		public function Session();
 
 		
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\EmailPassword\IEmailPasswordExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IEmailPasswordExtension
 		 */
 		public function EmailPassword();
 
 
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\IFileExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IFileExtension
 		 */
 		public function File();
 		
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\IFolderExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IFolderExtension
 		 */
 		public function Folder();
 
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\IFolderTypeExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IFolderTypeExtension
 		 */
 		public function FolderType();
 
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\IFormatExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IFormatExtension
 		 */
 		public function Format();
 
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\ILanguageExtension
+		 * @return \CHAOS\Portal\Client\Extensions\ILanguageExtension
 		 */
 		public function Language();
 
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\ILinkExtension
+		 * @return \CHAOS\Portal\Client\Extensions\ILinkExtension
 		 */
 		public function Link();
 
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\IMetadataExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IMetadataExtension
 		 */
 		public function Metadata();
 
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\IMetadataSchemaExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IMetadataSchemaExtension
 		 */
 		public function MetadataSchema();
 		
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\IObjectExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IObjectExtension
 		 */
 		public function Object();
 
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\IObjectRelationExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IObjectRelationExtension
 		 */
 		public function ObjectRelation();
 
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\MCM\ObjectRelationTypeExtension
+		 * @return \CHAOS\Portal\Client\Extensions\ObjectRelationTypeExtension
 		 */
 		public function ObjectRelationType();
 
 		
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\Statistics\IStatsObjectExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IStatsObjectExtension
 		 */
 		public function StatsObject();
 	}

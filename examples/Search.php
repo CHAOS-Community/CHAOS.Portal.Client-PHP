@@ -1,4 +1,5 @@
 <?php
+	//set_include_path(get_include_path() . PATH_SEPARATOR . "/usr/share/php/lib"); //Use this to set the path to the location of the CHAOS folder, this is where PHP will look for the PortalClient files. 
 	spl_autoload_extensions(".php");
 	spl_autoload_register(); //Autoload used classes
 

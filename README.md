@@ -14,11 +14,14 @@ which should enable code completion and type hinting in most modern code IDE's.
 
 ##Examples
 The examples are located in the *examples* folder. To run the examples copy the contents of the src folder  
-to any path where PHP is configured to look for classes. The easiest solution is to copy the contents of the src folder  
+to any path where PHP is configured to look for classes (see **Using PortalClient**). The easiest solution is to copy the contents of the src folder  
 to the same folder as the example you want to run.
 
+##Using PortalClient
+Coming soon...
+
 ##Reporting problems
-If you encounter any problems using this project, please report them using the "Issues" section of the projects Github page.
+If you encounter any problems using this project, please report them using the "(Issues)[https://github.com/CHAOS-Community/CHAOS.Portal.Client-PHP/issues]" section of the projects Github page.
 
 ##Links
 [Official CHAOS Community website](http://www.chaos-community.org/)  
