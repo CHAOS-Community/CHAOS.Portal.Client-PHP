@@ -14,7 +14,7 @@ which should enable code completion and type hinting in most modern code IDE's.
 
 ##Examples
 The examples are located in the *examples* folder.  
-By default the examples will add *__dir__/../src* to the include path, this will allow PHP to locate the source files from the namespace.
+By default the examples will add *\_\_dir\_\_/../src* to the include path, this will allow PHP to locate the source files from the namespace.
 Make sure to update this if you move the examples before running them (see **How to use PortalClient**).
 
 ##How to use PortalClient
