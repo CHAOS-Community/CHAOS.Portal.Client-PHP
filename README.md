@@ -14,12 +14,12 @@ which should enable code completion and type hinting in most modern code IDE's.
 
 ##Examples
 The examples are located in the *examples* folder.  
-By default the examples will add "../src" folder to the include path, this will allow PHP to locate the source files from the namespace.
+By default the examples will add *__dir__/../src* to the include path, this will allow PHP to locate the source files from the namespace.
 Make sure to update this if you move the examples before running them (see **How to use PortalClient**).
 
 ##How to use PortalClient
 Make sure the *CHAOS* folder (located in the *src* folder) is copied to a location where PHP is configured to look for classes.  
-This can be the same folder as the PHP-script that is using PortalClient, or a location added to the (include path)[http://php.net/manual/en/function.set-include-path.php].  
+This can be the same folder as the PHP-script that is using PortalClient, or a location added to the [include path](http://php.net/manual/en/function.set-include-path.php).  
 The examples all use the latter method.
 
 ##Reporting problems
