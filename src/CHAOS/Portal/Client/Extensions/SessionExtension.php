@@ -18,7 +18,7 @@
 
 		public function Create()
 		{
-			$result = $this->CallService("Create", IServiceCaller::GET, array("ProtocolVersion" => $this->_protocolVersion), false);
+			$result = $this->CallService("Create", IServiceCaller::GET, array("protocolVersion" => $this->_protocolVersion), false);
 
 			$this->_callback->__invoke($result);
 
