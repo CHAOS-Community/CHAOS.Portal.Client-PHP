@@ -37,17 +37,18 @@
 		 */
 		public function EmailPassword() { return $this->_emailPassword; }
 
+		private $_secureCookie;
+		/**
+		 * @return \CHAOS\Portal\Client\Data\ModuleResult
+		 */
+		public function SecureCookie() { return $this->_secureCookie; }
+
 		private $_mcm;
 		/**
 		 * @return \CHAOS\Portal\Client\Data\ModuleResult
 		 */
 		public function MCM() { return $this->_mcm; }
 
-		private $_geoLocator;
-		/**
-		 * @return \CHAOS\Portal\Client\Data\ModuleResult
-		 */
-		public function GeoLocator() { return $this->_geoLocator; }
 
 		private $_statistics;
 		/**
@@ -73,20 +74,19 @@
 					{
 						switch($moduleResult->Fullname)
 						{
-							case "Geckon.Portal":
-							case "CHAOS.Portal.Modules.SessionModule":
+							case "Portal":
 								$this->_portal = new ModuleResult($moduleResult);
 								break;
-							case "CHAOS.Portal.EmailPasswordModule.Standard.EmailPasswordModule":
-							case "CHAOS.Portal.Authentication.EmailPassword.Module.EmailPasswordModule":
+							case "EmailPassword":
 								$this->_emailPassword = new ModuleResult($moduleResult);
 								break;
-							case "CHAOS.MCM.Module.Standard.MCMModule":
-							case "CHAOS.MCM.Module.MCMModule":
-							case "CHAOS.MCM.Module.ObjectModule":
+							case "SecureCookie":
+								$this->_secureCookie = new ModuleResult($moduleResult);
+								break;
+							case "MCM":
 								$this->_mcm = new ModuleResult($moduleResult);
 								break;
-							case "CHAOS.Statistics.Module.Standard.StatisticsModule":
+							case "Statistics":
 								$this->_statistics = new ModuleResult($moduleResult);
 								break;
 						}

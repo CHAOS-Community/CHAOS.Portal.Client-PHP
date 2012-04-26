@@ -30,6 +30,12 @@
 		 */
 		public function EmailPassword();
 
+		
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\ISecureCookieExtension
+		 */
+		public function SecureCooke();
+		
 
 		/**
 		 * @return \CHAOS\Portal\Client\Extensions\IFileExtension

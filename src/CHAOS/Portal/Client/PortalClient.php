@@ -4,6 +4,7 @@
 	use \CHAOS\Portal\Client\Data\ServiceResult;
 	use \CHAOS\Portal\Client\Extensions\SessionExtension;
 	use \CHAOS\Portal\Client\Extensions\EmailPasswordExtension;
+	use \CHAOS\Portal\Client\Extensions\SecureCookieExtension;
 	use \CHAOS\Portal\Client\Extensions\ObjectExtension;
 	use \CHAOS\Portal\Client\Extensions\ObjectRelationExtension;
 	use \CHAOS\Portal\Client\Extensions\FileExtension;
@@ -71,7 +72,7 @@
 					if($this->GetCurrentSessionGUID() == null)
 						throw new Exception("Session was not created");
 
-					$parameters["SessionGUID"] = $this->GetCurrentSessionGUID();
+					$parameters["sessionGUID"] = $this->GetCurrentSessionGUID();
 				}
 
 				$parameters["format"] = self::FORMAT;
@@ -158,6 +159,18 @@
 				$this->_emailPassword = new EmailPasswordExtension($this);
 
 			return $this->_emailPassword;
+		}
+
+		private $_secureCookie = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\ISecureCookieExtension
+		 */
+		public function SecureCooke()
+		{
+			if($this->_secureCookie == null)
+				$this->_secureCookie = new SecureCookieExtension($this);
+
+			return $this->_secureCookie;
 		}
 
 		private $_object = null;
