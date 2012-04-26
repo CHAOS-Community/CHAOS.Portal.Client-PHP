@@ -74,12 +74,16 @@
 						switch($moduleResult->Fullname)
 						{
 							case "Geckon.Portal":
+							case "CHAOS.Portal.Modules.SessionModule":
 								$this->_portal = new ModuleResult($moduleResult);
 								break;
 							case "CHAOS.Portal.EmailPasswordModule.Standard.EmailPasswordModule":
+							case "CHAOS.Portal.Authentication.EmailPassword.Module.EmailPasswordModule":
 								$this->_emailPassword = new ModuleResult($moduleResult);
 								break;
 							case "CHAOS.MCM.Module.Standard.MCMModule":
+							case "CHAOS.MCM.Module.MCMModule":
+							case "CHAOS.MCM.Module.ObjectModule":
 								$this->_mcm = new ModuleResult($moduleResult);
 								break;
 							case "CHAOS.Statistics.Module.Standard.StatisticsModule":
