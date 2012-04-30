@@ -88,10 +88,14 @@
 		public function ObjectRelation();
 
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\ObjectRelationTypeExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IObjectRelationTypeExtension
 		 */
 		public function ObjectRelationType();
 
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\IObjectTypeExtension
+		 */
+		public function ObjectType();
 		
 		/**
 		 * @return \CHAOS\Portal\Client\Extensions\IStatsObjectExtension

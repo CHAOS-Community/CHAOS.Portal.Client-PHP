@@ -14,6 +14,7 @@
 	use \CHAOS\Portal\Client\Extensions\MetadataSchemaExtension;
 	use \CHAOS\Portal\Client\Extensions\MetadataExtension;
 	use \CHAOS\Portal\Client\Extensions\ObjectRelationTypeExtension;
+	use \CHAOS\Portal\Client\Extensions\ObjectTypeExtension;
 	use \CHAOS\Portal\Client\Extensions\LanguageExtension;
 	use \CHAOS\Portal\Client\Extensions\LinkExtension;
 	use \CHAOS\Portal\Client\Extensions\StatsObjectExtension;
@@ -195,6 +196,18 @@
 				$this->_objectRelation = new ObjectRelationExtension($this);
 
 			return $this->_objectRelation;
+		}
+
+		private $_objectType = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\IObjectTypeExtension
+		 */
+		public function ObjectType()
+		{
+			if($this->_objectType == null)
+				$this->_objectType = new ObjectTypeExtension($this);
+
+			return $this->_objectType;
 		}
 
 		private $_file = null;
