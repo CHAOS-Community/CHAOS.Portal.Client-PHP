@@ -2,7 +2,7 @@
 	namespace CHAOS\Portal\Client\Extensions;
 	use \CHAOS\Portal\Client\IServiceCaller;
 
-	class EmailPasswordExtension extends AExtension implements IEMailPasswordExtension
+	class EmailPasswordExtension extends AExtension implements IEmailPasswordExtension
 	{
 		public function Login($email, $password)
 		{

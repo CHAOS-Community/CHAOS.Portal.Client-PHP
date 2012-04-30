@@ -4,7 +4,7 @@
 	/**
 	 * Extension to log in as user with email/password combination
 	 */
-	interface IEMailPasswordExtension
+	interface IEmailPasswordExtension
 	{
 		/**
 		 * @param string $userGUID
