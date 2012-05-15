@@ -24,6 +24,16 @@
 		{
 			return $this->Get("(GUID:$objectGUID)", null, 0, 1, $includeMetadata, $includeFiles, $includeObjectRelations);
 		}
+                
+                public function GetByObjectGUIDs($objectGUIDs, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false)
+		{
+                    
+                    foreach($objectGUIDs as $objectGUID){
+                        $query[] = "(GUID:$objectGUID)";
+                    }
+			return $this->Get("(".implode("+OR+", $query).")", null, 0, count($objectGUIDs), $includeMetadata, $includeFiles, $includeObjectRelations);
+		}
+
 
 		public function GetSearchSchema($query, $schemaGUID, $languageCode, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false)
 		{
