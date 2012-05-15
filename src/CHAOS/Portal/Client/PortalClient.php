@@ -46,8 +46,9 @@
 
 			$this->_servicePath = $servicePath;
 			$this->_clientGUID = $clientGUID;
-
-			$this->Session()->Create();
+                        
+                        if ($autoCreateSession)
+                            $this->Session()->Create();
 		}
 
 		private function ValidateServicePath($servicePath)
