@@ -46,9 +46,9 @@
 
 			$this->_servicePath = $servicePath;
 			$this->_clientGUID = $clientGUID;
-                        
-                        if ($autoCreateSession)
-                            $this->Session()->Create();
+			
+			if ($autoCreateSession)
+				$this->Session()->Create();
 		}
 
 		private function ValidateServicePath($servicePath)
@@ -125,6 +125,15 @@
 			{
 				return new ServiceResult($e);
 			}
+		}
+
+		/**
+		 * Returns true if the PortalClient instance has a session.
+		 * @return bool
+		 */
+		public function HasSession()
+		{
+			return $this->GetCurrentSessionGUID() != null;
 		}
 
 		private $_session = null;

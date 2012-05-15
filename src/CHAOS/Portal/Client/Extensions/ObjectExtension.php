@@ -25,12 +25,13 @@
 			return $this->Get("(GUID:$objectGUID)", null, 0, 1, $includeMetadata, $includeFiles, $includeObjectRelations);
 		}
                 
-                public function GetByObjectGUIDs($objectGUIDs, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false)
+		public function GetByObjectGUIDs(array $objectGUIDs, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false)
 		{
-                    
-                    foreach($objectGUIDs as $objectGUID){
-                        $query[] = "(GUID:$objectGUID)";
-                    }
+			$query = array();
+			
+			foreach($objectGUIDs as $objectGUID)
+				$query[] = "(GUID:$objectGUID)";
+			
 			return $this->Get("(".implode("+OR+", $query).")", null, 0, count($objectGUIDs), $includeMetadata, $includeFiles, $includeObjectRelations);
 		}
 
@@ -40,9 +41,10 @@
 			return $this->GetSearchSchemas($query, array($schemaGUID), $languageCode, $pageIndex, $pageSize, $includeMetadata, $includeFiles, $includeObjectRelations);
 		}
 
-		public function GetSearchSchemas($query, $schemaGUIDs, $languageCode, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false)
+		public function GetSearchSchemas($query, array $schemaGUIDs, $languageCode, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false)
 		{
 			$searchStrings = array();
+			
 			foreach($schemaGUIDs as $guid)
 				$searchStrings[] = "(m$guid" . "_$languageCode" . "_all:$query)";
 			
@@ -51,9 +53,7 @@
 
 		public function Create($objectTypeID, $folderID, $guid = null)
 		{
-			return $this->CallService("Create", IServiceCaller::GET, array("objectTypeID" => $objectTypeID,
-																		"folderID" => $folderID,
-																		"guid" => $guid));
+			return $this->CallService("Create", IServiceCaller::GET, array("objectTypeID" => $objectTypeID, "folderID" => $folderID, "guid" => $guid));
 		}
 
 		public function Delete($guid, $folderID)

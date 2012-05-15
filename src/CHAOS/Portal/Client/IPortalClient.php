@@ -7,6 +7,12 @@
 	interface IPortalClient
 	{
 		/**
+		 * Returns true if the PortalClient instance has a session.
+		 * @return bool
+		 */
+		public function HasSession();
+		
+		/**
 		 * Sets a session GUID to use.
 		 * @param $value string The GUID to use.
 		 */
