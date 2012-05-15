@@ -105,9 +105,9 @@
 					$data = new Exception("No data returned from service");
 				else
 				{
-					$data = iconv( "UTF-16LE", "UTF-8", $data);
+					$data = @iconv( "UTF-16LE", "UTF-8", $data);
 
-					if($data === false)
+					if($data === false || is_null($data) || $data == "")
 						$data = new Exception("Invalid data returned from service");
 					else
 					{
