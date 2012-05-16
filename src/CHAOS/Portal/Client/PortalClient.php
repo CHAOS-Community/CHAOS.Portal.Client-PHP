@@ -46,9 +46,9 @@
 
 			$this->_servicePath = $servicePath;
 			$this->_clientGUID = $clientGUID;
-                        
-                        if ($autoCreateSession)
-                            $this->Session()->Create();
+			
+			if ($autoCreateSession)
+				$this->Session()->Create();
 		}
 
 		private function ValidateServicePath($servicePath)
@@ -106,9 +106,9 @@
 					$data = new Exception("No data returned from service");
 				else
 				{
-					$data = iconv( "UTF-16LE", "UTF-8", $data);
+					$data = @iconv( "UTF-16LE", "UTF-8", $data);
 
-					if($data === false)
+					if($data === false || is_null($data) || $data == "")
 						$data = new Exception("Invalid data returned from service");
 					else
 					{
@@ -125,6 +125,15 @@
 			{
 				return new ServiceResult($e);
 			}
+		}
+
+		/**
+		 * Returns true if the PortalClient instance has a session.
+		 * @return bool
+		 */
+		public function HasSession()
+		{
+			return $this->GetCurrentSessionGUID() != null;
 		}
 
 		private $_session = null;

@@ -40,6 +40,15 @@
 		public function GetByObjectGUID($objectGUID, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false);
 
 		/**
+		 * @param array $objectGUIDs
+		 * @param bool $includeMetadata
+		 * @param bool $includeFiles
+		 * @param bool $includeObjectRelations
+		 * @return \CHAOS\Portal\Client\Data\ServiceResult
+		 */
+		public function GetByObjectGUIDs(array $objectGUIDs, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false);
+
+		/**
 		 * Searches the metadata in the specified schema.
 		 * @param string $query The search string.
 		 * @param string $schemaGUID The GUID for the schemas to search.
@@ -65,7 +74,7 @@
 		 * @param bool $includeObjectRelations
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
-		public function GetSearchSchemas($query, $schemaGUIDs, $languageCode, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false);
+		public function GetSearchSchemas($query, array $schemaGUIDs, $languageCode, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false);
 
 		/**
 		 * @param int $folderID

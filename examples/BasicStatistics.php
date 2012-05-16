@@ -1,7 +1,9 @@
 <?php
 	set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . "/../src"); //Use this to set the path to the location of the CHAOS folder, this is where PHP will look for the PortalClient files.
+	require_once("CaseSensitiveAutoload.php");
+
 	spl_autoload_extensions(".php");
-	spl_autoload_register(); //Autoload used classes
+	spl_autoload_register("CaseSensitiveAutoload");
 
 	use CHAOS\Portal\Client\PortalClient;
 
