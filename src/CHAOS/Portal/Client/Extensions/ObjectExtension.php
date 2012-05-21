@@ -49,7 +49,7 @@
 			foreach($schemaGUIDs as $guid)
 				$searchStrings[] = "(m$guid" . "_$languageCode" . "_all:$query)";
 			
-			return $this->Get("(".implode("+OR+", $searchStrings).")", null, $pageIndex, $pageSize, $includeMetadata, $includeFiles, $includeObjectRelations);
+			return $this->Get("(".implode("+OR+", $searchStrings).")", null, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata, $includeFiles, $includeObjectRelations);
 		}
 
 		public function Create($objectTypeID, $folderID, $guid = null)
