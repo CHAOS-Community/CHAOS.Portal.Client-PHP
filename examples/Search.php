@@ -22,7 +22,7 @@
 			{
 				$client = new PortalClient($_POST["url"], $clientGUID); //Create a new client, a session is automaticly created.
 
-				echo "SessionGUID: " . $client->GetCurrentSessionGUID() . "<br />";
+				echo "SessionGUID: " . $client->SessionGUID() . "<br />";
 
 				$user = $client->EmailPassword()->Login($_POST["email"], $_POST["password"])->EmailPassword()->Results(); //Login using email/password combination.
 
@@ -40,7 +40,7 @@
 						break;
 				}
 
-				$objects = $client->Object()->GetSearchSchemas("test", $schemaGUIDs, "da", 0, 10, true)->MCM()->Results(); //Login using email/password combination.
+				$objects = $client->Object()->GetSearchSchemas("test", $schemaGUIDs, "da", null , 0, 10, true)->MCM()->Results(); //Login using email/password combination.
 				
 				echo "First 10 objects that matches &quot;test&quot; in the metadata in Danish:<br />";
 

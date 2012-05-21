@@ -9,6 +9,7 @@
 		/**
 		 * @param string $query
 		 * @param string|null $sort
+		 * @param string 
 		 * @param int $pageIndex
 		 * @param int $pageSize
 		 * @param bool $includeMetadata
@@ -16,7 +17,7 @@
 		 * @param bool $includeObjectRelations
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
-		public function Get($query, $sort, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false);
+		public function Get($query, $sort, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false);
 
 		/**
 		 * @param int $folderID
@@ -28,7 +29,7 @@
 		 * @param bool $includeObjectRelations
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
-		public function GetByFolderID($folderID, $includeChildFolders, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false);
+		public function GetByFolderID($folderID, $includeChildFolders, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false);
 
 		/**
 		 * @param string $objectGUID
@@ -37,7 +38,7 @@
 		 * @param bool $includeObjectRelations
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
-		public function GetByObjectGUID($objectGUID, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false);
+		public function GetByObjectGUID($objectGUID, $accessPointGUID, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false);
 
 		/**
 		 * @param array $objectGUIDs
@@ -46,7 +47,7 @@
 		 * @param bool $includeObjectRelations
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
-		public function GetByObjectGUIDs(array $objectGUIDs, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false);
+		public function GetByObjectGUIDs(array $objectGUIDs, $accessPointGUID, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false);
 
 		/**
 		 * Searches the metadata in the specified schema.
@@ -60,7 +61,7 @@
 		 * @param bool $includeObjectRelations
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
-		public function GetSearchSchema($query, $schemaGUID, $languageCode, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false);
+		public function GetSearchSchema($query, $schemaGUID, $languageCode, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false);
 
 		/**
 		 * Searches the metadata in the specified schemas.
@@ -74,7 +75,7 @@
 		 * @param bool $includeObjectRelations
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
-		public function GetSearchSchemas($query, array $schemaGUIDs, $languageCode, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false);
+		public function GetSearchSchemas($query, array $schemaGUIDs, $languageCode, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false);
 
 		/**
 		 * @param int $folderID

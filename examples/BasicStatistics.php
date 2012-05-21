@@ -22,7 +22,7 @@
 			{
 				$client = new PortalClient($_POST["url"], $clientGUID); //Create a new client, a session is automaticly created.
 		
-				echo "SessionGUID: " . $client->GetCurrentSessionGUID() . "<br />";
+				echo "SessionGUID: " . $client->SessionGUID() . "<br />";
 		
 				$user = $client->EmailPassword()->Login($_POST["email"], $_POST["password"])->EmailPassword()->Results(); //Login using email/password combination.
 		

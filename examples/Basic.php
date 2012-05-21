@@ -25,7 +25,7 @@
 			{
 				$client = new PortalClient($_POST["url"], $clientGUID); //Create a new client, a session is automaticly created.
 
-				echo "SessionGUID: " . $client->GetCurrentSessionGUID() . "<br />";
+				echo "SessionGUID: " . $client->SessionGUID() . "<br />";
 
 				$user = $client->EmailPassword()->Login($_POST["email"], $_POST["password"])->EmailPassword()->Results(); //Login using email/password combination.
 
@@ -52,7 +52,7 @@
 				}
 				else
 				{
-					$objectResult = $client->Object()->GetByFolderID($folderID, true, 0, 3, true, false, false); //Get three objects with metadata from folder with ID 212.
+					$objectResult = $client->Object()->GetByFolderID($folderID, true, null, 0, 3, true, false, false); //Get three objects with metadata from folder with ID 212.
 
 					echo "First three Objects in folder $folderID: <br />";
 

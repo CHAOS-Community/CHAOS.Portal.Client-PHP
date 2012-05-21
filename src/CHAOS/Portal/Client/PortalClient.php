@@ -21,6 +21,7 @@
 
 	class PortalClient implements IPortalClient, IServiceCaller
 	{
+		const CLIENT_VERSION = "0.1.0";
 		const PROTOCOL_VERSION = 4;
 		const FORMAT = "json";
 		const USE_HTTP_STATUS_CODES = false;
@@ -28,9 +29,36 @@
 		private $_servicePath = null;
 		private $_clientGUID = null;
 
+		/**
+		 * Returns the version of the client.
+		 * @return string
+		 */
+		public function ClientVersion()	{ return self::CLIENT_VERSION; }
+
+		/**
+		 * Returns the protocol version used by the client.
+		 * @return int
+		 */
+		public function ProtocolVersion() { return self::PROTOCOL_VERSION; }
+
 		private $_currentSessionGUID = null;
-		public function SetCurrentSessionGUID($value) { $this->_currentSessionGUID = $value; }
-		public function GetCurrentSessionGUID() { return $this->_currentSessionGUID; }
+		/**
+		 * Sets a session GUID to use.
+		 * @param string  $guid The GUID to use.
+		 * @param bool $isAuthenticated True if the GUID is authenticated.
+		 */
+		public function SetSessionGUID($guid, $isAuthenticated) { $this->_currentSessionGUID = $guid; }
+		/**
+		 * Returns the currently used session GUID.
+		 * @return string
+		 */
+		public function SessionGUID() { return $this->_currentSessionGUID; }
+
+		/**
+		 * Returns true if the PortalClient instance has a session.
+		 * @return bool
+		 */
+		public function HasSession() { return $this->SessionGUID() != null; }
 
 		/**
 		 * @param String $servicePath The URL of the Portal service.
@@ -71,10 +99,10 @@
 				
 				if($requiresSession)
 				{
-					if($this->GetCurrentSessionGUID() == null)
+					if($this->SessionGUID() == null)
 						throw new Exception("Session was not created");
 
-					$parameters["sessionGUID"] = $this->GetCurrentSessionGUID();
+					$parameters["sessionGUID"] = $this->SessionGUID();
 				}
 
 				$parameters["format"] = self::FORMAT;
@@ -127,15 +155,6 @@
 			}
 		}
 
-		/**
-		 * Returns true if the PortalClient instance has a session.
-		 * @return bool
-		 */
-		public function HasSession()
-		{
-			return $this->GetCurrentSessionGUID() != null;
-		}
-
 		private $_session = null;
 		/**
 		 * @return \CHAOS\Portal\Client\Extensions\ISessionExtension
@@ -152,7 +171,7 @@
 						$sessions = $result->Portal()->Results();
 						
 						if(count($sessions) == 1 && isset($sessions[0]->SessionGUID))
-							$client->SetCurrentSessionGUID($sessions[0]->SessionGUID);
+							$client->SetSessionGUID($sessions[0]->SessionGUID, false);
 					}
 				});
 			}

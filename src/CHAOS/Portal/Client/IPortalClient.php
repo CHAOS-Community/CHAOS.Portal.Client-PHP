@@ -7,22 +7,36 @@
 	interface IPortalClient
 	{
 		/**
-		 * Returns true if the PortalClient instance has a session.
-		 * @return bool
+		 * Returns the version of the client.
+		 * @return string
 		 */
-		public function HasSession();
+		public function ClientVersion();
+
+		/**
+		 * Returns the protocol version used by the client.
+		 * @return int
+		 */
+		public function ProtocolVersion();
+		
 		
 		/**
 		 * Sets a session GUID to use.
-		 * @param $value string The GUID to use.
+		 * @param string $guid The GUID to use.
+		 * @param bool $isAuthenticated True if the GUID is authenticated.
 		 */
-		public function SetCurrentSessionGUID($value);
+		public function SetSessionGUID($guid, $isAuthenticated);
 
 		/**
 		 * Returns the currently used session GUID.
 		 * @return string
 		 */
-		public function GetCurrentSessionGUID();
+		public function SessionGUID();
+
+		/**
+		 * Returns true if the PortalClient instance has a session.
+		 * @return bool
+		 */
+		public function HasSession();
 
 		
 		/**
