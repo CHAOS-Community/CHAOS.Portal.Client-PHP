@@ -61,5 +61,10 @@
 		{
 			throw new \Exception("Method not implemented");
 		}
+
+		public function SetPublishSettings($objectGUID, $accessPointGUID, $startDate = null, $endDate = null)
+		{
+			return $this->CallService("SetPublishSettings", IServiceCaller::GET, array("objectGUID" => $objectGUID, "accessPointGUID" => $accessPointGUID, "startDate" => $startDate, "endDate" => $endDate));
+		}
 	}
 ?>
