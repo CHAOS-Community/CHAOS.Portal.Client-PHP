@@ -4,7 +4,7 @@
 
 	class ObjectExtension extends AExtension implements IObjectExtension
 	{
-		public function Get($query, $sort, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false)
+		public function Get($query, $sort, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false, $includeAccessPoints = false)
 		{
 			return $this->CallService("Get", IServiceCaller::GET, array("query" => $query,
 																		"sort" => $sort,
@@ -12,21 +12,22 @@
 																		"includeMetadata" => $includeMetadata,
 																		"includeFiles" => $includeFiles,
 																		"includeObjectRelations" => $includeObjectRelations,
+																		"includeAccessPoints" => $includeAccessPoints,
 																		"pageIndex" => $pageIndex,
 																		"pageSize" => $pageSize));
 		}
 
-		public function GetByFolderID($folderID, $includeChildFolders, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false)
+		public function GetByFolderID($folderID, $includeChildFolders, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false, $includeAccessPoints = false)
 		{
 			return $this->Get($includeChildFolders ? "(FolderTree:$folderID)" : "(FolderID:$folderID)", null, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata, $includeFiles, $includeObjectRelations);
 		}
 
-		public function GetByObjectGUID($objectGUID, $accessPointGUID, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false)
+		public function GetByObjectGUID($objectGUID, $accessPointGUID, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false, $includeAccessPoints = false)
 		{
 			return $this->Get("(GUID:$objectGUID)", null, $accessPointGUID, 0, 1, $includeMetadata, $includeFiles, $includeObjectRelations);
 		}
                 
-		public function GetByObjectGUIDs(array $objectGUIDs, $accessPointGUID, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false)
+		public function GetByObjectGUIDs(array $objectGUIDs, $accessPointGUID, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false, $includeAccessPoints = false)
 		{
 			$query = array();
 			
@@ -37,12 +38,12 @@
 		}
 
 
-		public function GetSearchSchema($query, $schemaGUID, $languageCode, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false)
+		public function GetSearchSchema($query, $schemaGUID, $languageCode, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false, $includeAccessPoints = false)
 		{
 			return $this->GetSearchSchemas($query, array($schemaGUID), $languageCode, $pageIndex, $accessPointGUID, $pageSize, $includeMetadata, $includeFiles, $includeObjectRelations);
 		}
 
-		public function GetSearchSchemas($query, array $schemaGUIDs, $languageCode, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false)
+		public function GetSearchSchemas($query, array $schemaGUIDs, $languageCode, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false, $includeAccessPoints = false)
 		{
 			$searchStrings = array();
 			
