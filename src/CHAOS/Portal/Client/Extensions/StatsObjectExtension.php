@@ -14,7 +14,7 @@
 																		"channelTypeID" => $channelTypeID,
 																		"eventTypeID" => $eventTypeID,
 																		"objectTitle" => $objectTitle,
-																		"ip" => $ip,
+																		"IP" => $ip,
 																		"city" => $city,
 																		"country" => $country,
 																		"userSessionID" => $userSessionID));
