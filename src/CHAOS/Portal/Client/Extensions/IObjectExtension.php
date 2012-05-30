@@ -9,7 +9,7 @@
 		/**
 		 * @param string $query
 		 * @param string|null $sort
-		 * @param string 
+		 * @param string|null $accessPointGUID
 		 * @param int $pageIndex
 		 * @param int $pageSize
 		 * @param bool $includeMetadata

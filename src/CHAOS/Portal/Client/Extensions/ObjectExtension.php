@@ -37,10 +37,9 @@
 			return $this->Get("(".implode("+OR+", $query).")", null, $accessPointGUID, 0, count($objectGUIDs), $includeMetadata, $includeFiles, $includeObjectRelations);
 		}
 
-
 		public function GetSearchSchema($query, $schemaGUID, $languageCode, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false, $includeAccessPoints = false)
 		{
-			return $this->GetSearchSchemas($query, array($schemaGUID), $languageCode, $pageIndex, $accessPointGUID, $pageSize, $includeMetadata, $includeFiles, $includeObjectRelations);
+			return $this->GetSearchSchemas($query, array($schemaGUID), $languageCode, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata, $includeFiles, $includeObjectRelations);
 		}
 
 		public function GetSearchSchemas($query, array $schemaGUIDs, $languageCode, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false, $includeAccessPoints = false)
@@ -48,7 +47,7 @@
 			$searchStrings = array();
 			
 			foreach($schemaGUIDs as $guid)
-				$searchStrings[] = "(m$guid" . "_$languageCode" . "_all:$query)";
+				$searchStrings[] = "(m$guid" . "_$languageCode" . "_all:($query))";
 			
 			return $this->Get("(".implode("+OR+", $searchStrings).")", null, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata, $includeFiles, $includeObjectRelations);
 		}
