@@ -101,7 +101,8 @@
 		public function Delete($guid, $folderID);
 
 		/**
-		 * Sets the Publish settings for an Object
+		 * Sets the Publish settings for an Object.
+		 * If both dates are omitted the Object is unpublished, if only $endDate is omitted the Object is published forever.
 		 * @param string $objectGUID
 		 * @param string $accessPointGUID
 		 * @param \DateTime|null $startDate
