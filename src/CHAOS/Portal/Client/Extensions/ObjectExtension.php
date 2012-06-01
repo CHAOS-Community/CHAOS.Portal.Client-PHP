@@ -62,9 +62,9 @@
 			throw new \Exception("Method not implemented");
 		}
 
-		public function SetPublishSettings($objectGUID, $accessPointGUID, $startDate = null, $endDate = null)
+		public function SetPublishSettings($objectGUID, $accessPointGUID, \DateTime $startDate = null, \DateTime $endDate = null)
 		{
-			return $this->CallService("SetPublishSettings", IServiceCaller::GET, array("objectGUID" => $objectGUID, "accessPointGUID" => $accessPointGUID, "startDate" => $startDate, "endDate" => $endDate));
+			return $this->CallService("SetPublishSettings", IServiceCaller::GET, array("objectGUID" => $objectGUID, "accessPointGUID" => $accessPointGUID, "startDate" => $startDate == null ? null : $startDate->format(IServiceCaller::DATE_FORMAT), "endDate" => $endDate == null ? null : $endDate->format(IServiceCaller::DATE_FORMAT)));
 		}
 	}
 ?>

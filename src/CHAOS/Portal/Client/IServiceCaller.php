@@ -8,6 +8,7 @@
 	{
 		const POST = "post";
 		const GET = "get";
+		const DATE_FORMAT = "d-m-Y h:m:s";
 
 		/**
 		 * @param $path

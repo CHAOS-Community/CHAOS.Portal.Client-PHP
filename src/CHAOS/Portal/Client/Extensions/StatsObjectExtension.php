@@ -4,7 +4,7 @@
 
 	class StatsObjectExtension extends AExtension implements IStatsObjectExtension
 	{
-		public function Set($repositoryIdentifier, $objectIdentifier, $objectTypeID, $objectCollectionID, $channelIdentifier, $channelTypeID, $eventTypeID, $objectTitle, $ip, $city, $country, $userSessionID)
+		public function Set($repositoryIdentifier, $objectIdentifier, $objectTypeID, $objectCollectionID, $channelIdentifier, $channelTypeID, $eventTypeID, $objectTitle = null, $ip = null, $city = null, $country = null, $userSessionID = 0)
 		{
 			return $this->CallService("Set", IServiceCaller::GET, array("repositoryIdentifier" => $repositoryIdentifier,
 																		"objectIdentifier" => $objectIdentifier,
@@ -13,10 +13,10 @@
 																		"channelIdentifier" => $channelIdentifier,
 																		"channelTypeID" => $channelTypeID,
 																		"eventTypeID" => $eventTypeID,
-																		"objectTitle" => $objectTitle,
-																		"IP" => $ip,
-																		"city" => $city,
-																		"country" => $country,
+																		"objectTitle" => $objectTitle == null ? "" : $objectTitle,
+																		"IP" => $ip == null ? "" : $ip,
+																		"city" => $city == null ? "" : $city,
+																		"country" => $country == null ? "" : $country,
 																		"userSessionID" => $userSessionID));
 		}
 	}

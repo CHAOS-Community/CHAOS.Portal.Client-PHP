@@ -104,10 +104,10 @@
 		 * Sets the Publish settings for an Object
 		 * @param string $objectGUID
 		 * @param string $accessPointGUID
-		 * @param string|null $startDate
-		 * @param string|null $endDate
+		 * @param \DateTime|null $startDate
+		 * @param \DateTime|null $endDate
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
-		public function SetPublishSettings($objectGUID, $accessPointGUID, $startDate = null, $endDate = null);
+		public function SetPublishSettings($objectGUID, $accessPointGUID, \DateTime $startDate = null, \DateTime $endDate = null);
 	}
 ?>
