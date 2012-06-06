@@ -11,12 +11,12 @@
 		const DATE_FORMAT = "d-m-Y h:m:s";
 
 		/**
-		 * @param $path
-		 * @param $method
-		 * @param array $parameters
-		 * @param $requiresSession
+		 * @param string $path
+		 * @param string $method
+		 * @param array|null $parameters
+		 * @param bool $requiresSession
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
-		public function CallService($path, $method, array $parameters, $requiresSession);
+		public function CallService($path, $method, array $parameters = null, $requiresSession = true);
 	}
 ?>

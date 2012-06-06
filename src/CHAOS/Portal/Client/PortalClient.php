@@ -21,7 +21,7 @@
 
 	class PortalClient implements IPortalClient, IServiceCaller
 	{
-		const CLIENT_VERSION = "0.4.0";
+		const CLIENT_VERSION = "0.4.1";
 		const PROTOCOL_VERSION = 4;
 		const FORMAT = "json";
 		const USE_HTTP_STATUS_CODES = false;
@@ -90,7 +90,7 @@
 			return $servicePath;
 		}
 
-		public function CallService($path, $method, array $parameters, $requiresSession)
+		public function CallService($path, $method, array $parameters = null, $requiresSession = true)
 		{
 			try
 			{
@@ -128,7 +128,7 @@
 				curl_setopt($call, CURLOPT_RETURNTRANSFER, true);
 
 				$data = curl_exec($call);
-				curl_close($call); 
+				curl_close($call);
 				
 				if($data == null)
 					$data = new Exception("No data returned from service");

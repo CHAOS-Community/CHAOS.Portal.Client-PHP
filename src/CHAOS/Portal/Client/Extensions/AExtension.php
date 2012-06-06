@@ -20,7 +20,7 @@
 		/**
 		 * @param $extensionMethod
 		 * @param $httpMethod
-		 * @param array $parameters
+		 * @param array|null $parameters
 		 * @param bool $requiresSession
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
