@@ -6,7 +6,7 @@
 	{
 		public function Create($name)
 		{
-			throw new \Exception("Method not implemented");
+			return $this->CallService("Create", IServiceCaller::GET, array( "name" => $name));
 		}
 
 		public function Get()
@@ -16,12 +16,12 @@
 
 		public function Update($id, $newName)
 		{
-			throw new \Exception("Method not implemented");
+			return $this->CallService("Update", IServiceCaller::GET, array( "id" => $id, "newName" => $newName));
 		}
 
 		public function Delete($id)
 		{
-			throw new \Exception("Method not implemented");
+			return $this->CallService("Delete", IServiceCaller::GET, array( "id" => $id));
 		}
 	}
 
