@@ -15,6 +15,7 @@
 		 * @param string $filename
 		 * @param string $originalFilename
 		 * @param string $folderPath
+		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
 		public function Create($objectGUID, $parentFileID, $formatID, $destinationID, $filename, $originalFilename, $folderPath);
 	}
