@@ -24,5 +24,15 @@
 
 			return $result;
 		}
+
+		public function Update()
+		{
+			return $this->CallService("Update", IServiceCaller::GET);
+		}
+
+		public function Delete()
+		{
+			return $this->CallService("Delete", IServiceCaller::GET);
+		}
 	}
 ?>
