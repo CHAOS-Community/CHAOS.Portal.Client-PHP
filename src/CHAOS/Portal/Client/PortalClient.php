@@ -145,7 +145,7 @@
 				{
 					// Escape the tabs, bug reported as https://github.com/CHAOS-Community/Media-Content-Manager/issues/7
 					// FIXME: Delete the line when it has been fixed serverside.
-					$data = str_replace("\t", '\t', $data);
+					// $data = str_replace("\t", '\t', $data);
 					$data = @iconv( "UTF-16LE", "UTF-8", $data);
 
 					if($data === false || is_null($data) || $data == "")
