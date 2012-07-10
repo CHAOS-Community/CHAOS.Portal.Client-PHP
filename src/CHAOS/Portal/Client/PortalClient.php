@@ -28,6 +28,7 @@
 
 		private $_servicePath = null;
 		private $_clientGUID = null;
+		private $_curlHandle = null;
 
 		/**
 		 * Returns the version of the client.
@@ -78,6 +79,12 @@
 			if ($autoCreateSession)
 				$this->Session()->Create();
 		}
+		
+		public function __destruct() {
+			if($this->_curlHandle !== null) {
+				curl_close($this->_curlHandle);
+			}
+		}
 
 		private function ValidateServicePath($servicePath)
 		{
@@ -114,26 +121,31 @@
 
 				$path = $this->_servicePath . $path;
 
-				$call = curl_init();
+				if($this->_curlHandle === null) {
+					$this->_curlHandle = curl_init();
+					curl_setopt($this->_curlHandle, CURLOPT_RETURNTRANSFER, true);
+				}
 
 				if($method == IServiceCaller::POST)
 				{
-					curl_setopt($call, CURLOPT_POST, true);
-					curl_setopt($call, CURLOPT_POSTFIELDS, http_build_query($parameters)); //Remove http_build_query call to use "multipart/form-data"
-				}
-				else
+					curl_setopt($this->_curlHandle, CURLOPT_POST, true);
+					curl_setopt($this->_curlHandle, CURLOPT_POSTFIELDS, http_build_query($parameters)); //Remove http_build_query call to use "multipart/form-data"
+				} else {
+					curl_setopt($this->_curlHandle, CURLOPT_POST, false);
 					$path .= "?" . http_build_query($parameters);
+				}
+				curl_setopt($this->_curlHandle, CURLOPT_URL, $path);
 
-				curl_setopt($call, CURLOPT_URL, $path);
-				curl_setopt($call, CURLOPT_RETURNTRANSFER, true);
-
-				$data = curl_exec($call);
-				curl_close($call);
+				$data = curl_exec($this->_curlHandle);
+				//curl_close($this->_curlHandle); // This is done in the destructor instead.
 				
 				if($data == null)
 					$data = new Exception("No data returned from service");
 				else
 				{
+					// Escape the tabs, bug reported as https://github.com/CHAOS-Community/Media-Content-Manager/issues/7
+					// FIXME: Delete the line when it has been fixed serverside.
+					$data = str_replace("\t", '\t', $data);
 					$data = @iconv( "UTF-16LE", "UTF-8", $data);
 
 					if($data === false || is_null($data) || $data == "")
