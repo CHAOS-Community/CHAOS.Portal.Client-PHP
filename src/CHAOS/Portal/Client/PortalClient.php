@@ -82,7 +82,7 @@
 		
 		public function __destruct() {
 			if($this->_curlHandle !== null) {
-				curl_close($this->_curlHandle);
+				\curl_close($this->_curlHandle);
 			}
 		}
 
@@ -122,21 +122,21 @@
 				$path = $this->_servicePath . $path;
 
 				if($this->_curlHandle === null) {
-					$this->_curlHandle = curl_init();
-					curl_setopt($this->_curlHandle, CURLOPT_RETURNTRANSFER, true);
+					$this->_curlHandle = \curl_init();
+					\curl_setopt($this->_curlHandle, CURLOPT_RETURNTRANSFER, true);
 				}
 
 				if($method == IServiceCaller::POST)
 				{
-					curl_setopt($this->_curlHandle, CURLOPT_POST, true);
-					curl_setopt($this->_curlHandle, CURLOPT_POSTFIELDS, http_build_query($parameters)); //Remove http_build_query call to use "multipart/form-data"
+					\curl_setopt($this->_curlHandle, CURLOPT_POST, true);
+					\curl_setopt($this->_curlHandle, CURLOPT_POSTFIELDS, http_build_query($parameters)); //Remove http_build_query call to use "multipart/form-data"
 				} else {
-					curl_setopt($this->_curlHandle, CURLOPT_POST, false);
+					\curl_setopt($this->_curlHandle, CURLOPT_POST, false);
 					$path .= "?" . http_build_query($parameters);
 				}
-				curl_setopt($this->_curlHandle, CURLOPT_URL, $path);
+				\curl_setopt($this->_curlHandle, CURLOPT_URL, $path);
 
-				$data = curl_exec($this->_curlHandle);
+				$data = \curl_exec($this->_curlHandle);
 				//curl_close($this->_curlHandle); // This is done in the destructor instead.
 				
 				if($data == null)
