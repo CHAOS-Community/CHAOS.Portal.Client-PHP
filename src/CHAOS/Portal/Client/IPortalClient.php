@@ -38,11 +38,28 @@
 		 */
 		public function HasSession();
 
+
+		/**
+		 * Returns the client GUID.
+		 * @return string
+		 */
+		public function ClientGUID();
+
+
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\IClientSettingsExtension
+		 */
+		public function ClientSettings();
 		
 		/**
 		 * @return \CHAOS\Portal\Client\Extensions\ISessionExtension
 		 */
 		public function Session();
+
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\IUserSEttingsExtension
+		 */
+		public function UserSettings();
 
 		
 		/**
