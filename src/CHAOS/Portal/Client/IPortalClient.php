@@ -138,5 +138,10 @@
 		 * @return \CHAOS\Portal\Client\Extensions\IStatsObjectExtension
 		 */
 		public function StatsObject();
+
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\IUploadExtension
+		 */
+		public function Upload();
 	}
 ?>

@@ -49,12 +49,17 @@
 		 */
 		public function MCM() { return $this->_mcm; }
 
-
 		private $_statistics;
 		/**
 		 * @return \CHAOS\Portal\Client\Data\ModuleResult
 		 */
 		public function Statistics() { return $this->_statistics; }
+
+		private $_upload;
+		/**
+		 * @return \CHAOS\Portal\Client\Data\ModuleResult
+		 */
+		public function Upload() { return $this->_upload; }
 
 		function __construct($data)
 		{
@@ -88,6 +93,9 @@
 								break;
 							case "Statistics":
 								$this->_statistics = new ModuleResult($moduleResult);
+								break;
+							case "Upload":
+								$this->_upload = new ModuleResult($moduleResult);
 								break;
 						}
 					}

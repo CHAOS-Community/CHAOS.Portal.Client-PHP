@@ -20,10 +20,11 @@
 	use \CHAOS\Portal\Client\Extensions\LanguageExtension;
 	use \CHAOS\Portal\Client\Extensions\LinkExtension;
 	use \CHAOS\Portal\Client\Extensions\StatsObjectExtension;
+	use \CHAOS\Portal\Client\Extensions\UploadExtension;
 
 	class PortalClient implements IPortalClient, IServiceCaller
 	{
-		const CLIENT_VERSION = "1.0.0";
+		const CLIENT_VERSION = "1.1.0";
 		const PROTOCOL_VERSION = 4;
 		const FORMAT = "json";
 		const USE_HTTP_STATUS_CODES = false;
@@ -129,7 +130,8 @@
 
 				$path = $this->_servicePath . $path;
 
-				if($this->_curlHandle === null) {
+				if($this->_curlHandle === null)
+				{
 					$this->_curlHandle = curl_init();
 					curl_setopt($this->_curlHandle, CURLOPT_RETURNTRANSFER, true);
 				}
@@ -138,7 +140,9 @@
 				{
 					curl_setopt($this->_curlHandle, CURLOPT_POST, true);
 					curl_setopt($this->_curlHandle, CURLOPT_POSTFIELDS, http_build_query($parameters)); //Remove http_build_query call to use "multipart/form-data"
-				} else {
+				}
+				else
+				{
 					curl_setopt($this->_curlHandle, CURLOPT_POST, false);
 					$path .= "?" . http_build_query($parameters);
 				}
@@ -398,6 +402,18 @@
 				$this->_statsObject = new StatsObjectExtension($this);
 
 			return $this->_statsObject;
+		}
+
+		private $_upload = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\IUploadExtension
+		 */
+		public function Upload()
+		{
+			if($this->_upload == null)
+				$this->_upload = new UploadExtension($this);
+
+			return $this->_upload;
 		}
 	}
 ?>
