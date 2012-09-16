@@ -24,7 +24,7 @@
 
 	class PortalClient implements IPortalClient, IServiceCaller
 	{
-		const CLIENT_VERSION = "1.1.0";
+		const CLIENT_VERSION = "1.1.1";
 		const PROTOCOL_VERSION = 4;
 		const FORMAT = "json";
 		const USE_HTTP_STATUS_CODES = false;

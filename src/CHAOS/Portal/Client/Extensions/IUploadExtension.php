@@ -9,12 +9,12 @@
 		/**
 		 * Initiates a upload
 		 * @param string $objectGUID
-		 * @param int $formatID
+		 * @param int $formatTypeID
 		 * @param int $fileSize
 		 * @param bool $supportMultipleChunks
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
-		public function Initiate($objectGUID, $formatID, $fileSize, $supportMultipleChunks = false);
+		public function Initiate($objectGUID, $formatTypeID, $fileSize, $supportMultipleChunks = false);
 
 		/**
 		 * Uploads file data

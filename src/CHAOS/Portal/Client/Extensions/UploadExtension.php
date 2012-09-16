@@ -4,9 +4,9 @@
 
 	class UploadExtension extends AExtension implements IUploadExtension
 	{
-		public function Initiate($objectGUID, $formatID, $fileSize, $supportMultipleChunks = false)
+		public function Initiate($objectGUID, $formatTypeID, $fileSize, $supportMultipleChunks = false)
 		{
-			return $this->CallService("Initiate", IServiceCaller::GET, array("objectGUID" => $objectGUID, "formatID" => $formatID, "fileSize" => $fileSize, "supportMultipleChunks" => $supportMultipleChunks));
+			return $this->CallService("Initiate", IServiceCaller::GET, array("objectGUID" => $objectGUID, "formatTypeID" => $formatTypeID, "fileSize" => $fileSize, "supportMultipleChunks" => $supportMultipleChunks));
 		}
 
 		public function Transfer($uploadID, $chunkIndex, $fileData)
