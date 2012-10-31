@@ -76,8 +76,12 @@
 			$this->_servicePath = $servicePath;
 			$this->_clientGUID = $clientGUID;
 			
-			if ($autoCreateSession)
-				$this->Session()->Create();
+			if ($autoCreateSession) {
+				$response = $this->Session()->Create();
+				if(!$response->WasSuccess()) {
+					throw new \RuntimeException("Couldn't autocreate session: ".$response->Error()->Message());
+				}
+			}
 		}
 		
 		public function __destruct() {
@@ -143,10 +147,6 @@
 					$data = new Exception("No data returned from service");
 				else
 				{
-					// Escape the tabs, bug reported as https://github.com/CHAOS-Community/Media-Content-Manager/issues/7
-					// FIXME: Delete the line when it has been fixed serverside.
-					// $data = str_replace("\t", '\t', $data);
-					$data = @iconv( "UTF-16LE", "UTF-8", $data);
 
 					if($data === false || is_null($data) || $data == "")
 						$data = new Exception("Invalid data returned from service");
