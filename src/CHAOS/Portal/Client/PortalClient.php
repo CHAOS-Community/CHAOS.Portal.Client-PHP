@@ -3,6 +3,8 @@
 	use Exception;
 	use \CHAOS\Portal\Client\Data\ServiceResult;
 	use \CHAOS\Portal\Client\Extensions\SessionExtension;
+	use \CHAOS\Portal\Client\Extensions\ClientSettingsExtension;
+	use \CHAOS\Portal\Client\Extensions\UserSettingsExtension;
 	use \CHAOS\Portal\Client\Extensions\EmailPasswordExtension;
 	use \CHAOS\Portal\Client\Extensions\SecureCookieExtension;
 	use \CHAOS\Portal\Client\Extensions\ObjectExtension;
@@ -18,10 +20,11 @@
 	use \CHAOS\Portal\Client\Extensions\LanguageExtension;
 	use \CHAOS\Portal\Client\Extensions\LinkExtension;
 	use \CHAOS\Portal\Client\Extensions\StatsObjectExtension;
+	use \CHAOS\Portal\Client\Extensions\UploadExtension;
 
 	class PortalClient implements IPortalClient, IServiceCaller
 	{
-		const CLIENT_VERSION = "0.5.1";
+		const CLIENT_VERSION = "1.1.1";
 		const PROTOCOL_VERSION = 4;
 		const FORMAT = "json";
 		const USE_HTTP_STATUS_CODES = false;
@@ -60,6 +63,12 @@
 		 * @return bool
 		 */
 		public function HasSession() { return $this->SessionGUID() != null; }
+
+		/**
+		 * Returns the client GUID.
+		 * @return string
+		 */
+		public function ClientGUID() { return $this->_clientGUID; }
 
 		/**
 		 * @param String $servicePath The URL of the Portal service.
@@ -141,7 +150,6 @@
 				\curl_setopt($this->_curlHandle, CURLOPT_URL, $path);
 
 				$data = \curl_exec($this->_curlHandle);
-				//curl_close($this->_curlHandle); // This is done in the destructor instead.
 				
 				if($data == null)
 					$data = new Exception("No data returned from service");
@@ -193,6 +201,31 @@
 
 			return $this->_session;
 		}
+
+		private $_clientSettings = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\IClientSettingsExtension
+		 */
+		public function ClientSettings()
+		{
+			if(is_null($this->_clientSettings))
+				$this->_clientSettings = new ClientSettingsExtension($this, $this);
+
+			return $this->_clientSettings;
+		}
+
+		private $_userSettings = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\IUserSEttingsExtension
+		 */
+		public function UserSettings()
+		{
+			if(is_null($this->_userSettings == null))
+				$this->_userSettings = new UserSettingsExtension($this, $this);
+
+			return $this->_userSettings;
+		}
+
 
 		private $_emailPassword = null;
 		/**
@@ -372,6 +405,18 @@
 				$this->_statsObject = new StatsObjectExtension($this);
 
 			return $this->_statsObject;
+		}
+
+		private $_upload = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\IUploadExtension
+		 */
+		public function Upload()
+		{
+			if($this->_upload == null)
+				$this->_upload = new UploadExtension($this);
+
+			return $this->_upload;
 		}
 	}
 ?>
