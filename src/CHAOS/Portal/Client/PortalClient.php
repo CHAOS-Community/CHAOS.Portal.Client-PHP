@@ -147,7 +147,10 @@
 					$data = new Exception("No data returned from service");
 				else
 				{
-
+					if(ord($data[1]) === 0) {
+						// Hotfixes a bug on v4 of the service.
+						$data = @iconv( "UTF-16LE", "UTF-8", $data);
+					}
 					if($data === false || is_null($data) || $data == "")
 						$data = new Exception("Invalid data returned from service");
 					else
