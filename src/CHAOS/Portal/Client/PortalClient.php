@@ -85,13 +85,17 @@
 			$this->_servicePath = $servicePath;
 			$this->_clientGUID = $clientGUID;
 			
-			if ($autoCreateSession)
-				$this->Session()->Create();
+			if ($autoCreateSession) {
+				$response = $this->Session()->Create();
+				if(!$response->WasSuccess()) {
+					throw new \RuntimeException("Couldn't autocreate session: ".$response->Error()->Message());
+				}
+			}
 		}
 		
 		public function __destruct() {
 			if($this->_curlHandle !== null) {
-				curl_close($this->_curlHandle);
+				\curl_close($this->_curlHandle);
 			}
 		}
 
@@ -130,32 +134,31 @@
 
 				$path = $this->_servicePath . $path;
 
-				if($this->_curlHandle === null)
-				{
-					$this->_curlHandle = curl_init();
-					curl_setopt($this->_curlHandle, CURLOPT_RETURNTRANSFER, true);
+				if($this->_curlHandle === null) {
+					$this->_curlHandle = \curl_init();
+					\curl_setopt($this->_curlHandle, CURLOPT_RETURNTRANSFER, true);
 				}
 
 				if($method == IServiceCaller::POST)
 				{
-					curl_setopt($this->_curlHandle, CURLOPT_POST, true);
-					curl_setopt($this->_curlHandle, CURLOPT_POSTFIELDS, http_build_query($parameters)); //Remove http_build_query call to use "multipart/form-data"
-				}
-				else
-				{
-					curl_setopt($this->_curlHandle, CURLOPT_POST, false);
+					\curl_setopt($this->_curlHandle, CURLOPT_POST, true);
+					\curl_setopt($this->_curlHandle, CURLOPT_POSTFIELDS, http_build_query($parameters)); //Remove http_build_query call to use "multipart/form-data"
+				} else {
+					\curl_setopt($this->_curlHandle, CURLOPT_POST, false);
 					$path .= "?" . http_build_query($parameters);
 				}
-				curl_setopt($this->_curlHandle, CURLOPT_URL, $path);
+				\curl_setopt($this->_curlHandle, CURLOPT_URL, $path);
 
-				$data = curl_exec($this->_curlHandle);
+				$data = \curl_exec($this->_curlHandle);
 				
 				if($data == null)
 					$data = new Exception("No data returned from service");
 				else
 				{
-					$data = @iconv( "UTF-16LE", "UTF-8", $data);
-
+					if(ord($data[1]) === 0) {
+						// Hotfixes a bug on v4 of the service.
+						$data = @iconv( "UTF-16LE", "UTF-8", $data);
+					}
 					if($data === false || is_null($data) || $data == "")
 						$data = new Exception("Invalid data returned from service");
 					else

@@ -8,3 +8,6 @@ Thumbs.db
 *.suo
 *.xap
 .idea
+/.buildpath
+/.project
+/.settings
