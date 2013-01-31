@@ -8,5 +8,10 @@
 		{
 			return $this->CallService("Create", IServiceCaller::GET, array("objectGUID" => $objectGUID, "parentFileID" => $parentFileID, "formatID" => $formatID, "destinationID" => $destinationID, "filename" => $filename, "originalFilename" => $originalFilename, "folderPath" => $folderPath));
 		}
+
+		public function Delete($ID)
+		{
+			return $this->CallService("Delete", IServiceCaller::GET, array("ID" => $$ID));
+		}
 	}
 ?>

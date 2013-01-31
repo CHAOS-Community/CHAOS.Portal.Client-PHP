@@ -18,6 +18,12 @@
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
 		public function Create($objectGUID, $parentFileID, $formatID, $destinationID, $filename, $originalFilename, $folderPath);
-	}
 
+		/**
+		 * Deletes a file reference
+		 * @param int $ID
+		 * @return \CHAOS\Portal\Client\Data\ServiceResult
+		 */
+		public function Delete($ID);
+	}
 ?>
