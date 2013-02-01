@@ -11,7 +11,7 @@
 
 		public function Delete($ID)
 		{
-			return $this->CallService("Delete", IServiceCaller::GET, array("ID" => $$ID));
+			return $this->CallService("Delete", IServiceCaller::GET, array("ID" => $ID));
 		}
 	}
 ?>
