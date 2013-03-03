@@ -12,6 +12,10 @@ The file structure matches the namesspaces used and should be preserved for easy
 All public functions and classes have been documented in-code with [PHPDoc](http://www.phpdoc.de/) syntax,  
 which should enable code completion and type hinting in most modern code IDE's.
 
+##Tutorials
+The tutorials are located in the *tutorials* folder.
+They can also be found online on [this project's Github pages](http://chaos-community.github.com/CHAOS.Portal.Client-PHP/).
+
 ##Examples
 The examples are located in the *examples* folder.  
 By default the examples will add *\_\_dir\_\_/../src* to the include path, this will allow PHP to locate the source files from the namespace.
