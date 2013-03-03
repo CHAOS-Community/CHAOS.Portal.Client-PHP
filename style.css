@@ -1,0 +1,163 @@
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans);
+@import url(http://fonts.googleapis.com/css?family=PT+Sans);
+@import url(http://fonts.googleapis.com/css?family=Lato);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro);
+
+body {
+  font-family: 'PT Sans', 'Droid Sans', 'Lato', verdana, arial, sans-serif;
+  /* font-family: 'Droid Sans', 'Lato', verdana, arial, sans-serif; */
+  font-size: 10pt;
+  text-align: center;
+}
+
+/* Centered div: http://stackoverflow.com/questions/114543/how-to-center-a-div-in-a-div-horizontallyhttp://stackoverflow.com/questions/114543/how-to-center-a-div-in-a-div-horizontally */
+div#body-column {
+  display: inline-block;
+  width: 600px;
+  text-align: left;
+  position: relative;
+}
+
+h1 {
+  font-family:'Lato', verdana, arial, sans-serif;
+  margin-bottom: 0;
+  color: #B0B0B0;
+  font-weight: normal;
+}
+h2 {
+  margin-top: 0;
+  text-align: right;
+  font-weight: normal;
+}
+
+div#index {
+  /* position: absolute; */
+  /* width: 145px; */
+  /* left: -155px; */
+  /* top: 200px; */
+  position: fixed;
+  width: 145px;
+  margin-left: -155px;
+  top: 125px;
+
+  border-width: 1px;
+  border-style: solid;
+  border-color: black;
+
+  border-left: none;
+  border-right: none;
+}
+div#index ol {
+  padding-left: 2em;
+}
+div#index ol li.current {
+  list-style: none;
+  padding-left: 0em;
+  text-indent: -1em;
+}
+/* http://alistapart.com/article/taminglists/ */
+div#index ol li.current:before {
+  margin-left: -0.4em;
+  padding-right: 0.5em;
+  /* content: "\0BB \020"; */
+  content: "\25B6 "; /* 25B6 through 25BB right-pointing triangles */
+}
+
+
+dl#intro {
+  background-color: #E0FFE0;
+  /* color: #555555; */
+  /* font-size: 1.2em; */
+
+  /* http://www.css3.info/preview/rounded-border/ */
+  border-radius: 8px;
+} 
+
+div.intro {
+ background-color: #E0FFE0;
+  /* border-bottom: 1px solid black; */
+  /* border-top: 1px solid black; */
+  color: #555555;
+  font-size: 1.1em;
+  padding-top: 0.5em;
+  padding-left: 0.5em;
+  padding-bottom: 0.2em;
+  border-radius: 8px;
+}
+dfn {
+  font-style: normal;
+  font-weight: bold;
+}
+
+p br {
+  display: block;
+  /* height: 1.5em; */
+  margin-top: 0.2em;
+  line-height: 0.2em;
+}
+
+span.important {
+  background-color: #FDD;
+}
+
+div.try-code {
+  text-align: right;
+}
+
+#file-table img {
+  width: 10em;
+}
+
+p code, dl code {
+  background-color: #E3E3E3;
+}
+code.line {
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+  background-color: #E3E3E3;
+  display: block;
+}
+
+aside.note p:before {
+  font-style: italic;
+  content: 'Note: ';
+  margin-right: 10px;
+}
+aside.note {
+  margin-left:  20px;
+  padding-left: 10px;
+  background-color: #FFE6E6;
+  color: #666;
+  border-radius: 8px;
+}
+
+
+p.note {
+  margin-left:  20px;
+  padding-left: 10px;
+  background-color: #E6FFE6;
+  /* color: #666; */
+}
+
+
+a.prev-page {
+  /* display: block; */
+  float: left;
+  /* text-align: right; */
+}
+a.next-page {
+  /* display: block; */
+  float: right;
+  /* text-align: right; */
+}
+
+/* Auto-fit CodeMirror to contents: http://codemirror.net/demo/resize.html */
+.CodeMirror {
+  border: 1px solid #eee;
+  height: auto;
+}
+.CodeMirror-scroll {
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
