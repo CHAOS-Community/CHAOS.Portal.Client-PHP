@@ -13,6 +13,9 @@
 		private $_message;
 		public function Message() { return $this->_message; }
 
+		private $_stacktrace;
+		public function Stacktrace() { return $this->_stacktrace; }
+
 		public function __construct($data)
 		{
 			if(is_a($data, "Exception"))
@@ -24,6 +27,7 @@
 			{
 				$this->_name = $data->Fullname;
 				$this->_message = $data->Message;
+				$this->_stacktrace = $data->Stacktrace;
 			}
 		}
 
