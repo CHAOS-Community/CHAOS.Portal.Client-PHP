@@ -19,7 +19,7 @@
 
 		public function GetByFolderID($folderID, $includeChildFolders, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false, $includeAccessPoints = false)
 		{
-			return $this->Get($includeChildFolders ? "(FolderTree:$folderID)" : "(FolderID:$folderID)", null, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata, $includeFiles, $includeObjectRelations);
+			return $this->Get($includeChildFolders ? "(FolderTree:$folderID)" : "(FolderID:$folderID)", null, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata, $includeFiles, $includeObjectRelations, $includeAccessPoints);
 		}
 
 		public function GetByObjectGUID($objectGUID, $accessPointGUID, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false, $includeAccessPoints = false)
