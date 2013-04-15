@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>CHAOS tutorials: Introduction to the CHAOS.Portal PHP client</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/codemirror/3.0/codemirror.css">
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/codemirror/3.0/codemirror.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/codemirror/3.0/mode/javascript/javascript.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/codemirror/3.0/mode/css/css.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/codemirror/3.0/mode/xml/xml.js"></script>
+    <!-- htmlmixed depends on xml, javascript and css -->
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/codemirror/3.0/mode/htmlmixed/htmlmixed.js"></script>
+    <!-- php depends on htmlmixed and c-like -->
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/codemirror/3.0/mode/clike/clike.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/codemirror/3.0/mode/php/php.js"></script>
+
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="script.js"></script>
+  </head>
+  <body>
+    <!-- Representation of code in HTML is for some reason weird but it seems consensus is
+    <pre><code>CODE</code></pre>
+    Check: http://stackoverflow.com/questions/4611591/code-vs-pre-vs-samp-for-inline-and-block-code-snippets
+    -->
+
+    <div id="body-column">
+      <div id="index">
+        <a href="index.html">Overview</a>
+        <ol>
+          <li class="current">The Basics</li>
+          <li><a href="metadata.html">Metadata and files</a></li>
+          <li><a href="errors.html">Error handling</a></li>
+        </ol>
+      </div>
+
+      <h1>Tutorial: CHAOS.Portal PHP Client</h1>
+      <h2>The first steps</h2>
+      <div class="intro">
+      This tutorial will teach you how to:
+      <ul>
+        <li>set up the client</li>
+        <li>connect to a CHAOS.Portal</li>
+        <li>search for objects in the CHAOS database</li>
+      </ul>
+      </div>
+      <aside class="note">
+        <p>
+        All code in this and the following tutorial can be edited in-place.
+        This means that you can use ⌃A (Ctrl-A) or ⌘A (Cmd-A) to easily select
+        and copy all code in a field.<br>
+        All code is fully runnable given you change the paths to point
+        to your downloaded Portal PHP Client, and include the setup code given
+        below.
+        <!-- &#F8FF / &#2303; -->
+        </p>
+      </aside>
+
+      <section>
+      <h3>Setting up</h3>
+      <p>
+        The first thing to do is to load the PHP Portal Client:
+      </p>
+
+      <aside class="code">
+      <pre><code class="language-php">&lt;?php
+set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ .
+                 "/../src"); // &lt;-- Relative path to Portal Client
+
+require_once("CaseSensitiveAutoload.php");
+
+spl_autoload_extensions(".php");
+spl_autoload_register("CaseSensitiveAutoload");
+
+use CHAOS\Portal\Client\PortalClient;
+?&gt;</code></pre>
+      </aside>
+      <p> This is just some code for setting up PHP's include path and loading
+      the needed files. <br>
+      All you need to worry about is the
+      <code>"/../src"</code> which should be the path from your current PHP
+      file to the PHP Portal Client <code>src</code> directory.</p>
+
+      <p>
+        Having loaded the client, we can now instantiate it:
+      </p>
+
+      <aside class="code">
+      <pre><code id="setup" class="language-php">&lt;?php
+$servicePath = "http://api.chaos-systems.com/";
+$clientGUID = "B9CBFFDD-3F73-48FC-9D5D-3802FBAD4CBD";
+$accessPointGUID = "C4C2B8DA-A980-11E1-814B-02CEA2621172";
+
+$client = new PortalClient($servicePath, $clientGUID);
+
+echo "SessionGUID: " . $client-&gt;SessionGUID() . "<br />";
+?&gt;</code></pre>
+      </aside>
+<!-- // Create a new client, a session is automaticly created. -->
+
+      <dl>
+        <dt><code>servicePath</code></dt>
+        <dd>is the URL at which your CHAOS.Portal is set up.</dd>
+        <dt><code>clientGUID</code></dt>
+        <dd> should be unique for each application, any GUID can be used.</dd>
+        <dt><code>accessPointGUID</code></dt>
+        <dd>is an ID that authenticates us to use the CHAOS.Portal. This
+        should be given to you by your friendly neighbourhood CHAOS.Portal
+        administrator.</dd>
+      </dl>
+
+      <p> Instantiating the <code>PortalClient</code> this way automatically
+      sets up a session. When the session has been set up we are ready to use
+      the CHAOS.Portal and get some objects!</p>
+      </section>
+
+      <section>
+      <h3>Searching</h3>
+      <p>
+        The easiest way to retrieve some objects from a CHAOS database is to
+        search.
+      </p>
+
+      <aside class="code">
+      <pre><code class="language-php">&lt;?php
+$fields = [
+  "5906a41b-feae-48db-bfb7-714b3e105396",
+  "00000000-0000-0000-0000-000063c30000",
+  "00000000-0000-0000-0000-000065c30000"
+];
+
+$serviceResult = $client-&gt;Object()-&gt;GetSearchSchemas(
+  "test",       // search string
+  $fields,      // fields to search
+  "da",         // language code
+  $accessPointGUID,
+  0,            // pageIndex
+  10,           // pageSize
+  true,         // includeMetadata
+  true,         // includeFiles
+  true          // includeObjectRelations
+);
+$objects = $serviceResult-&gt;MCM()-&gt;Results();
+
+echo "Got " . $serviceResult-&gt;MCM()-&gt;Count() . "/" . $serviceResult-&gt;MCM()-&gt;TotalCount() . " objects";
+?&gt;</code></pre>
+      </aside>
+
+      <dl>
+        <dt><code>fields</code></dt>
+        <dd>are search fields to use in the Solr index. The long GUIDs refers to
+        metadata schemas. So what we're doing here is searching the object
+        metadata for the word 'mut'.</dd>
+        <dt><code>pageIndex</code></dt>
+        <dd>is the starting page of the search results, where the page size is
+        determined by <code>pageSize</code></dd>
+        <dt><code>pageSize</code></dt>
+        <dd>is the number of results you want retrieve</dd>
+        <dt><code>includeFiles</code></dt>
+        <dd>include files attached to objects in the results.</dd>
+        <dt><code>includeMetadata</code></dt>
+        <dd>include metadata attached to objects in the results.</dd>
+        <dt><code>includeObjectRelations</code></dt>
+        <dd>include object relations for an object in the results.</dd>
+      </dl>
+
+
+      <p>
+        Now the resulting objects are quite big, so let's only grab one, by
+        setting pageSize to 1:
+      </p>
+
+      <aside class="code">
+      <pre><code class="language-php">&lt;?php
+// Retrieve objects
+$serviceResult = $client-&gt;Object()-&gt;GetSearchSchemas(
+  "test",       // search string
+  ["5906a41b-feae-48db-bfb7-714b3e105396"],      // fields to search
+  "da",         // language code
+  $accessPointGUID,
+  0,            // pageIndex
+  10,           // pageSize
+  true,         // includeMetadata
+  true,         // includeFiles
+  true          // includeObjectRelations
+);
+$objects = $serviceResult-&gt;MCM()-&gt;Results();
+
+var_dump($objects[0]);
+?&gt;</code></pre>
+      </aside>
+
+      <p>The results you get should look something like this:<br>
+      (I have Xdebug installed so it might look a little different on your setup)</p>
+      <aside class="code result" id="search-results">
+<pre class='xdebug-var-dump' dir='ltr'>
+<b>object</b>(<i>stdClass</i>)[<i>47</i>]
+  <i>public</i> 'GUID' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'00000000-0000-0000-0000-000064faff15'</font> <i>(length=36)</i>
+  <i>public</i> 'ObjectTypeID' <font color='#888a85'>=&gt;</font> <small>int</small> <font color='#4e9a06'>36</font>
+  <i>public</i> 'DateCreated' <font color='#888a85'>=&gt;</font> <small>int</small> <font color='#4e9a06'>-2147483648</font>
+  <i>public</i> 'Metadatas' <font color='#888a85'>=&gt;</font>
+    <b>array</b> <i>(size=2)</i>
+      0 <font color='#888a85'>=&gt;</font>
+        <b>object</b>(<i>stdClass</i>)[<i>48</i>]
+          <i>public</i> 'GUID' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'72164e6d-c9ec-f145-8907-b187ec108fe0'</font> <i>(length=36)</i>
+          <i>public</i> 'EditingUserGUID' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'80d15fb4-c1fb-9445-89c6-1a398cbd85e5'</font> <i>(length=36)</i>
+          <i>public</i> 'LanguageCode' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'da'</font> <i>(length=2)</i>
+          <i>public</i> 'MetadataSchemaGUID' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'5906a41b-feae-48db-bfb7-714b3e105396'</font> <i>(length=36)</i>
+          <i>public</i> 'RevisionID' <font color='#888a85'>=&gt;</font> <small>int</small> <font color='#4e9a06'>1</font>
+          <i>public</i> 'MetadataXML' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'&lt;DKA xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://www.danskkulturarv.dk/DKA2.xsd&quot; xmlns:oa=&quot;http://www.openarchives.org/OAI/2.0/&quot; xmlns:ese=&quot;http://www.europeana.eu/schemas/ese/&quot; xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot; xmlns:dcterms=&quot;http://purl.org/dc/terms/&quot; xsi:schemaLocation=&quot;http://www.danskkulturarv.dk/DKA2.xsd ../../Base/schemas/DKA2.xsd&quot;&gt;&lt;Title&gt;Livets gang i Lidenlund&lt;/Title&gt;&lt;Abstract /&gt;&lt;Description&gt;&lt;div xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;&lt;p&gt;Politibetjent StrÃ¸hmer pÃ¥ p'...</font> <i>(length=1592)</i>
+          <i>public</i> 'DateCreated' <font color='#888a85'>=&gt;</font> <small>int</small> <font color='#4e9a06'>-2147483648</font>
+          <i>public</i> 'FullName' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'CHAOS.MCM.Data.DTO.Metadata'</font> <i>(length=27)</i>
+      1 <font color='#888a85'>=&gt;</font>
+        <b>object</b>(<i>stdClass</i>)[<i>49</i>]
+          <i>public</i> 'GUID' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'c7d38f18-39cb-9a49-b3be-46c1be735f1c'</font> <i>(length=36)</i>
+          <i>public</i> 'EditingUserGUID' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'80d15fb4-c1fb-9445-89c6-1a398cbd85e5'</font> <i>(length=36)</i>
+          <i>public</i> 'LanguageCode' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'da'</font> <i>(length=2)</i>
+          <i>public</i> 'MetadataSchemaGUID' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'00000000-0000-0000-0000-000063c30000'</font> <i>(length=36)</i>
+          <i>public</i> 'RevisionID' <font color='#888a85'>=&gt;</font> <small>int</small> <font color='#4e9a06'>1</font>
+          <i>public</i> 'MetadataXML' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'&lt;DKA&gt;&lt;Title&gt;Livets gang i Lidenlund&lt;/Title&gt;&lt;Abstract&gt;Politibetjent StrÃ¸hmer pÃ¥ politigÃ¥rden.&lt;/Abstract&gt;&lt;Description /&gt;&lt;Organization&gt;Det Kongelige Bibliotek&lt;/Organization&gt;&lt;Type /&gt;&lt;CreatedDate&gt;2009-12-17T00:00:00&lt;/CreatedDate&gt;&lt;FirstPublishedDate&gt;2009-12-17T00:00:00&lt;/FirstPublishedDate&gt;&lt;Identifier&gt;102188&lt;/Identifier&gt;&lt;Contributor /&gt;&lt;Creator&gt;&lt;Person Name=&quot;Gantriis, Henning (1918-1989) bladtegner&quot; Role=&quot;Creator&quot; /&gt;&lt;/Creator&gt;&lt;TechnicalComment /&gt;&lt;Location /&gt;&lt;RightsDescription&gt;Billedet er beskyttet af loven om op'...</font> <i>(length=559)</i>
+          <i>public</i> 'DateCreated' <font color='#888a85'>=&gt;</font> <small>int</small> <font color='#4e9a06'>-2147483648</font>
+          <i>public</i> 'FullName' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'CHAOS.MCM.Data.DTO.Metadata'</font> <i>(length=27)</i>
+  <i>public</i> 'Files' <font color='#888a85'>=&gt;</font>
+    <b>array</b> <i>(size=2)</i>
+      0 <font color='#888a85'>=&gt;</font>
+        <b>object</b>(<i>stdClass</i>)[<i>50</i>]
+          <i>public</i> 'ID' <font color='#888a85'>=&gt;</font> <small>int</small> <font color='#4e9a06'>501377</font>
+          <i>public</i> 'ParentID' <font color='#888a85'>=&gt;</font> <font color='#3465a4'>null</font>
+          <i>public</i> 'Filename' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'db_henning_gantriis_01384.jpg'</font> <i>(length=29)</i>
+          <i>public</i> 'OriginalFilename' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'db_henning_gantriis_01384.jpg'</font> <i>(length=29)</i>
+          <i>public</i> 'Token' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'HTTP Download'</font> <i>(length=13)</i>
+          <i>public</i> 'URL' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'http://www.kb.dk/imageService//online_master_arkiv_2/non-archival/Images/BLADTE_VANDMAERKER//db_henning_gantriis_01384.jpg'</font> <i>(length=122)</i>
+          <i>public</i> 'FormatID' <font color='#888a85'>=&gt;</font> <small>int</small> <font color='#4e9a06'>42</font>
+          <i>public</i> 'Format' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'KB Source JPEG '</font> <i>(length=15)</i>
+          <i>public</i> 'FormatCategory' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Image Source'</font> <i>(length=12)</i>
+          <i>public</i> 'FormatType' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Image'</font> <i>(length=5)</i>
+          <i>public</i> 'FullName' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'CHAOS.MCM.Data.DTO.FileInfo'</font> <i>(length=27)</i>
+      1 <font color='#888a85'>=&gt;</font>
+        <b>object</b>(<i>stdClass</i>)[<i>51</i>]
+          <i>public</i> 'ID' <font color='#888a85'>=&gt;</font> <small>int</small> <font color='#4e9a06'>3550788</font>
+          <i>public</i> 'ParentID' <font color='#888a85'>=&gt;</font> <font color='#3465a4'>null</font>
+          <i>public</i> 'Filename' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'db_henning_gantriis_01384.jpg'</font> <i>(length=29)</i>
+          <i>public</i> 'OriginalFilename' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'db_henning_gantriis_01384.jpg'</font> <i>(length=29)</i>
+          <i>public</i> 'Token' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'HTTP Download'</font> <i>(length=13)</i>
+          <i>public</i> 'URL' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'http://www.kb.dk/imageService/w150/online_master_arkiv_2/non-archival/Images/BLADTE_VANDMAERKER/db_henning_gantriis_01384.jpg'</font> <i>(length=125)</i>
+          <i>public</i> 'FormatID' <font color='#888a85'>=&gt;</font> <small>int</small> <font color='#4e9a06'>10</font>
+          <i>public</i> 'Format' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'SMK asset thumbnail'</font> <i>(length=19)</i>
+          <i>public</i> 'FormatCategory' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'SMK asset thumbnail'</font> <i>(length=19)</i>
+          <i>public</i> 'FormatType' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Image'</font> <i>(length=5)</i>
+          <i>public</i> 'FullName' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'CHAOS.MCM.Data.DTO.FileInfo'</font> <i>(length=27)</i>
+  <i>public</i> 'ObjectRelations' <font color='#888a85'>=&gt;</font>
+    <b>array</b> <i>(size=0)</i>
+      <i><font color='#888a85'>empty</font></i>
+  <i>public</i> 'FullName' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'CHAOS.MCM.Data.DTO.Object'</font> <i>(length=25)</i>
+</pre>
+      </aside>
+      <p> What you can see here is that we get a list of objects. Each object
+      has a GUID and an ObjectTypeID. Furthermore we can see that each object
+      has a list of files and a list of metadata.</p>
+
+      <p>Try turning off and on <code>includeFiles</code> and
+      <code>includeMetadata</code> and changing <code>pageSize</code> and
+      <code>pageIndex</code> in order to
+      familiarize yourself with the interface.</p>
+      <p>Unfortunately this object has no relations.</p>
+
+
+      <p>You are now ready to head on to the next section, which will teach you
+      how to use files and metadata.</p>
+
+        <p>The next section will teach you how to use files and metadata.</p>
+    </section>
+
+      <footer>
+        <a class="prev-page" href="index.html">&larr; Back up: Overview
+          </a>
+        <a class="next-page" href="metadata.html">Next up: Using metadata and
+          files &rarr;</a>
+        <!-- &raquo; / &laquo; -->
+      </footer>
+    </div>
+  </body>
+</html>

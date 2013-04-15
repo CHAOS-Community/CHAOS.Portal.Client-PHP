@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>CHAOS tutorials: Introduction to the CHAOS.Portal PHP client</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/codemirror/3.0/codemirror.css">
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/codemirror/3.0/codemirror.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/codemirror/3.0/mode/javascript/javascript.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/codemirror/3.0/mode/css/css.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/codemirror/3.0/mode/xml/xml.js"></script>
+    <!-- htmlmixed depends on xml, javascript and css -->
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/codemirror/3.0/mode/htmlmixed/htmlmixed.js"></script>
+    <!-- php depends on htmlmixed and c-like -->
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/codemirror/3.0/mode/clike/clike.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/codemirror/3.0/mode/php/php.js"></script>
+
+    <script type="text/javascript" src="https://raw.github.com/marijnh/CodeMirror/master/addon/format/formatting.js"></script>
+
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="script.js"></script>
+  </head>
+  <body>
+    <!-- Representation of code in HTML is for some reason weird but it seems consensus is
+    <pre><code>CODE</code></pre>
+    Check: http://stackoverflow.com/questions/4611591/code-vs-pre-vs-samp-for-inline-and-block-code-snippets
+    -->
+
+    <div id="body-column">
+      <div id="index">
+        <a href="index.html">Overview</a>
+        <ol>
+          <li><a href="intro.html">The Basics</a></li>
+          <li class="current">Metadata and files</li>
+          <li><a href="errors.html">Error handling</a></li>
+        </ol>
+      </div>
+      <h1>Tutorial: CHAOS.Portal PHP Client</h1>
+      <h2>Using metadata and files</h2>
+      <div class="intro">
+      This tutorial will teach you how to:
+      <ul>
+        <li>retrieve single objects (by GUID)</li>
+        <li>use files attached to objects</li>
+        <li>use object metadata</li>
+      </ul>
+      </div>
+      <!--
+          Every piece of code is inside a text editor and can be edited.
+          Code pieces that make sense to evaluate can be run using "Try"
+          button.
+      -->
+
+      <section>
+      <h3>Grabbing a single object</h3>
+      <p>In many cases it will makes sense to only request a single known object.
+      Objects are identified by their GUID:</p>
+
+      <aside class="code">
+      <pre><code class="language-php">&lt;?php
+$serviceResult = $client-&gt;Object()-&gt;GetByObjectGUID(
+  "00000000-0000-0000-0000-00004e040016" // objectGUID
+  , $accessPointGUID // accessPointGuid
+  , true                          // includeMetadata
+  , true                          // includeFiles
+  , true                          // includeObjectRelations
+  , false                         // includeAccessPoints
+);
+$object = $serviceResult-&gt;MCM()-&gt;Results()[0];
+echo "Grabbed object (GUID): " . $object-&gt;GUID;
+?&gt;</code></pre>
+      </aside>
+
+
+      </section>
+      <h3>Files</h3>
+      <p>
+      Files belonging to an object can be of different types -- video, audio,
+      images and basically any other kind of file.
+      </p>
+
+
+      <aside class="code">
+      <pre><code class="language-php">&lt;table id="file-table"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;FormatType&lt;/th&gt;
+      &lt;th&gt;Filename&lt;/th&gt;
+      &lt;th&gt;URL&lt;/th&gt;
+      &lt;th&gt;Representation&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+&lt;?php
+$serviceResult = $client-&gt;Object()-&gt;GetByObjectGUID(
+  "00000000-0000-0000-0000-00004e040016" // objectGUID
+  , $accessPointGUID // accessPointGuid
+  , true                          // includeMetadata
+  , true                          // includeFiles
+  , true                          // includeObjectRelations
+  , false                         // includeAccessPoints
+);
+$object = $serviceResult-&gt;MCM()-&gt;Results()[0];
+
+for ($i = 0; $i &lt; count($object-&gt;Files); $i++) {
+  $tr = "";
+  $tr .= "&lt;tr&gt;";
+  $tr .= "&lt;td&gt;" . $object-&gt;Files[$i]-&gt;FormatType . "&lt;/td&gt;";
+  $tr .= "&lt;td&gt;" . $object-&gt;Files[$i]-&gt;Filename . "&lt;/td&gt;";
+  $tr .= "&lt;td&gt;" . $object-&gt;Files[$i]-&gt;URL . "&lt;/td&gt;";
+  if ($object-&gt;Files[$i]-&gt;FormatType == "Image") {
+    $tr .= "&lt;td&gt;&lt;img src=\"" . $object-&gt;Files[$i]-&gt;URL . "\"&gt;&lt;/td&gt;";
+  } else {
+    $tr .= "&lt;td&gt;No representation&lt;/td&gt;";
+  }
+  $tr .= "&lt;/tr&gt;";
+  echo $tr;
+}
+?&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</code></pre>
+      </aside>
+
+      <p>Running the code you should get the output:</p>
+
+        <table id="file-table">
+        <thead>
+          <tr>
+            <th>FormatType</th>
+            <th>Filename</th>
+            <th>URL</th>
+            <th>Representation</th>
+          </tr>
+        </thead>
+        <tbody>
+      <tr><td>Image</td><td>db_fo_sa_00564.jpg</td><td>http://www.kb.dk/imageService//online_master_arkiv_9/non-archival/Images/BLADTE_VANDMAERKER//db_fo_sa_00564.jpg</td><td><img src="http://www.kb.dk/imageService//online_master_arkiv_9/non-archival/Images/BLADTE_VANDMAERKER//db_fo_sa_00564.jpg"></td></tr><tr><td>Image</td><td>db_fo_sa_00564.jpg</td><td>http://www.kb.dk/imageService/w150/online_master_arkiv_9/non-archival/Images/BLADTE_VANDMAERKER/db_fo_sa_00564.jpg</td><td><img src="http://www.kb.dk/imageService/w150/online_master_arkiv_9/non-archival/Images/BLADTE_VANDMAERKER/db_fo_sa_00564.jpg"></td></tr>  </tbody>
+      </table>
+
+
+      <section>
+      <h3>Metadata</h3>
+      <p>
+      Okay, so we have an object and maybe some files related to it. But...<br>
+      What's the name of the object? What color does it have? What length?
+      Texture? Taste? -- and what noise does it make when it's out of paper?<br>
+      These are questions for the metadata.<br>
+      <!-- This is all in the metadata -->
+      <!--What I'm saying here is that your-->
+      The CHAOS database can be filled all kinds of objects. What kind of
+      objects should be known to you when you start working with your CHAOS
+      database or it should be documented in some place known to you.<br>
+      <span class="important">The metadata of an object is a list of XML
+        documents with related XML schemas</span>. Again I recommend that you
+      know the structure of these document before you begin, if you want
+      anything meaningful out them.<br>
+      <!--Now just to be clear metadata is <emph>just</emph> metadata. What is
+      contained in that metadata is basically up to the people who the object in
+      to the database and it could be anything - as a general rule the structure
+      and content of such metadata should be known to you already or documented
+      someplace you know.-->
+      Let's have a look:
+      </p>
+
+      <aside class="code">
+      <pre><code class="language-php">&lt;?php
+$serviceResult = $client-&gt;Object()-&gt;GetByObjectGUID(
+  "00000000-0000-0000-0000-00004e040016" // objectGUID
+  , $accessPointGUID // accessPointGuid
+  , true                          // includeMetadata
+  , true                          // includeFiles
+  , true                          // includeObjectRelations
+  , false                         // includeAccessPoints
+);
+$object = $serviceResult-&gt;MCM()-&gt;Results()[0];
+
+echo "&lt;pre&gt;" . $object-&gt;Metadatas[1]-&gt;MetadataXML . "&lt;/pre&gt;";
+?&gt;</code></pre>
+      </aside>
+
+      <p>Our object's metadata:</p>
+      <aside class="code" id="metadata-results">
+      <pre><code class="language-xml">&lt;DKA&gt;&lt;Title&gt;Uden titel&lt;/Title&gt;&lt;Abstract&gt;En mand i profil med sideskilning og et mut ansigtsudtryk&lt;/Abstract&gt;&lt;Description /&gt;&lt;Organization&gt;Det Kongelige Bibliotek&lt;/Organization&gt;&lt;Type /&gt;&lt;CreatedDate&gt;2010-10-06T00:00:00&lt;/CreatedDate&gt;&lt;FirstPublishedDate&gt;2010-10-06T00:00:00&lt;/FirstPublishedDate&gt;&lt;Identifier&gt;108593&lt;/Identifier&gt;&lt;Contributor /&gt;&lt;Creator&gt;&lt;Person Name="ukendt" Role="Creator" /&gt;&lt;/Creator&gt;&lt;TechnicalComment /&gt;&lt;Location /&gt;&lt;RightsDescription&gt;Billedet er beskyttet af loven om ophavsret&lt;/RightsDescription&gt;&lt;Categories /&gt;&lt;/DKA&gt;</code></pre>
+      </aside>
+
+      <p> Parsing XML with PHP can be done in <a
+        href="http://www.php.net/manual/en/refs.xml.php">a number of ways</a>.
+      <br>
+      In the following example I will use SimpleXML to parse and access the XML.
+      </p>
+      <aside class="code">
+      <pre><code class="language-php"> &lt;?php
+$serviceResult = $client-&gt;Object()-&gt;GetByObjectGUID(
+  "00000000-0000-0000-0000-00004e040016" // objectGUID
+  , $accessPointGUID // accessPointGuid
+  , true                          // includeMetadata
+  , true                          // includeFiles
+  , true                          // includeObjectRelations
+  , false                         // includeAccessPoints
+);
+$object = $serviceResult-&gt;MCM()-&gt;Results()[0];
+
+$xmlstr = $object-&gt;Metadatas[1]-&gt;MetadataXML;
+
+$xmlDoc = new SimpleXMLElement($xmlstr);
+
+$obj_title = $xmlDoc-&gt;Title;
+$obj_desc = $xmlDoc-&gt;Abstract;
+
+echo "Title: " . $obj_title . "&lt;br&gt;";
+echo "Abstract: " . $obj_desc;
+?&gt;</code></pre>
+      </aside>
+
+      <p>The result should be:</p>
+      <pre>Title: Uden titel<br>Abstract: En mand i profil med sideskilning og et mut ansigtsudtryk</pre>
+      </section>
+
+
+      <footer>
+        <p>The next section will teach you about handling errors when dealing
+        with CHAOS.Portal.</p>
+        <a class="prev-page" href="intro.html">&larr; Back up: The Basics
+          </a>
+        <a class="next-page" href="errors.html">Next up: Error handling &rarr;</a>
+        <!-- &raquo; / &laquo; -->
+      </footer>
+    </div>
+  </body>
+</html>
