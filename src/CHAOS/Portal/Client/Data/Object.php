@@ -26,10 +26,14 @@ class Object
 		$this->_object = $object;
 	}
 	
-	/**
-	 * Returns the object given when constructed.
-	 * @return stdClass
-	 */
+	public function __get($name) {
+		return $this->_object->$name;
+	}
+	
+	public function __set($name, $value) {
+		$this->_object->$name = $value;
+	}
+	
 	public function getObject() {
 		return $this->_object;
 	}
