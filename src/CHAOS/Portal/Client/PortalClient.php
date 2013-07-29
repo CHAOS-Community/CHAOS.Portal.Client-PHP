@@ -21,6 +21,7 @@
 	use \CHAOS\Portal\Client\Extensions\LinkExtension;
 	use \CHAOS\Portal\Client\Extensions\StatsObjectExtension;
 	use \CHAOS\Portal\Client\Extensions\UploadExtension;
+	use \CHAOS\Portal\Client\Extensions\IndexExtension;
 
 	class PortalClient implements IPortalClient, IServiceCaller
 	{
@@ -417,6 +418,18 @@
 				$this->_upload = new UploadExtension($this);
 
 			return $this->_upload;
+		}
+
+		private $_index = null;
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\IIndexExtension
+		 */
+		public function Index()
+		{
+			if($this->_index == null)
+				$this->_index = new IndexExtension($this);
+
+			return $this->_index;
 		}
 	}
 ?>

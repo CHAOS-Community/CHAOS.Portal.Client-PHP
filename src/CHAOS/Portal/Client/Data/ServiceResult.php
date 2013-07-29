@@ -61,6 +61,12 @@
 		 */
 		public function Upload() { return $this->_upload; }
 
+		private $_index;
+		/**
+		 * @return \CHAOS\Portal\Client\Data\ModuleResult
+		 */
+		public function Index() { return $this->_index; }
+
 		function __construct($data)
 		{
 			if(is_a($data, "Exception"))
@@ -96,6 +102,9 @@
 								break;
 							case "Upload":
 								$this->_upload = new ModuleResult($moduleResult);
+								break;
+							case "Index":
+								$this->_index = new ModuleResult($moduleResult);
 								break;
 						}
 					}

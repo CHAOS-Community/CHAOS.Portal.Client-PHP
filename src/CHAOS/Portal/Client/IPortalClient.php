@@ -143,5 +143,10 @@
 		 * @return \CHAOS\Portal\Client\Extensions\IUploadExtension
 		 */
 		public function Upload();
+
+		/**
+		 * @return \CHAOS\Portal\Client\Extensions\IIndexExtension
+		 */
+		public function Index();
 	}
 ?>
