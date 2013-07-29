@@ -88,6 +88,24 @@ class Object
 		return null;
 	}
 	
+	// TODO: Consider having this in the database / memory.
+	static $metadata_schemas = array();
+	
+	public static function validate_metadata(\CHAOS\Portal\Client\PortalClient $client, \SimpleXMLElement $metadata, $metadata_schema_guid) {
+		if(!array_key_exists(strtolower($metadata_schema_guid), self::$metadata_schemas)) {
+			// Download the schema to the local cache.
+			$response = $client->MetadataSchema()->Get($metadata_schema_guid);
+			$result = $response->MCM()->Results();
+			if(count($result) < 1) {
+				throw new \CHAOSException("The metadata schema GUID ($metadata_schema_guid) was unknown to CHAOS (maybe the session has no access to the metadata schema)");
+			}
+			self::$metadata_schemas[$metadata_schema_guid] = strval($result[0]->SchemaXML);
+		}
+		$metadata_scehma = self::$metadata_schemas[$metadata_schema_guid];
+		$metadata = dom_import_simplexml($metadata)->ownerDocument;
+		return $metadata->schemaValidateSource($metadata_scehma);
+	}
+	
 	/**
 	 * A cache for parsed XML strings, keyed by the GUID of the metadata schema.
 	 * @var \SimpleXMLElement[string]
@@ -103,7 +121,7 @@ class Object
 	 * @throws \RuntimeException If a namespace couldn't be registered.
 	 * @return NULL|string|stdClass[] A string concatinated with $seperator, an array of matches or NULL if nothing was found.
 	 */
-	protected function get_metadata($schema_guid, $xpath, $seperator = ', ') {
+	public function get_metadata($schema_guid, $xpath, $seperator = ', ') {
 		$schema_guid = strtolower($schema_guid);
 		foreach($this->_object->Metadatas as $metadata) {
 			if(strtolower($metadata->MetadataSchemaGUID) == $schema_guid) {
@@ -127,11 +145,28 @@ class Object
 		}
 	}
 	
+	/**
+	 * Sets the metadata of an object on a specific schema, validating it first.
+	 * @param \CHAOS\Portal\Client\PortalClient $client The PortalCliet to use when communicating with CHAOS.
+	 * @param string $schema_guid The GUID of the Metadata Schema that the metadata supposingly validates successfully against.
+	 * @param \SimpleXMLElement $xml The metadata XML to insert into the service.
+	 * @param unknown $languageCode The language of the data in the XML schema.
+	 * @param string|null $revisionID The revision - to prevent race conditions.
+	 * @return \CHAOS\Portal\Client\Data\ServiceResult|boolean Either a result if the validation succeded, false if the validation fails.
+	 */
+	public function set_metadata(\CHAOS\Portal\Client\PortalClient $client, $schema_guid, \SimpleXMLElement $xml, $languageCode, $revisionID = null) {
+		if(self::validate_metadata($client, $xml, $schema_guid)) {
+			return $client->Metadata()->Set($this->GUID, $schema_guid, $languageCode, $revisionID, $xml->asXML());
+		} else {
+			return false;
+		}
+	}
+	
 	public function has_metadata($schema_guid) {
 		$schema_guid = strtolower($schema_guid);
 		foreach($this->_object->Metadatas as $metadata) {
 			if(strtolower($metadata->MetadataSchemaGUID) == $schema_guid) {
-				return true;
+				return $metadata;
 			}
 		}
 		return false;
