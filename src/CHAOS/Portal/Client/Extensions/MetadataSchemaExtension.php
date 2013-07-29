@@ -6,7 +6,7 @@
 	{
 		public function Create($name, $schemaXML, $metadataSchemaGUID = null)
 		{
-			return $this->CallService("Create", IServiceCaller::GET, array("name" => $name, "schemaXML" => $schemaXML, "metadataSchemaGUID" => $metadataSchemaGUID));
+			return $this->CallService("Create", IServiceCaller::POST, array("name" => $name, "schemaXML" => $schemaXML, "metadataSchemaGUID" => $metadataSchemaGUID));
 		}
 
 		public function Get($metadataSchemaGUID = null)
@@ -16,7 +16,7 @@
 
 		public function Update($name, $schemaXML, $metadataSchemaGUID)
 		{
-			return $this->CallService("Update", IServiceCaller::GET, array("name" => $name, "schemaXML" => $schemaXML, "metadataSchemaGUID" => $metadataSchemaGUID));
+			return $this->CallService("Update", IServiceCaller::POST, array("name" => $name, "schemaXML" => $schemaXML, "metadataSchemaGUID" => $metadataSchemaGUID));
 		}
 
 		public function Delete($metadataSchemaGUID)
