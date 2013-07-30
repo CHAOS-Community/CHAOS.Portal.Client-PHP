@@ -163,7 +163,6 @@ class Object
 	}
 	
 	public function has_metadata($schema_guid) {
-		$schema_guid = strtolower($schema_guid);
 		foreach($this->_object->Metadatas as $metadata) {
 			if(strtolower($metadata->MetadataSchemaGUID) == $schema_guid) {
 				return $metadata;
