@@ -136,10 +136,17 @@ class Object
 				$node = $this->xml_cache[$schema_guid]->xpath($xpath);
 				if(count($node) == 0) {
 					return null;
-				} elseif(isset($seperator)) {
-					return implode($seperator, $node);
 				} else {
-					return $node;
+					$strings = array();
+					foreach($node as $n) {
+						$returnString = count($n->children()) == 0;
+						if($returnString) {
+							$strings[] = strval($n);
+						} else {
+							$strings[] = $n->asXML();
+						}
+					}
+					return implode($seperator, $strings);
 				}
 			}
 		}
