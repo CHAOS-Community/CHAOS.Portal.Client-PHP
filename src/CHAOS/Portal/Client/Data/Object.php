@@ -80,7 +80,7 @@ class Object
 		}
 		
 		for($i = 0; $i < count($schema_guids); $i++) {
-			$value = $this->get_metadata($schema_guids[$i], $xpaths[$i]);
+			$value = $this->get_metadata($schema_guids[$i], $xpaths[$i], $seperator);
 			if(isset($value)) {
 				return $value;
 			}
