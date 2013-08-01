@@ -147,7 +147,11 @@ class Object
 								$strings[] = $n->asXML();
 							}
 						}
-						return implode($seperator, $strings);
+						if($seperator == null) {
+							return $strings;
+						} else {
+							return implode($seperator, $strings);
+						}
 					}
 				}
 			}
