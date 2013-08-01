@@ -123,33 +123,36 @@ class Object
 	 */
 	public function get_metadata($schema_guid, $xpath, $seperator = ', ') {
 		$schema_guid = strtolower($schema_guid);
-		foreach($this->_object->Metadatas as $metadata) {
-			if(strtolower($metadata->MetadataSchemaGUID) == $schema_guid) {
-				if(!array_key_exists($schema_guid, $this->xml_cache)) {
-					$this->xml_cache[$schema_guid] = simplexml_load_string($metadata->MetadataXML);
-					foreach(self::$xml_namespaces as $prefix => $ns) {
-						if(!$this->xml_cache[$schema_guid]->registerXPathNamespace($prefix, $ns)) {
-							throw new \RuntimeException("Failed to register namespace $ns at $prefix.");
+		if(isset($this->_object->Metadatas)) {
+			foreach($this->_object->Metadatas as $metadata) {
+				if(strtolower($metadata->MetadataSchemaGUID) == $schema_guid) {
+					if(!array_key_exists($schema_guid, $this->xml_cache)) {
+						$this->xml_cache[$schema_guid] = simplexml_load_string($metadata->MetadataXML);
+						foreach(self::$xml_namespaces as $prefix => $ns) {
+							if(!$this->xml_cache[$schema_guid]->registerXPathNamespace($prefix, $ns)) {
+								throw new \RuntimeException("Failed to register namespace $ns at $prefix.");
+							}
 						}
 					}
-				}
-				$node = $this->xml_cache[$schema_guid]->xpath($xpath);
-				if(count($node) == 0) {
-					return null;
-				} else {
-					$strings = array();
-					foreach($node as $n) {
-						$returnString = count($n->children()) == 0;
-						if($returnString) {
-							$strings[] = strval($n);
-						} else {
-							$strings[] = $n->asXML();
+					$node = $this->xml_cache[$schema_guid]->xpath($xpath);
+					if(count($node) == 0) {
+						return null;
+					} else {
+						$strings = array();
+						foreach($node as $n) {
+							$returnString = count($n->children()) == 0;
+							if($returnString) {
+								$strings[] = strval($n);
+							} else {
+								$strings[] = $n->asXML();
+							}
 						}
+						return implode($seperator, $strings);
 					}
-					return implode($seperator, $strings);
 				}
 			}
 		}
+		return null;
 	}
 	
 	/**
