@@ -140,8 +140,11 @@ class Object
 					} else {
 						$strings = array();
 						foreach($node as $n) {
+							$returnAttributes = (count($n->attributes()) > 0);
 							$returnString = count($n->children()) == 0;
-							if($returnString) {
+							if($returnAttributes) {
+								$strings[] = $n->attributes();
+							} else if($returnString) {
 								$strings[] = strval($n);
 							} else {
 								$strings[] = $n->asXML();
