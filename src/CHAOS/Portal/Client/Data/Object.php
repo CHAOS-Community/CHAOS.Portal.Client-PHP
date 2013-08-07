@@ -124,6 +124,9 @@ class Object
 	public function get_metadata($schema_guid, $xpath = null, $seperator = ', ') {
 		if($xpath) {
 			$metadata = $this->get_metadata($schema_guid);
+			if(!($metadata instanceof \SimpleXMLElement)) {
+				return null;
+			}
 			$node = $metadata->xpath($xpath);
 			if(count($node) == 0) {
 				return null;
