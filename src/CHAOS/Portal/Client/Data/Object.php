@@ -121,41 +121,58 @@ class Object
 	 * @throws \RuntimeException If a namespace couldn't be registered.
 	 * @return NULL|string|stdClass[] A string concatinated with $seperator, an array of matches or NULL if nothing was found.
 	 */
-	public function get_metadata($schema_guid, $xpath, $seperator = ', ') {
+	public function get_metadata($schema_guid, $xpath = null, $seperator = ', ') {
+		if($xpath) {
+			$metadata = $this->get_metadata($schema_guid);
+			$node = $metadata->xpath($xpath);
+			if(count($node) == 0) {
+				return null;
+			} else {
+				$strings = array();
+				foreach($node as $n) {
+					$returnAttributes = (count($n->attributes()) > 0);
+					$returnString = count($n->children()) == 0;
+					if($returnAttributes) {
+						$strings[] = $n->attributes();
+					} else if($returnString) {
+						$strings[] = strval($n);
+					} else {
+						$strings[] = $n->asXML();
+					}
+				}
+				if($seperator == null) {
+					return $strings;
+				} else {
+					return implode($seperator, $strings);
+				}
+			}
+		} else {
+			$schema_guid = strtolower($schema_guid);
+			if(isset($this->_object->Metadatas)) {
+				foreach($this->_object->Metadatas as $metadata) {
+					if(strtolower($metadata->MetadataSchemaGUID) == $schema_guid) {
+						if(!array_key_exists($schema_guid, $this->xml_cache)) {
+							$this->xml_cache[$schema_guid] = simplexml_load_string($metadata->MetadataXML);
+							foreach(self::$xml_namespaces as $prefix => $ns) {
+								if(!$this->xml_cache[$schema_guid]->registerXPathNamespace($prefix, $ns)) {
+									throw new \RuntimeException("Failed to register namespace $ns at $prefix.");
+								}
+							}
+						}
+						return $this->xml_cache[$schema_guid];
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	public function get_metadata_revision_id($schema_guid) {
 		$schema_guid = strtolower($schema_guid);
 		if(isset($this->_object->Metadatas)) {
 			foreach($this->_object->Metadatas as $metadata) {
 				if(strtolower($metadata->MetadataSchemaGUID) == $schema_guid) {
-					if(!array_key_exists($schema_guid, $this->xml_cache)) {
-						$this->xml_cache[$schema_guid] = simplexml_load_string($metadata->MetadataXML);
-						foreach(self::$xml_namespaces as $prefix => $ns) {
-							if(!$this->xml_cache[$schema_guid]->registerXPathNamespace($prefix, $ns)) {
-								throw new \RuntimeException("Failed to register namespace $ns at $prefix.");
-							}
-						}
-					}
-					$node = $this->xml_cache[$schema_guid]->xpath($xpath);
-					if(count($node) == 0) {
-						return null;
-					} else {
-						$strings = array();
-						foreach($node as $n) {
-							$returnAttributes = (count($n->attributes()) > 0);
-							$returnString = count($n->children()) == 0;
-							if($returnAttributes) {
-								$strings[] = $n->attributes();
-							} else if($returnString) {
-								$strings[] = strval($n);
-							} else {
-								$strings[] = $n->asXML();
-							}
-						}
-						if($seperator == null) {
-							return $strings;
-						} else {
-							return implode($seperator, $strings);
-						}
-					}
+					return $metadata->RevisionID;
 				}
 			}
 		}
