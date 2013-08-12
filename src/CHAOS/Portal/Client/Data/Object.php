@@ -134,13 +134,14 @@ class Object
 				$strings = array();
 				foreach($node as $n) {
 					$returnAttributes = (count($n->attributes()) > 0);
-					$returnString = count($n->children()) == 0;
 					if($returnAttributes) {
 						$strings[] = $n->attributes();
-					} else if($returnString) {
-						$strings[] = strval($n);
 					} else {
-						$strings[] = $n->asXML();
+						$temp = '';
+						foreach(dom_import_simplexml($n)->childNodes as $child) {
+							 $temp .= $child->ownerDocument->saveXML($child);
+						}
+						$strings[] = $temp;
 					}
 				}
 				if($seperator == null) {
