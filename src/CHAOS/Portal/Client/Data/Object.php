@@ -119,7 +119,8 @@ class Object
 	 * @param string $seperator If multiple matches are found, what seperator should concatinate the results? (default = ', ')
 	 * 							If $seperator == null, an array is returned instead.
 	 * @throws \RuntimeException If a namespace couldn't be registered.
-	 * @return NULL|string|stdClass[] A string concatinated with $seperator, an array of matches or NULL if nothing was found.
+	 * @return NULL|string|stdClass[]|SimpleXMLElement A string concatinated with $seperator, an array of matches or NULL if nothing was found.
+	 *         or a SimpleXMLElement of the whole metadata blob if $xpath was not sat.
 	 */
 	public function get_metadata($schema_guid, $xpath = null, $seperator = ', ') {
 		if($xpath) {
@@ -193,6 +194,9 @@ class Object
 	 * @return \CHAOS\Portal\Client\Data\ServiceResult|boolean Either a result if the validation succeded, false if the validation fails.
 	 */
 	public function set_metadata(\CHAOS\Portal\Client\PortalClient $client, $schema_guid, \SimpleXMLElement $xml, $languageCode, $revisionID = null) {
+		if($revisionID == null) {
+			$revisionID = $this->get_metadata_revision_id($schema_guid);
+		}
 		if(self::validate_metadata($client, $xml, $schema_guid)) {
 			return $client->Metadata()->Set($this->GUID, $schema_guid, $languageCode, $revisionID, $xml->asXML());
 		} else {
