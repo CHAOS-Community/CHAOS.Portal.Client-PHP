@@ -217,7 +217,7 @@
 
 		private $_userSettings = null;
 		/**
-		 * @return \CHAOS\Portal\Client\Extensions\IUserSEttingsExtension
+		 * @return \CHAOS\Portal\Client\Extensions\IUserSettingsExtension
 		 */
 		public function UserSettings()
 		{
