@@ -134,9 +134,8 @@ class Object
 			} else {
 				$strings = array();
 				foreach($node as $n) {
-					$returnAttributes = (count($n->attributes()) > 0);
-					if($returnAttributes) {
-						$strings[] = $n->attributes();
+					if($seperator == null) {
+						$strings[] = $n;
 					} else {
 						$temp = '';
 						foreach(dom_import_simplexml($n)->childNodes as $child) {
