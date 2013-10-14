@@ -1,5 +1,5 @@
 <?php
-require('PortalClientTest.php');
+require_once 'PortalClientTest.php';
 
 class ObjectTest extends PortalClientTest
 {
@@ -15,7 +15,7 @@ class ObjectTest extends PortalClientTest
 		);
 		$object = $serviceResult->MCM()->Results()[0];
 
-// $this->assertSuccess($serviceResult);
+		$this->assertSuccess($serviceResult);
 
 		$this->assertNotNull($object, "Returned non-null object");
 		$this->assertEquals($serviceResult->MCM()->Count(), 1, "Returned exactly one object");

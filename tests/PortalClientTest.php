@@ -1,5 +1,6 @@
 <?php
-require('PortalClientSetup.php');
+require_once 'PortalClientSetup.php';
+
 use CHAOS\Portal\Client\PortalClient;
 
 class PortalClientTest extends PHPUnit_Framework_TestCase
@@ -27,6 +28,17 @@ class PortalClientTest extends PHPUnit_Framework_TestCase
 	{
 		$this->assertNotNull(self::$client->SessionGUID(), "SessionGUID was set");
 	}
-}
 
+    /**
+     * Asserts successfull ServiceResult
+     *
+     * @param  ServiceResult $serviceResult
+     * @throws PHPUnit_Framework_AssertionFailedError
+     */
+	public static function assertSuccess($serviceResult, $message = 'Successfully recieved ServiceResult')
+	{
+		self::assertTrue($serviceResult->WasSuccess(), $message);
+		self::assertTrue($serviceResult->MCM()->WasSuccess(), $message);
+	}
+}
 ?>
