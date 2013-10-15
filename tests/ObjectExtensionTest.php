@@ -8,14 +8,10 @@ class ObjectExtensionTest extends PortalClientTest
 		$serviceResult = self::$client->Object()->GetByObjectGUID(
 			"00000000-0000-0000-0000-00004e040016"
 			, self::$accessPointGUID
-
 		);
 
 		$this->assertSuccess($serviceResult);
-
-		$object = $serviceResult->MCM()->Results()[0];
-
-		$this->assertNotNull($object, "Returned non-null object");
+		$this->assertNotEmpty($serviceResult->MCM()->Results(), "Returned not empty results");
 		$this->assertEquals(1, $serviceResult->MCM()->Count(), "Returned correct number of objects");
 	}
 
@@ -25,14 +21,10 @@ class ObjectExtensionTest extends PortalClientTest
 			array("00000000-0000-0000-0000-00004e040016",
 			      "00000000-0000-0000-0000-000064faff15")
 			, self::$accessPointGUID
-
 		);
 
 		$this->assertSuccess($serviceResult);
-
-		$object = $serviceResult->MCM()->Results()[0];
-
-		$this->assertNotNull($object, "Returned non-null object");
+		$this->assertNotEmpty($serviceResult->MCM()->Results(), "Returned not empty results");
 		$this->assertEquals(2, $serviceResult->MCM()->Count(), "Returned correct number of objects");
 	}
 
@@ -44,15 +36,12 @@ class ObjectExtensionTest extends PortalClientTest
 			, "da"
 			, self::$accessPointGUID
 			, 0
-			, 1
+			, $pageSize = 1
 		);
 
 		$this->assertSuccess($serviceResult);
-
-		$object = $serviceResult->MCM()->Results()[0];
-
-		$this->assertNotNull($object, "Returned non-null object");
-		$this->assertEquals(1, $serviceResult->MCM()->Count(), "Returned correct number of objects");
+		$this->assertNotEmpty($serviceResult->MCM()->Results(), "Returned not empty results");
+		$this->assertEquals($pageSize, $serviceResult->MCM()->Count(), "Returned correct number of objects");
 	}
 
 	public function testGetSearchSchemas()
@@ -65,16 +54,12 @@ class ObjectExtensionTest extends PortalClientTest
 			, "da"
 			, self::$accessPointGUID
 			, 0
-			, 3
-
+			, $pageSize = 3
 		);
 
 		$this->assertSuccess($serviceResult);
-
-		$object = $serviceResult->MCM()->Results()[0];
-
-		$this->assertNotNull($object, "Returned non-null object");
-		$this->assertEquals(3, $serviceResult->MCM()->Count(), "Returned correct number of objects");
+		$this->assertNotEmpty($serviceResult->MCM()->Results(), "Returned not empty results");
+		$this->assertEquals($pageSize, $serviceResult->MCM()->Count(), "Returned correct number of objects");
 	}
 
  	public function testGetByFolderID()
@@ -84,15 +69,12 @@ class ObjectExtensionTest extends PortalClientTest
  			, false
  			, self::$accessPointGUID
  			, 0
- 			, 6
+ 			, $pageSize = 2
  		);
 
  		$this->assertSuccess($serviceResult);
-
- 		$object = $serviceResult->MCM()->Results()[0];
-
- 		$this->assertNotNull($object, "Returned non-null object");
- 		$this->assertEquals(6, $serviceResult->MCM()->Count(), "Returned correct number of objects");
+		$this->assertNotEmpty($serviceResult->MCM()->Results(), "Returned not empty results");
+ 		$this->assertEquals($pageSize, $serviceResult->MCM()->Count(), "Returned correct number of objects");
  	}
 }
 ?>
