@@ -16,7 +16,16 @@ class PortalClientTest extends PHPUnit_Framework_TestCase
 		self::$servicePath = $_SERVER['SERVICE_PATH'];
 		self::$clientGUID = $_SERVER['CLIENT_GUID'];
 		self::$accessPointGUID = $_SERVER['ACCESS_POINT_GUID'];
+
 		self::$client = new PortalClient(self::$servicePath, self::$clientGUID);
+
+		if (isset($_SERVER['EMAIL']) && isset($_SERVER['PASSWORD']))
+		{
+			$email = $_SERVER['EMAIL'];
+			$password = $_SERVER['PASSWORD'];
+
+			self::$client->EmailPassword()->Login($email, $password);
+		}
 	}
 
 	public static function tearDownBeforeClass()
