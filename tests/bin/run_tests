@@ -31,7 +31,7 @@ esac
 
 # variables
 BASEDIR=$(dirname $0)
-CONFIG="$BASEDIR/$1"
+CONFIG="$BASEDIR/$1.yml"
 
 # colors
 BLUE="\033[96m"
@@ -41,8 +41,15 @@ RED="\033[91m"
 NOC="\033[m"
 
 
-# read config
-for opt in `sed -e 's/:[^:\/\/]/=/g;s/$//g;s/ *=/=/g' $CONFIG.yml`
+# check config
+if [[ ! -e $CONFIG ]]
+then
+    echo " $RED->$NOC No such config file!"
+    exit 2
+fi
+
+#read config
+for opt in `sed -e 's/:[^:\/\/]/=/g;s/$//g;s/ *=/=/g' $CONFIG`
 do
     export $opt
 done
