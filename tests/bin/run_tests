@@ -1,0 +1,63 @@
+#!/bin/sh
+
+
+usage()
+{
+    echo "Usage: run_tests <config> [-p|--password <password>]\n"
+    echo "  config   - Name (not path) of YAML configuration file, without extension"
+    echo "             E.g. \`run_tests dka.v5\` uses the config file 'dka.v5.yml'"
+    echo "             File should lay in the scripts base dir"
+    echo "  password - Password, when config requires it"
+}
+
+
+# opt sanity
+case $1
+    in
+    -h|--help)
+        usage
+        exit 1
+        break;;
+    -p|--password)
+        usage
+        exit 1
+        break;;
+    '')
+        usage
+        exit 1
+        break;;
+esac
+
+
+# variables
+BASEDIR=$(dirname $0)
+CONFIG="$BASEDIR/$1"
+
+# colors
+BLUE="\033[96m"
+GREEN="\033[92m"
+YELLOW="\033[93m"
+RED="\033[91m"
+NOC="\033[m"
+
+
+# read config
+for opt in `sed -e 's/:[^:\/\/]/=/g;s/$//g;s/ *=/=/g' $CONFIG.yml`
+do
+    export $opt
+done
+
+
+# password sanity
+if [[ $PASSWORD_REQUIRED == 'true' ]]
+then
+    if [[ $2 == '' || $3 == '' ]]
+    then
+        echo " $RED->$NOC Given config requires password!"
+        exit 1
+    else
+        export PASSWORD=$3
+    fi
+fi
+
+phpunit --colors ..

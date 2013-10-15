@@ -13,9 +13,9 @@ class PortalClientTest extends PHPUnit_Framework_TestCase
 
 	public static function setUpBeforeClass()
 	{
-		self::$servicePath = "http://api.chaos-systems.com/";
-		self::$clientGUID = "B9CBFFDD-3F73-48FC-9D5D-3802FBAD4CBD";
-		self::$accessPointGUID = "7A06C4FF-D15A-48D9-A908-088F9796AF28";
+		self::$servicePath = $_SERVER['SERVICE_PATH'];
+		self::$clientGUID = $_SERVER['CLIENT_GUID'];
+		self::$accessPointGUID = $_SERVER['ACCESS_POINT_GUID'];
 		self::$client = new PortalClient(self::$servicePath, self::$clientGUID);
 	}
 
