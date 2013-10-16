@@ -1,70 +1,195 @@
-#!/bin/sh
+#!/usr/bin/env php
+<?php
+
+/************************************************************/
+/* run_tests											    */
+/* @description Script for testing CHAOS.Portal.Client-PHP  */
+/* @author BIT-BLUEPRINT								    */
+/* @link github.com/CHAOS-Community/CHAOS.Portal.Client-PHP */
+/* 														    */
+/* Test													    */
+/* - Different web service versions						    */
+/* - Different methods of authentification				    */
+/* - Different users									    */
+/* - Different test data								    */
+/************************************************************/
+
+require_once 'PHPUnit/Autoload.php';
 
 
-usage()
+const INFO = 'info';
+const WARNING = 'warning';
+const ERROR = 'error';
+
+const BLUE = "\033[96m";
+const GREEN = "\033[92m";
+const YELLOW = "\033[93m";
+const RED = "\033[91m";
+const NOC = "\033[m";
+
+const USAGE = "Usage: run_tests -c|--config <config> [-d|--data <data>] [-p|--password <password>] [<tests>]\n
+  config   - Name (not path) of JSON configuration file, without extension
+             E.g. \`run_tests -c dka.v5 ...\` uses the config file 'dka.v5.json'
+             File should lay in the scripts base dir
+  data     - File with data constants used in tests
+  password - Password, when config requires it
+  tests    - Test files or directory. Defaults to shells current working directory
+";
+
+
+// parse options
+
+$parameters = array(
+	'h' => 'help',
+	'c:' => 'config:',
+	'd:' => 'data:',
+	'p:' => 'password:'
+);
+
+$options = getopt(implode('', array_keys($parameters)), $parameters);
+
+// remove getopts from argv
+$pruneargv = array();
+foreach ($options as $option => $value) {
+	foreach ($argv as $key => $chunk) {
+		$regex = '/^'. (isset($option[1]) ? '--' : '-') . $option . '/';
+		if ($chunk == $value && $argv[$key-1][0] == '-' || preg_match($regex, $chunk)) {
+			array_push($pruneargv, $key);
+		}
+	}
+}
+while ($key = array_pop($pruneargv)) unset($argv[$key]);
+
+// opt: help
+if (array_key_exists('help', $options) || array_key_exists('h', $options))
 {
-    echo "Usage: run_tests <config> [-p|--password <password>]\n"
-    echo "  config   - Name (not path) of YAML configuration file, without extension"
-    echo "             E.g. \`run_tests dka.v5\` uses the config file 'dka.v5.yml'"
-    echo "             File should lay in the scripts base dir"
-    echo "  password - Password, when config requires it"
+	echo USAGE;
+	exit(0);
+}
+
+// opt: config
+$config = null;
+if (array_key_exists('config', $options)) {
+	$config = $options['config'];
+} elseif (array_key_exists('c', $options)) {
+	$config = $options['c'];
+} else {
+	log_message("Missing config argument!\n", ERROR);
+	echo USAGE;
+	exit(1);
+}
+
+// opt: data
+$data = null;
+if (array_key_exists('data', $options)) {
+	$data = $options['data'];
+} elseif (array_key_exists('d', $options)) {
+	$data = $options['d'];
+} else {
+	log_message("No data file specified. Defaulting to 'default.json'");
+	$data = 'default.json';
+}
+
+// opt: password
+$password = null;
+if (array_key_exists('password', $options)) {
+	$password = $options['password'];
+} elseif (array_key_exists('p', $options)) {
+	$password = $options['p'];
 }
 
 
-# opt sanity
-case $1
-    in
-    -h|--help)
-        usage
-        exit 1
-        break;;
-    -p|--password)
-        usage
-        exit 1
-        break;;
-    '')
-        usage
-        exit 1
-        break;;
-esac
+// parse json
+
+// add extension if not present
+$config .= (!preg_match('/.json$/i', $config)) ? '.json' : '';
+$data .= (!preg_match('/.json$/i', $data)) ? '.json' : '';
+
+// add path
+$config = __DIR__ . '/' . $config;
+$data = __DIR__ . '/' . $data;
+
+// check files
+if (!file_exists($config))
+{
+	log_message("Config file '" . $config . "' does not exist!", ERROR);
+	exit(1);
+}
+if (!file_exists($data))
+{
+	log_message("Data file '" . $data . "' does not exist!", ERROR);
+	exit(1);
+}
+
+$CONFIG = json_decode(file_get_contents($config), true);
+$DATA = json_decode(file_get_contents($data), true);
+
+if (is_null($CONFIG))
+{
+	log_message("Could not parse config file!", ERROR);
+	exit(1);
+} elseif (is_null($DATA))
+{
+	log_message("Could not parse config file!", ERROR);
+	exit(1);
+}
 
 
-# variables
-BASEDIR=$(dirname $0)
-CONFIG="$BASEDIR/$1.yml"
+// check password
+if (isset($CONFIG['password_required']))
+{
+	if ($CONFIG['password_required'] == true && is_null($password))
+	{
+		log_message("Password required!\n", ERROR);
+		echo USAGE;
+		exit(1);
 
-# colors
-BLUE="\033[96m"
-GREEN="\033[92m"
-YELLOW="\033[93m"
-RED="\033[91m"
-NOC="\033[m"
-
-
-# check config
-if [[ ! -e $CONFIG ]]
-then
-    echo " $RED->$NOC No such config file!"
-    exit 2
-fi
-
-#read config
-for opt in `sed -e 's/:[^:\/\/]/=/g;s/$//g;s/ *=/=/g' $CONFIG`
-do
-    export $opt
-done
+	} else
+	{
+		$CONFIG['password'] = $password;
+	}
+}
 
 
-# password sanity
-if [[ $PASSWORD_REQUIRED == 'true' ]]
-then
-    if [[ $2 == '' || $3 == '' ]]
-    then
-        echo " $RED->$NOC Given config requires password!"
-        exit 1
-    else
-        export PASSWORD=$3
-    fi
-fi
+// check for specific dir
+$dir = '.';
+if (count($argv) > 1)
+{
+	$dir = end($argv);
+	reset($argv);
+}
 
-phpunit --colors ..
+
+// run tests
+
+$GLOBALS['CONFIG'] = $CONFIG;
+$GLOBALS['DATA'] = $DATA;
+
+echo "\n";
+
+$command = new PHPUnit_TextUI_Command;
+$command->run(array('phpunit', '--colors', $dir), true);
+
+
+// functions
+
+function log_message($message, $level = INFO)
+{
+	$color = NOC;
+	switch ($level)
+	{
+	case INFO:
+		$color = GREEN;
+		break;
+	case WARNING:
+		$color = YELLOW;
+		break;
+	case ERROR:
+		$color = RED;
+		break;
+	}
+
+	echo $color . " -> " . NOC . $message . "\n";
+}
+
+?>

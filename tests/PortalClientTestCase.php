@@ -1,9 +1,12 @@
 <?php
-require_once 'PortalClientSetup.php';
+set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . "/../src");
+require_once("CaseSensitiveAutoload.php");
+spl_autoload_extensions(".php");
+spl_autoload_register("CaseSensitiveAutoload");
 
 use CHAOS\Portal\Client\PortalClient;
 
-class PortalClientTest extends PHPUnit_Framework_TestCase
+class PortalClientTestCase extends PHPUnit_Framework_TestCase
 {
 	protected static $servicePath;
 	protected static $clientGUID;
@@ -11,20 +14,24 @@ class PortalClientTest extends PHPUnit_Framework_TestCase
 
 	protected static $client;
 
+	protected static $config;
+	protected static $data;
+
 	public static function setUpBeforeClass()
 	{
-		self::$servicePath = $_SERVER['SERVICE_PATH'];
-		self::$clientGUID = $_SERVER['CLIENT_GUID'];
-		self::$accessPointGUID = $_SERVER['ACCESS_POINT_GUID'];
+		self::$config = $GLOBALS['CONFIG'];
+		self::$data = $GLOBALS['DATA'];
+
+		self::$servicePath = self::$config['service_path'];
+		self::$clientGUID = self::$config['client_guid'];
+		self::$accessPointGUID = self::$config['access_point_guid'];
 
 		self::$client = new PortalClient(self::$servicePath, self::$clientGUID);
 
-		if (isset($_SERVER['EMAIL']) && isset($_SERVER['PASSWORD']))
+		if (isset(self::$config['email']) && isset(self::$config['password']))
 		{
-			$email = $_SERVER['EMAIL'];
-			$password = $_SERVER['PASSWORD'];
-
-			self::$client->EmailPassword()->Login($email, $password);
+			self::$client->EmailPassword()->Login(self::$config['email'],
+			                                      self::$config['password']);
 		}
 	}
 

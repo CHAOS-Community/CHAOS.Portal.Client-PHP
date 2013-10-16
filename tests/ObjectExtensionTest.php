@@ -1,7 +1,7 @@
 <?php
-require_once 'PortalClientTest.php';
+require_once 'PortalClientTestCase.php';
 
-class ObjectExtensionTest extends PortalClientTest
+class ObjectExtensionTest extends PortalClientTestCase
 {
 	public function testGetByObjectGUID()
 	{
@@ -54,7 +54,7 @@ class ObjectExtensionTest extends PortalClientTest
 			, "da"
 			, self::$accessPointGUID
 			, 0
-			, $pageSize = 3
+			, $pageSize = 1
 		);
 
 		$this->assertSuccess($serviceResult);
