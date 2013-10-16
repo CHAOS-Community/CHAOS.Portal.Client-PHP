@@ -2,16 +2,17 @@
 <?php
 
 /************************************************************/
-/* run_tests											    */
+/* run-tests											    */
 /* @description Script for testing CHAOS.Portal.Client-PHP  */
 /* @author BIT-BLUEPRINT								    */
 /* @link github.com/CHAOS-Community/CHAOS.Portal.Client-PHP */
 /* 														    */
 /* Test													    */
-/* - Different web service versions						    */
+/* - Different service providers						    */
+/* - Different service versions						        */
 /* - Different methods of authentification				    */
 /* - Different users									    */
-/* - Different test data								    */
+/* - Different data sets								    */
 /************************************************************/
 
 require_once 'PHPUnit/Autoload.php';
@@ -27,7 +28,7 @@ const YELLOW = "\033[93m";
 const RED = "\033[91m";
 const NOC = "\033[m";
 
-const USAGE = "Usage: run_tests -c|--config <config> [-d|--data <data>] [-p|--password <password>] [<tests>]\n
+const USAGE = "Usage: run-tests -c|--config <config> [-d|--data <data>] [-p|--password <password>] [<tests>]\n
   config   - Name (not path) of JSON configuration file, without extension
              E.g. \`run_tests -c dka.v5 ...\` uses the config file 'dka.v5.json'
              File should lay in the scripts base dir
