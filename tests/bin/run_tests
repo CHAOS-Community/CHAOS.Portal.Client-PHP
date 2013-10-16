@@ -130,7 +130,7 @@ if (is_null($CONFIG))
 	exit(1);
 } elseif (is_null($DATA))
 {
-	log_message("Could not parse config file!", ERROR);
+	log_message("Could not parse data file!", ERROR);
 	exit(1);
 }
 

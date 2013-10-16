@@ -70,7 +70,7 @@ class PortalClientTestCase extends PHPUnit_Framework_TestCase
 
 				$e_msg .= "Exception: " . $error->Name() . "\n";
 				$e_msg .= "Message: " . $error->Message() . "\n";
-				$e_msg .= "Stacktrace: " . $error->Stacktrace() . "\n";
+				$e_msg .= "Stacktrace: \n" . $error->Stacktrace() . "\n";
 			}
 
 			throw new PHPUnit_Framework_AssertionFailedError($e_msg);

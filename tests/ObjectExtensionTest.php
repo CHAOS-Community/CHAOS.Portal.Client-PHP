@@ -6,8 +6,8 @@ class ObjectExtensionTest extends PortalClientTestCase
 	public function testGetByObjectGUID()
 	{
 		$serviceResult = self::$client->Object()->GetByObjectGUID(
-			"00000000-0000-0000-0000-00004e040016"
-			, self::$accessPointGUID
+			self::$data['objects'][0]['guid'],
+			self::$accessPointGUID
 		);
 
 		$this->assertSuccess($serviceResult);
@@ -18,22 +18,23 @@ class ObjectExtensionTest extends PortalClientTestCase
 	public function testGetByObjectGUIDs()
 	{
 		$serviceResult = self::$client->Object()->GetByObjectGUIDs(
-			array("00000000-0000-0000-0000-00004e040016",
-			      "00000000-0000-0000-0000-000064faff15")
-			, self::$accessPointGUID
+			array(self::$data['objects'][0]['guid'],
+			      self::$data['objects'][1]['guid'],
+			      self::$data['objects'][2]['guid']),
+			self::$accessPointGUID
 		);
 
 		$this->assertSuccess($serviceResult);
 		$this->assertNotEmpty($serviceResult->MCM()->Results(), "Returned not empty results");
-		$this->assertEquals(2, $serviceResult->MCM()->Count(), "Returned correct number of objects");
+		$this->assertEquals(3, $serviceResult->MCM()->Count(), "Returned correct number of objects");
 	}
 
 	public function testGetSearchSchema()
 	{
 		$serviceResult = self::$client->Object()->GetSearchSchema(
 			"test"
-			, "5906a41b-feae-48db-bfb7-714b3e105396"
-			, "da"
+			, self::$data['metadatas'][0]['metadata_schema_guid']
+			, self::$data['metadatas'][0]['language_code']
 			, self::$accessPointGUID
 			, 0
 			, $pageSize = 1
@@ -47,14 +48,14 @@ class ObjectExtensionTest extends PortalClientTestCase
 	public function testGetSearchSchemas()
 	{
 		$serviceResult = self::$client->Object()->GetSearchSchemas(
-			"test"
-			, array("5906a41b-feae-48db-bfb7-714b3e105396",
-			        "00000000-0000-0000-0000-000063c30000",
-			        "00000000-0000-0000-0000-000065c30000")
-			, "da"
+			"a"
+			, array(self::$data['metadatas'][0]['metadata_schema_guid'],
+			        self::$data['metadatas'][1]['metadata_schema_guid'],
+			        self::$data['metadatas'][2]['metadata_schema_guid'])
+			, self::$data['metadatas'][0]['language_code']
 			, self::$accessPointGUID
 			, 0
-			, $pageSize = 1
+			, $pageSize = 3
 		);
 
 		$this->assertSuccess($serviceResult);
@@ -65,7 +66,7 @@ class ObjectExtensionTest extends PortalClientTestCase
  	public function testGetByFolderID()
  	{
  		$serviceResult = self::$client->Object()->GetByFolderID(
- 			"444"
+			  self::$data['folders'][0]['id']
  			, false
  			, self::$accessPointGUID
  			, 0

@@ -1,3 +1,52 @@
 {
-  "asdf" : "asdf"
+    "objects" : [
+        {
+            "guid" : "00000000-0000-0000-0000-00004e040016"
+        },
+        {
+            "guid" : "98e410f2-d551-a34e-9435-7da40301930f"
+        },
+        {
+            "guid" : "bee19217-f986-ad42-a1e2-64e799d3ce3f"
+        }
+    ],
+    "metadatas" : [
+        {
+            "guid" : "8777dfe8-ce7e-3f4a-b0fb-b1ed6805cc83",
+            "metadata_schema_guid" : "5906a41b-feae-48db-bfb7-714b3e105396",
+            "language_code" : "da"
+        },
+        {
+            "guid" : "b9e33b44-389a-514a-b229-41608d9b38c1",
+            "metadata_schema_guid" : "00000000-0000-0000-0000-000063c30000",
+            "language_code" : "da"
+        },
+        {
+            "guid" : "b9690488-839b-8e46-99d9-1a71167e96de",
+            "metadata_schema_guid" : "a37167e0-e13b-4d29-8a41-b0ffbaa1fe5f",
+            "language_code" : "da"
+        }
+    ],
+    "files" : [
+        {
+            "id" : "3962036",
+            "filename" : "118-mw_rj_o_t_1968_35x50x60.jpg",
+            "filetype" : "Image"
+        },
+        {
+            "id" : "3962060",
+            "filename" : "015-mw_rj_dobbeltsidig_nk_479.jpg",
+            "filetype" : "Image"
+        },
+        {
+            "id" : "3962066",
+            "filename" : "129-0222.jpg",
+            "filetype" : "Image"
+        }
+    ],
+    "folders" : [
+        {
+            "id" : "444"
+        }
+    ]
 }
