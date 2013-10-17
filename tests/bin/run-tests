@@ -28,13 +28,17 @@ const YELLOW = "\033[93m";
 const RED = "\033[91m";
 const NOC = "\033[m";
 
-const USAGE = "Usage: run-tests -c|--config <config> [-d|--data <data>] [-p|--password <password>] [<tests>]\n
-  config   - Name (not path) of JSON configuration file, without extension
-             E.g. \`run_tests -c dka.v5 ...\` uses the config file 'dka.v5.json'
-             File should lay in the scripts base dir
-  data     - File with data constants used in tests
-  password - Password, when config requires it
-  tests    - Test files or directory. Defaults to shells current working directory
+const USAGE = "Usage: run-tests -c|--config <config> [-p|--password <password>]
+                 [-d|--data <data>] [-v|--verbose] [<tests>]\n
+  config   - Name (not path) of JSON configuration file (extension not required)
+             E.g. `run-tests -c dka.v5 ...` uses the config file 'dka.v5.json'
+             File should lay in the scripts base dir ('bin', if not moved)
+  data     - Same as above, only this one contains the data constants used in the tests
+  verbose  - Ask PHPUnit to output more verbose information
+  password - Password, when config requires it, else it will be ignored
+  tests    - Files or directory to test.
+             Defaults to all tests (with filename mathing /*Test.php$/),
+             in shells current working directory
 ";
 
 
@@ -42,6 +46,7 @@ const USAGE = "Usage: run-tests -c|--config <config> [-d|--data <data>] [-p|--pa
 
 $parameters = array(
 	'h' => 'help',
+	'v' => 'verbose',
 	'c:' => 'config:',
 	'd:' => 'data:',
 	'p:' => 'password:'
@@ -89,6 +94,14 @@ if (array_key_exists('data', $options)) {
 } else {
 	log_message("No data file specified. Defaulting to 'default.json'");
 	$data = 'default.json';
+}
+
+// opt: verbose
+$verbose = '';
+if (array_key_exists('verbose', $options)) {
+	$verbose = '--verbose';
+} elseif (array_key_exists('v', $options)) {
+	$verbose = '--verbose';
 }
 
 // opt: password
@@ -169,7 +182,7 @@ $GLOBALS['DATA'] = $DATA;
 echo "\n";
 
 $command = new PHPUnit_TextUI_Command;
-$command->run(array('phpunit', '--colors', $dir), true);
+$command->run(array('phpunit', '--colors', $verbose, $dir), true);
 
 
 // functions
