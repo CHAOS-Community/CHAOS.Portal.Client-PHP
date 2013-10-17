@@ -4,10 +4,10 @@
             "guid" : "00000000-0000-0000-0000-00004e040016"
         },
         {
-            "guid" : "98e410f2-d551-a34e-9435-7da40301930f"
+            "guid" : "d69740a6-b7e4-5f43-b719-438744f27660"
         },
         {
-            "guid" : "bee19217-f986-ad42-a1e2-64e799d3ce3f"
+            "guid" : "9f36e450-ed37-3046-99b3-c0804f8f221c"
         }
     ],
     "metadatas" : [
@@ -25,6 +25,20 @@
             "guid" : "b9690488-839b-8e46-99d9-1a71167e96de",
             "metadata_schema_guid" : "a37167e0-e13b-4d29-8a41-b0ffbaa1fe5f",
             "language_code" : "da"
+        }
+    ],
+    "metadata_schemas" : [
+        {
+            "guid" : "5906a41b-feae-48db-bfb7-714b3e105396",
+            "name" : "DKA2"
+        },
+        {
+            "guid" : "00000000-0000-0000-0000-000063c30000",
+            "name" : "DKA"
+        },
+        {
+            "guid" : "a37167e0-e13b-4d29-8a41-b0ffbaa1fe5f",
+            "name" : "DKA-Crowd"
         }
     ],
     "files" : [

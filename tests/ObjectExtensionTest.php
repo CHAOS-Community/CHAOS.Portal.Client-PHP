@@ -6,7 +6,7 @@ class ObjectExtensionTest extends PortalClientTestCase
 	public function testGetByObjectGUID()
 	{
 		$serviceResult = self::$client->Object()->GetByObjectGUID(
-			self::$data['objects'][0]['guid'],
+			self::$data['objects'][1]['guid'],
 			self::$accessPointGUID
 		);
 
@@ -23,7 +23,6 @@ class ObjectExtensionTest extends PortalClientTestCase
 			      self::$data['objects'][2]['guid']),
 			self::$accessPointGUID
 		);
-
 		$this->assertSuccess($serviceResult);
 		$this->assertNotEmpty($serviceResult->MCM()->Results(), "Returned not empty results");
 		$this->assertEquals(3, $serviceResult->MCM()->Count(), "Returned correct number of objects");
@@ -33,7 +32,7 @@ class ObjectExtensionTest extends PortalClientTestCase
 	{
 		$serviceResult = self::$client->Object()->GetSearchSchema(
 			"test"
-			, self::$data['metadatas'][0]['metadata_schema_guid']
+			, self::$data['metadata_schemas'][0]['guid']
 			, self::$data['metadatas'][0]['language_code']
 			, self::$accessPointGUID
 			, 0
@@ -49,9 +48,9 @@ class ObjectExtensionTest extends PortalClientTestCase
 	{
 		$serviceResult = self::$client->Object()->GetSearchSchemas(
 			"a"
-			, array(self::$data['metadatas'][0]['metadata_schema_guid'],
-			        self::$data['metadatas'][1]['metadata_schema_guid'],
-			        self::$data['metadatas'][2]['metadata_schema_guid'])
+			, array(self::$data['metadata_schemas'][0]['guid'],
+			        self::$data['metadata_schemas'][1]['guid'],
+			        self::$data['metadata_schemas'][2]['guid'])
 			, self::$data['metadatas'][0]['language_code']
 			, self::$accessPointGUID
 			, 0
@@ -66,11 +65,11 @@ class ObjectExtensionTest extends PortalClientTestCase
  	public function testGetByFolderID()
  	{
  		$serviceResult = self::$client->Object()->GetByFolderID(
-			  self::$data['folders'][0]['id']
- 			, false
- 			, self::$accessPointGUID
- 			, 0
- 			, $pageSize = 2
+			self::$data['folders'][0]['id'],
+			false,
+			self::$authenticated ? null : self::$accessPointGUID, // WTF
+ 			0,
+ 			$pageSize = 5
  		);
 
  		$this->assertSuccess($serviceResult);
