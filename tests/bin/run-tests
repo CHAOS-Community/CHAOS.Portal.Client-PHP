@@ -47,6 +47,7 @@ const USAGE = "Usage: run-tests -c|--config <config> [-p|--password <password>]
 $parameters = array(
 	'h' => 'help',
 	'v' => 'verbose',
+	'g' => 'coverage',
 	'c:' => 'config:',
 	'd:' => 'data:',
 	'p:' => 'password:'
@@ -98,10 +99,14 @@ if (array_key_exists('data', $options)) {
 
 // opt: verbose
 $verbose = '';
-if (array_key_exists('verbose', $options)) {
+if (array_key_exists('verbose', $options) || array_key_exists('v', $options)) {
 	$verbose = '--verbose';
-} elseif (array_key_exists('v', $options)) {
-	$verbose = '--verbose';
+}
+
+// opt: coverage
+$coverage = '';
+if (array_key_exists('coverage', $options) || array_key_exists('g', $options)) {
+	$coverage = '--coverage-text';
 }
 
 // opt: password
@@ -182,7 +187,7 @@ $GLOBALS['DATA'] = $DATA;
 echo "\n";
 
 $command = new PHPUnit_TextUI_Command;
-$command->run(array('phpunit', '--colors', $verbose, $dir), true);
+$command->run(array('phpunit', '--colors', $verbose, $coverage, $dir), true);
 
 
 // functions
