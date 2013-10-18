@@ -1,5 +1,5 @@
 {
-    "objects" : [
+    "object" : [
         {
             "guid" : "00000000-0000-0000-0000-00004e040016"
         },
@@ -10,7 +10,13 @@
             "guid" : "9f36e450-ed37-3046-99b3-c0804f8f221c"
         }
     ],
-    "metadatas" : [
+    "object_relation_type" : [
+        {
+            "id" : "1",
+            "name" : "Answers"
+        }
+    ],
+    "metadata" : [
         {
             "guid" : "8777dfe8-ce7e-3f4a-b0fb-b1ed6805cc83",
             "metadata_schema_guid" : "5906a41b-feae-48db-bfb7-714b3e105396",
@@ -27,7 +33,7 @@
             "language_code" : "da"
         }
     ],
-    "metadata_schemas" : [
+    "metadata_schema" : [
         {
             "guid" : "5906a41b-feae-48db-bfb7-714b3e105396",
             "name" : "DKA2"
@@ -41,7 +47,7 @@
             "name" : "DKA-Crowd"
         }
     ],
-    "files" : [
+    "file" : [
         {
             "id" : "3962036",
             "filename" : "118-mw_rj_o_t_1968_35x50x60.jpg",
@@ -58,22 +64,11 @@
             "filetype" : "Image"
         }
     ],
-    "folders" : [
+    "folder" : [
         {
-            "id" : "444"
+            "id" : "444",
+            "parent_id" : "437",
+            "name" : "Bonanza"
         }
-    ],
-    "tests" : {
-        "objects" : [
-        ],
-        "metadatas" : [
-        ],
-        "metadata_schemas" : [
-            {
-                "guid" : "",
-                "name" : "TEST01",
-                "schema_xml" : "Duis sollicitudin sed erat eget."
-            }
-        ]
-    }
+    ]
 }
