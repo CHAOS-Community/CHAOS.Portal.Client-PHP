@@ -107,7 +107,7 @@ class PortalClientTestCase extends PHPUnit_Framework_TestCase
      * @param  \CHAOS\Portal\Client\Data\ServiceResult $serviceResult
      * @throws PHPUnit_Framework_AssertionFailedError
      */
-	public static function assertNotSuccess($serviceResult, $message = 'Successfully recieved ServiceResult')
+	public static function assertNotSuccess($serviceResult, $message = 'Unsuccessfully recieved ServiceResult')
 	{
 		self::assertFalse($serviceResult->WasSuccess(), $message);
 		self::assertFalse($serviceResult->MCM()->WasSuccess(), $message);

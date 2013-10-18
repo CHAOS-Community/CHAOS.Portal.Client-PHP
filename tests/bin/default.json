@@ -62,5 +62,18 @@
         {
             "id" : "444"
         }
-    ]
+    ],
+    "tests" : {
+        "objects" : [
+        ],
+        "metadatas" : [
+        ],
+        "metadata_schemas" : [
+            {
+                "guid" : "",
+                "name" : "TEST01",
+                "schema_xml" : "Duis sollicitudin sed erat eget."
+            }
+        ]
+    }
 }
