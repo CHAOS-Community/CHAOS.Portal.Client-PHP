@@ -3,10 +3,10 @@ require_once 'PortalClientTestCase.php';
 
 class MetadataSchemaExtensionTest extends PortalClientTestCase
 {
-//  Can't run this test with 'manager' permissions
-//	public function testCreate()
-//	{
-//		$expected = self::$data['tests']['metadata_schemas'][0];
+//  Insufficient permissions
+	public function testCreate()
+	{
+//		$expected = self::$data['test']['metadata_schema'][0];
 //		$serviceResult = self::$client->MetadataSchema()->Create(
 //			$expected['name'],
 //			$expected['schema_xml']
@@ -24,11 +24,11 @@ class MetadataSchemaExtensionTest extends PortalClientTestCase
 //
 //		$this->assertEquals($expected['name'], $actual->Name, 'Schema name matches');
 //		$this->assertEquals($expected['name'], $actual->Name, 'Schema name matches');
-//	}
+	}
 
 	public function testGet()
 	{
-		$expected = self::$data['metadata_schemas'][1];
+		$expected = self::$data['metadata_schema'][1];
 		$serviceResult = self::$client->MetadataSchema()->Get(
 			$expected['guid']
 		);
@@ -43,7 +43,7 @@ class MetadataSchemaExtensionTest extends PortalClientTestCase
 	public function testUpdate()
 	{
 		$serviceResult = self::$client->MetadataSchema()->Get(
-			self::$data['metadata_schemas'][0]['guid']
+			self::$data['metadata_schema'][0]['guid']
 		);
 		
 		$this->assertSuccess($serviceResult);
@@ -74,9 +74,7 @@ class MetadataSchemaExtensionTest extends PortalClientTestCase
 		$this->assertEquals($expected->SchemaXML, $actual->SchemaXML, 'Schema schemaXML matches');
 	}
 
-//  Won't test this with test schema (see comment above, testCreate)
-//	public function testDelete()
-//	{
-//	}
+//  Insufficient permissions
+	public function testDelete() {}
 }
 ?>

@@ -65,10 +65,10 @@ class PortalClientTestCase extends PHPUnit_Framework_TestCase
 		self::$client = NULL;
 	}
 
-	public function testSessionGUID()
-	{
-		$this->assertNotNull(self::$client->SessionGUID(), "SessionGUID was set");
-	}
+//	public function testSessionGUID()
+//	{
+//		$this->assertNotNull(self::$client->SessionGUID(), "SessionGUID was set");
+//	}
 
     /**
      * Asserts successfull ServiceResult
