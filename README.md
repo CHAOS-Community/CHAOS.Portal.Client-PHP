@@ -44,8 +44,12 @@ In *tests/bin/* are different sample JSON files. Those include config files, wit
 
 If you want to run all tests (from the *tests* directory), using the CHAOS API v4 (*http://api.chaos-systems.com/v4/*):
     
-    bin/run-tests --config chaos.v4 .
+    bin/run-tests --config chaos.v4 --password secret .
+
+To include a coverage report in the output:
     
+    bin/run-tests --config chaos.v4 -password secret --coverage .
+
 For more information on how to use the script, run it with the help argument
     
     bin/run-tests --help

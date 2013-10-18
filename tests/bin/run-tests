@@ -29,7 +29,7 @@ const RED = "\033[91m";
 const NOC = "\033[m";
 
 const USAGE = "Usage: run-tests -c|--config <config> [-p|--password <password>]
-                 [-d|--data <data>] [-v|--verbose] [<tests>]\n
+                 [-d|--data <data>] [-v|--verbose] [-g|--coverage] [<tests>]\n
   config   - Name (not path) of JSON configuration file (extension not required)
              E.g. `run-tests -c dka.v5 ...` uses the config file 'dka.v5.json'
              File should lay in the scripts base dir ('bin', if not moved)
@@ -39,6 +39,7 @@ const USAGE = "Usage: run-tests -c|--config <config> [-p|--password <password>]
   tests    - Files or directory to test.
              Defaults to all tests (with filename mathing /*Test.php$/),
              in shells current working directory
+  coverage - Include coverage report in output
 ";
 
 
