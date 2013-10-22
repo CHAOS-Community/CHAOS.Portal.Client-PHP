@@ -7,10 +7,11 @@ class ObjectExtensionTest extends PortalClientTestCase
 	{
 		$serviceResult = self::$client->Object()->GetByObjectGUID(
 			self::$data['object'][1]['guid'],
-			self::$authenticated ? null : self::$accessPointGUID // WTF
+			self::$authenticated ? null : self::$config['access_point_guid'] // WTF
 		);
-		
+
 		$this->assertSuccess($serviceResult);
+		$this->assertSuccess($serviceResult->MCM());
 		$this->assertNotEmpty($serviceResult->MCM()->Results(), "Returned not empty results");
 		$this->assertEquals(1, $serviceResult->MCM()->Count(), "Returned correct number of objects");
 	}
@@ -21,10 +22,11 @@ class ObjectExtensionTest extends PortalClientTestCase
 			$objectGUIDs = array(self::$data['object'][0]['guid'],
 			      self::$data['object'][1]['guid'],
 			      self::$data['object'][2]['guid']),
-			self::$authenticated ? null : self::$accessPointGUID // WTF
+			self::$authenticated ? null : self::$config['access_point_guid'] // WTF
 		);
 
 		$this->assertSuccess($serviceResult);
+		$this->assertSuccess($serviceResult->MCM());
 		$this->assertNotEmpty($serviceResult->MCM()->Results(), "Returned not empty results");
 		$this->assertEquals(count($objectGUIDs), $serviceResult->MCM()->Count(), "Returned correct number of objects");
 	}
@@ -35,12 +37,13 @@ class ObjectExtensionTest extends PortalClientTestCase
 			"test"
 			, self::$data['metadata_schema'][0]['guid']
 			, self::$data['metadata'][0]['language_code']
-			, self::$accessPointGUID
+			, self::$config['access_point_guid']
 			, 0
 			, $pageSize = 1
 		);
 
 		$this->assertSuccess($serviceResult);
+		$this->assertSuccess($serviceResult->MCM());
 		$this->assertNotEmpty($serviceResult->MCM()->Results(), "Returned not empty results");
 		$this->assertEquals($pageSize, $serviceResult->MCM()->Count(), "Returned correct number of objects");
 	}
@@ -53,12 +56,13 @@ class ObjectExtensionTest extends PortalClientTestCase
 			        self::$data['metadata_schema'][1]['guid'],
 			        self::$data['metadata_schema'][2]['guid'])
 			, self::$data['metadata'][0]['language_code']
-			, self::$accessPointGUID
+			, self::$config['access_point_guid']
 			, 0
 			, $pageSize = 3
 		);
 
 		$this->assertSuccess($serviceResult);
+		$this->assertSuccess($serviceResult->MCM());
 		$this->assertNotEmpty($serviceResult->MCM()->Results(), "Returned not empty results");
 		$this->assertEquals($pageSize, $serviceResult->MCM()->Count(), "Returned correct number of objects");
 	}
@@ -68,12 +72,13 @@ class ObjectExtensionTest extends PortalClientTestCase
  		$serviceResult = self::$client->Object()->GetByFolderID(
 			self::$data['folder'][0]['id'],
 			false,
-			self::$authenticated ? null : self::$accessPointGUID, // WTF
+			self::$authenticated ? null : self::$config['access_point_guid'], // WTF
  			0,
  			$pageSize = 5
  		);
 
  		$this->assertSuccess($serviceResult);
+		$this->assertSuccess($serviceResult->MCM());
 		$this->assertNotEmpty($serviceResult->MCM()->Results(), "Returned not empty results");
  		$this->assertEquals($pageSize, $serviceResult->MCM()->Count(), "Returned correct number of objects");
  	}

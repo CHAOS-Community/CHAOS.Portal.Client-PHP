@@ -1,7 +1,0 @@
-{
-    "service_path"      : "http://www.danskkulturarv.dk/"
-  , "client_guid"       : "B9CBFFDD-3F73-48FC-9D5D-3802FBAD4CBD"
-  , "access_point_guid" : "7A06C4FF-D15A-48D9-A908-088F9796AF28"
-  , "email"             : "admin@danskkulturarv.dk"
-  , "password_required" : true
-}

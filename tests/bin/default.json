@@ -66,9 +66,28 @@
     ],
     "folder" : [
         {
+            "id" : "1912",
+            "parent_id" : "444",
+            "name" : "Test",
+            "folder_type_id" : "1"
+        },
+        {
             "id" : "444",
             "parent_id" : "437",
-            "name" : "Bonanza"
+            "name" : "Bonanza",
+            "folder_type_id" : "1"
         }
-    ]
+    ],
+    "folder_permission": {
+        "none" : "0",
+        "upload" : "1",
+        "read" : "2",
+        "write" : "4",
+        "createupdateobjects" : "8",
+        "createlink" : "16",
+        "deleteobject" : "32",
+        "update" : "64",
+        "delete" : "128",
+        "max" : "4294967295"
+    }
 }
