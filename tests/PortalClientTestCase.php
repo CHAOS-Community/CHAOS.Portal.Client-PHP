@@ -83,18 +83,20 @@ class PortalClientTestCase extends PHPUnit_Framework_TestCase
 			$e_msg .= "Stacktrace: \n" . $error->Stacktrace() . "\n";
 
 			throw new PHPUnit_Framework_AssertionFailedError($e_msg);
-		}
-	}
+		} finally
+		{
+			if ($result instanceof ServiceResult)
+			{
+				if (!is_null($result->MCM()))
+				{
+					self::assertSuccess($result->MCM());
 
-    /**
-     * Asserts unsuccessfull response
-     *
-     * @param  \CHAOS\Portal\Client\Data\ServiceResult|ModuleResult $result
-     * @throws PHPUnit_Framework_AssertionFailedError
-     */
-	public static function assertNotSuccess($result, $message = 'Unsuccessfully response')
-	{
-		self::assertFalse($result->WasSuccess(), $message);
+				} elseif (!is_null($result->Portal()))
+				{
+					self::assertSuccess($result->Portal());
+				}
+			}
+		}
 	}
 
     /*
