@@ -3,36 +3,40 @@ require_once 'PortalClientTestCase.php';
 
 class ObjectRelationExtensionTest extends PortalClientTestCase
 {
-//	Permissions not yet implemented in CHAOS
-//  Will fail when that happens
 	public function testCreate()
 	{
-		$serviceResult = self::$client->ObjectRelation()->Create(
-			self::$data['object'][0]['guid'],
-			self::$data['object'][1]['guid'],
-			self::$data['object_relation_type'][0]['id']
+		$relation = (object) array(
+			'From' => self::$data['object'][0]['guid'],
+			'To' => self::$data['object'][1]['guid'],
+			'Type' => self::$data['object_relation_type'][0]['id']
 		);
-		
+		$serviceResult = self::$client->ObjectRelation()->Create(
+			$relation->From,
+			$relation->To,
+			$relation->Type
+		);
+
 		$this->assertSuccess($serviceResult);
-		$this->assertSuccess($serviceResult->MCM());
-		$this->assertNotEmpty($serviceResult->MCM()->Results(), "Returned not empty results");
-		$this->assertEquals(1, $serviceResult->MCM()->Results()[0]->Value, "Returned ScalarResult 1");
+		$this->assertNotEmpty($serviceResult->MCM()->Results(), "Results not empty");
+		$this->assertScalarResultEquals(1, $serviceResult);
+
+		return $relation;
 	}
 
-//	Permissions not yet implemented in CHAOS
-//  Will fail when that happens
-	public function testDelete()
+    /**
+	 * @depends testCreate
+	 */
+	public function testDelete($relation)
 	{
 		$serviceResult = self::$client->ObjectRelation()->Delete(
-			self::$data['object'][0]['guid'],
-			self::$data['object'][1]['guid'],
-			self::$data['object_relation_type'][0]['id']
+			$relation->From,
+			$relation->To,
+			$relation->Type
 		);
-		
+
 		$this->assertSuccess($serviceResult);
-		$this->assertSuccess($serviceResult->MCM());
 		$this->assertNotEmpty($serviceResult->MCM()->Results(), "Returned not empty results");
-		$this->assertEquals(1, $serviceResult->MCM()->Results()[0]->Value, "Returned ScalarResult 1");
+		$this->assertScalarResultEquals(1, $serviceResult);
 	}
 }
 ?>
