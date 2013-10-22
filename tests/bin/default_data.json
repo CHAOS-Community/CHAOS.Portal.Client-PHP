@@ -89,6 +89,13 @@
             "folder_type_id" : "1"
         }
     ],
+    "folder_type" : [
+        {
+            "id" : "1",
+            "name" : "Folder",
+            "date_created" : "-2147483648"
+        }
+    ],
     "folder_permission": {
         "none" : "0",
         "upload" : "1",
