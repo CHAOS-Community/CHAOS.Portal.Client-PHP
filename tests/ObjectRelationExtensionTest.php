@@ -14,6 +14,7 @@ class ObjectRelationExtensionTest extends PortalClientTestCase
 		);
 		
 		$this->assertSuccess($serviceResult);
+		$this->assertSuccess($serviceResult->MCM());
 		$this->assertNotEmpty($serviceResult->MCM()->Results(), "Returned not empty results");
 		$this->assertEquals(1, $serviceResult->MCM()->Results()[0]->Value, "Returned ScalarResult 1");
 	}
@@ -29,6 +30,7 @@ class ObjectRelationExtensionTest extends PortalClientTestCase
 		);
 		
 		$this->assertSuccess($serviceResult);
+		$this->assertSuccess($serviceResult->MCM());
 		$this->assertNotEmpty($serviceResult->MCM()->Results(), "Returned not empty results");
 		$this->assertEquals(1, $serviceResult->MCM()->Results()[0]->Value, "Returned ScalarResult 1");
 	}

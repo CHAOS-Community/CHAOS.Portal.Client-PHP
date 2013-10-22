@@ -11,6 +11,7 @@ class ObjectTypeExtensionTest extends PortalClientTestCase
 		$serviceResult = self::$client->ObjectType()->Get();
 
 		$this->assertSuccess($serviceResult);
+		$this->assertSuccess($serviceResult->MCM());
 		$this->assertNotEmpty($serviceResult->MCM()->Results(), 'Results not empty');
 	}
 

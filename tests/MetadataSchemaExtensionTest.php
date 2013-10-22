@@ -34,6 +34,7 @@ class MetadataSchemaExtensionTest extends PortalClientTestCase
 		);
 
 		$this->assertSuccess($serviceResult);
+		$this->assertSuccess($serviceResult->MCM());
 		$this->assertNotEmpty($serviceResult->MCM()->Results(), 'Results not empty');
 
 		$actual = $serviceResult->MCM()->Results()[0];
@@ -47,6 +48,7 @@ class MetadataSchemaExtensionTest extends PortalClientTestCase
 		);
 		
 		$this->assertSuccess($serviceResult);
+		$this->assertSuccess($serviceResult->MCM());
 		$this->assertNotEmpty($serviceResult->MCM()->Results(), 'Results not empty');
 
 		$expected = $serviceResult->MCM()->Results()[0];
@@ -58,6 +60,7 @@ class MetadataSchemaExtensionTest extends PortalClientTestCase
 		);
 		
 		$this->assertSuccess($serviceResult);
+		$this->assertSuccess($serviceResult->MCM());
 		$this->assertNotEmpty($serviceResult->MCM()->Results(), 'Results not empty');
 		
 		$serviceResult = self::$client->MetadataSchema()->Get(
@@ -65,6 +68,7 @@ class MetadataSchemaExtensionTest extends PortalClientTestCase
 		);
 		
 		$this->assertSuccess($serviceResult);
+		$this->assertSuccess($serviceResult->MCM());
 		$this->assertNotEmpty($serviceResult->MCM()->Results(), 'Results not empty');
 
 		$actual = $serviceResult->MCM()->Results()[0];
