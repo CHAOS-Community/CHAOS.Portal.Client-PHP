@@ -17,6 +17,7 @@
 
 require_once 'PHPUnit/Autoload.php';
 
+const DEFAULT_DATA = 'default_data.json';
 
 const INFO = 'info';
 const WARNING = 'warning';
@@ -94,8 +95,8 @@ if (array_key_exists('data', $options)) {
 } elseif (array_key_exists('d', $options)) {
 	$data = $options['d'];
 } else {
-	log_message("No data file specified. Defaulting to 'default.json'");
-	$data = 'default.json';
+	log_message("No data file specified. Defaulting to " . DEFAULT_DATA);
+	$data = DEFAULT_DATA;
 }
 
 // opt: verbose
