@@ -144,7 +144,7 @@ class Object
 						$result[] = $temp;
 					}
 				}
-				if($result == null) {
+				if($seperator == null) {
 					return $result;
 				} else {
 					return implode($seperator, $result);
