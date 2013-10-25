@@ -48,8 +48,6 @@ const USAGE = "Usage: run-tests -c|--config <config> [-p|--password <password>]
 
 $parameters = array(
 	'h' => 'help',
-	'v' => 'verbose',
-	'g' => 'coverage',
 	'c:' => 'config:',
 	'd:' => 'data:',
 	'p:' => 'password:'
@@ -68,6 +66,16 @@ foreach ($options as $option => $value) {
 	}
 }
 while ($key = array_pop($pruneargv)) unset($argv[$key]);
+
+// phpunit arguments
+$phpunit_args = array('phpunit', '--colors');
+foreach ($argv as $key => $value) 
+{
+    if ($key != 0)
+    {
+        array_push($phpunit_args, $value);
+    }
+}
 
 // opt: help
 if (array_key_exists('help', $options) || array_key_exists('h', $options))
@@ -97,18 +105,6 @@ if (array_key_exists('data', $options)) {
 } else {
 	log_message("No data file specified. Defaulting to " . DEFAULT_DATA);
 	$data = DEFAULT_DATA;
-}
-
-// opt: verbose
-$verbose = '';
-if (array_key_exists('verbose', $options) || array_key_exists('v', $options)) {
-	$verbose = '--verbose';
-}
-
-// opt: coverage
-$coverage = '';
-if (array_key_exists('coverage', $options) || array_key_exists('g', $options)) {
-	$coverage = '--coverage-text';
 }
 
 // opt: password
@@ -172,15 +168,6 @@ if (isset($CONFIG['password_required']))
 }
 
 
-// check for specific dir
-$dir = '.';
-if (count($argv) > 1)
-{
-	$dir = end($argv);
-	reset($argv);
-}
-
-
 // run tests
 
 $GLOBALS['CONFIG'] = $CONFIG;
@@ -189,7 +176,7 @@ $GLOBALS['DATA'] = $DATA;
 echo "\n";
 
 $command = new PHPUnit_TextUI_Command;
-$command->run(array('phpunit', '--colors', $verbose, $coverage, $dir), true);
+$command->run($phpunit_args, true);
 
 
 // functions

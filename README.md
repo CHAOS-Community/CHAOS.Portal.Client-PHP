@@ -29,32 +29,55 @@ This can be the same folder as the PHP-script that is using PortalClient, or a l
 The examples all use the latter method.
 
 ## Tests
-The tests are located in the *tests* folder and uses [PHPUnit](http://phpunit.de/manual/current/en/index.html) by Sebastian Bergmann.  
-With the tests comes a handy script `run-tests`, located under *bin* , which is required to run the test suite. The tests *cannot* simply be run by `phpunit`.  
+The unit tests are located in the *tests* folder and uses [PHPUnit 3.7](http://phpunit.de/manual/current/en/index.html) by Sebastian Bergmann.
+
+With the tests comes a handy script `run-tests`, located under *bin* , which is **required** to run the test suite. The tests *cannot* simply be run by `phpunit` as they rely on data from the json files.  
 
 With the script you can:
 
- - Test different service providers
+ - Test different service providers (e.g. *api.danskkulturarv.dk* or *api.chaos-systems.org*)
  - Test different protocol versions
- - Test different methods of authentication
- - Test different users
+ - Test different methods of authentication (e.i. with an *accessPointGUID* or with the *EmailPassword* extension)
+ - Test different users 
  - Test different data sets
 
-In *tests/bin/* are different sample JSON files. Those include config files, with and without authentication using the `EmailPassword` extension, and data sets. If no data file is specified when running the script, it defaults to `default.json`.
+In *tests/bin/* are different sample JSON files. Those include config files, with and without authentication, and data sets. If no data file is specified when running the script, it defaults to `default_data.json`.
+
+All other arguments are passed to PHPUnit (see `phpunit --help` for more information).
+
+### Examples
 
 If you want to run all tests (from the *tests* directory), using the CHAOS API v4 (*http://api.chaos-systems.com/v4/*):
-    
-    bin/run-tests --config chaos.v4 --password secret .
 
-To include a coverage report in the output:
-    
-    bin/run-tests --config chaos.v4 -password secret --coverage .
+    bin/run-tests --config chaos.v4.auth --password secret .
 
-For more information on how to use the script, run it with the help argument
+or, without authentication:
+
+    bin/run-tests --config chaos.v4 .
+    
+or, different data file:
+
+    bin/run-tests --config chaos.v4 --data your_data .
+
+To run a singe file:
+    
+    bin/run-tests --config chaos.v4.auth --password secret ObjectExtension.php
+
+To include a coverage report in the output ([more information](http://phpunit.de/manual/current/en/code-coverage-analysis.html)):
+    
+    bin/run-tests --config chaos.v4.auth --password secret --coverage-text .
+
+For more verbose output:
+    
+    bin/run-tests --config chaos.v4.auth --password secret --verbose .
+
+For information on how to use the script:
     
     bin/run-tests --help
 
-##Reporting problems
+To create you own config/data file, copy one of the existing and change out the information. It might be best to have at least as many objects in each section, to avoid null pointers.
+
+## Reporting problems
 If you encounter any problems using this project, please report them using the [Issues](https://github.com/CHAOS-Community/CHAOS.Portal.Client-PHP/issues) section of the projects Github page.
 
 ## Links
