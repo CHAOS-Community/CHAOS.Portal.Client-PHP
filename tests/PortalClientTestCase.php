@@ -14,10 +14,15 @@ class PortalClientTestCase extends PHPUnit_Framework_TestCase
 	protected static $config;
 	protected static $data;
 
+    protected static $orphans;
+    protected static $timeFormat;
+
 	public static function setUpBeforeClass()
 	{
 		self::$config = $GLOBALS['CONFIG'];
 		self::$data = $GLOBALS['DATA'];
+        self::$orphans = "orphans.txt";
+        self::$timeFormat = "d-m-y H:i:s";
 
 		self::$client = new PortalClient(self::$config['service_path'], self::$config['client_guid']);
 
@@ -52,12 +57,12 @@ class PortalClientTestCase extends PHPUnit_Framework_TestCase
 		}
 	}
 
-	public static function tearDownBeforeClass()
+	public static function tearDownAfterClass()
 	{
-		self::$client = NULL;
-		self::$authenticated = NULL;
-		self::$config = NULL;
-		self::$data = NULL;
+		self::$client = null;
+		self::$authenticated = null;
+		self::$config = null;
+		self::$data = null;
 	}
 
     /**
@@ -70,7 +75,7 @@ class PortalClientTestCase extends PHPUnit_Framework_TestCase
 	{
 		try
 		{
-			self::assertTrue($result->WasSuccess(), $message);
+            self::assertTrue($result->WasSuccess() && is_null($result->Error()), $message);
 
 		} catch (Exception $e)
 		{
@@ -85,7 +90,7 @@ class PortalClientTestCase extends PHPUnit_Framework_TestCase
 			throw new PHPUnit_Framework_AssertionFailedError($e_msg);
 		} finally
 		{
-			if ($result instanceof ServiceResult)
+			if ($result instanceof CHAOS\Portal\Client\Data\ServiceResult)
 			{
 				if (!is_null($result->MCM()))
 				{
@@ -110,5 +115,10 @@ class PortalClientTestCase extends PHPUnit_Framework_TestCase
 	{
 		self::assertEquals($expected, $result->MCM()->Results()[0]->Value, $message);
 	}
+
+    protected static function logOrphan($id)
+    {
+        file_put_contents(self::$orphans, date(self::$timeFormat) . ' - ' . $id . "\n", FILE_APPEND | LOCK_EX);
+    }
 }
 ?>
