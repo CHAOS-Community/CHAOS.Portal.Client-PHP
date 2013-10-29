@@ -6,7 +6,7 @@ class MetadataSchemaExtensionTest extends PortalClientTestCase
 	public function testCreate()
 	{
 		$this->markTestIncomplete(
-			'Not implemented due to insufficient permissions.'
+            'Not implemented due to insufficient permissions.'
 		);
 
 		$expected = self::$data['metadata_schema'][3];

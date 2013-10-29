@@ -77,12 +77,6 @@
     ],
     "folder" : [
         {
-            "id" : "1912",
-            "parent_id" : "444",
-            "name" : "Test",
-            "folder_type_id" : "1"
-        },
-        {
             "id" : "444",
             "parent_id" : "437",
             "name" : "Bonanza",

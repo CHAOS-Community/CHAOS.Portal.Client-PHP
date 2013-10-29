@@ -3,11 +3,10 @@ require_once 'PortalClientTestCase.php';
 
 class ObjectTypeExtensionTest extends PortalClientTestCase
 {
-//  TODO: Implement
 	public function testCreate()
 	{
 		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
+            'Not implemented due to insufficient permissions.'
 		);
 	}
 

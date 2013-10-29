@@ -11,8 +11,8 @@ class PortalClientTestCase extends PHPUnit_Framework_TestCase
 	protected static $client;
 	protected static $authenticated;
 
-	protected static $config;
-	protected static $data;
+	public static $config;
+	public static $data;
 
     protected static $orphans;
     protected static $timeFormat;
@@ -21,6 +21,7 @@ class PortalClientTestCase extends PHPUnit_Framework_TestCase
 	{
 		self::$config = $GLOBALS['CONFIG'];
 		self::$data = $GLOBALS['DATA'];
+
         self::$orphans = "orphans.txt";
         self::$timeFormat = "d-m-y H:i:s";
 
@@ -115,10 +116,21 @@ class PortalClientTestCase extends PHPUnit_Framework_TestCase
 	{
 		self::assertEquals($expected, $result->MCM()->Results()[0]->Value, $message);
 	}
-
-    protected static function logOrphan($id)
+    
+    protected static function addOrphan($id)
     {
         file_put_contents(self::$orphans, date(self::$timeFormat) . ' - ' . $id . "\n", FILE_APPEND | LOCK_EX);
+    }
+
+    protected static function removeOrphan($id)
+    {
+        $arr = file(self::$orphans, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+       
+        $arr = array_filter($arr, function($item) use($id) {
+            return strpos($item, $id) === false;
+        });
+
+        file_put_contents(self::$orphans, join("\n", $arr));
     }
 }
 ?>
