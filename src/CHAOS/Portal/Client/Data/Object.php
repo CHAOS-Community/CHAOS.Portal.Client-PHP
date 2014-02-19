@@ -197,7 +197,9 @@ class Object
 			$revisionID = $this->get_metadata_revision_id($schema_guid);
 		}
 		if(self::validate_metadata($client, $xml, $schema_guid)) {
-			return $client->Metadata()->Set($this->GUID, $schema_guid, $languageCode, $revisionID, $xml->asXML());
+			$success = $client->Metadata()->Set($this->GUID, $schema_guid, $languageCode, $revisionID, $xml->asXML());
+			$this->refresh($client);
+			return $success;
 		} else {
 			return false;
 		}
@@ -210,6 +212,19 @@ class Object
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Fetches an updated version of the CHAOS object from the webservice and invalidates all caches.
+	 * @param \CHAOS\Portal\Client\PortalClient $client The PortalCliet to use when communicating with CHAOS.
+	 */	
+	public function refresh(\CHAOS\Portal\Client\PortalClient $client) {
+		$response = $client->Object()->Get($this->_object->GUID, null, null, 0, 1, true, true, true, true);
+		if($response->MCM()->TotalCount() != 1) {
+			throw new \RuntimeException('Woups! Error updating object from web service, ' . $response->MCM()->TotalCount() . ' objects returned.');
+		}
+		$results = $response->MCM()->Results();
+		$this->_object = $results[0];
 	}
 }
 ?>
