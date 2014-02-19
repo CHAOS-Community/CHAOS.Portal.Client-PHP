@@ -132,22 +132,22 @@ class Object
 			if(count($node) == 0) {
 				return null;
 			} else {
-				$strings = array();
+				$result = array();
 				foreach($node as $n) {
 					if($seperator == null) {
-						$strings[] = $n;
+						$result[] = $n;
 					} else {
 						$temp = '';
 						foreach(dom_import_simplexml($n)->childNodes as $child) {
 							 $temp .= $child->ownerDocument->saveXML($child);
 						}
-						$strings[] = $temp;
+						$result[] = $temp;
 					}
 				}
 				if($seperator == null) {
-					return $strings;
+					return $result;
 				} else {
-					return implode($seperator, $strings);
+					return implode($seperator, $result);
 				}
 			}
 		} else {
