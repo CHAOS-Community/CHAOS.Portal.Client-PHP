@@ -192,13 +192,15 @@ class Object
 	 * @param string|null $revisionID The revision - to prevent race conditions.
 	 * @return \CHAOS\Portal\Client\Data\ServiceResult|boolean Either a result if the validation succeded, false if the validation fails.
 	 */
-	public function set_metadata(\CHAOS\Portal\Client\PortalClient $client, $schema_guid, \SimpleXMLElement $xml, $languageCode, $revisionID = null) {
+	public function set_metadata(\CHAOS\Portal\Client\PortalClient $client, $schema_guid, \SimpleXMLElement $xml, $languageCode, $revisionID = null, $refresh_object = true) {
 		if($revisionID == null) {
 			$revisionID = $this->get_metadata_revision_id($schema_guid);
 		}
 		if(self::validate_metadata($client, $xml, $schema_guid)) {
 			$success = $client->Metadata()->Set($this->GUID, $schema_guid, $languageCode, $revisionID, $xml->asXML());
-			$this->refresh($client);
+			if($refresh_object) {
+				$this->refresh($client);
+			}
 			return $success;
 		} else {
 			return false;
