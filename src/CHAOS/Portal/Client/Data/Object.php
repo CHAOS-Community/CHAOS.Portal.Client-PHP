@@ -190,6 +190,7 @@ class Object
 	 * @param \SimpleXMLElement $xml The metadata XML to insert into the service.
 	 * @param unknown $languageCode The language of the data in the XML schema.
 	 * @param string|null $revisionID The revision - to prevent race conditions.
+	 * @param  boolean $refresh_object
 	 * @return \CHAOS\Portal\Client\Data\ServiceResult|boolean Either a result if the validation succeded, false if the validation fails.
 	 */
 	public function set_metadata(\CHAOS\Portal\Client\PortalClient $client, $schema_guid, \SimpleXMLElement $xml, $languageCode, $revisionID = null, $refresh_object = true) {
