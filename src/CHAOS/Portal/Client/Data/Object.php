@@ -10,6 +10,7 @@ namespace CHAOS\Portal\Client\Data;
  *    expressions - in priority. (If the exact schema is unknown)
  * @author Kræn Hansen (kraen@opensourceshift.com)
  */
+libxml_set_external_entity_loader(array('CHAOS\Portal\Client\Data\Object', 'set_external_entities'));
 class Object
 {
 	/**
@@ -49,9 +50,27 @@ class Object
 	 * @param string $prefix The prefix that the namespace should be registered under.
 	 * @param string $ns The URI of the namespace to register.
 	 */
-	public static function registerXMLNamespace($prefix, $ns) {
-		self::$xml_namespaces[$prefix] = $ns;
+	public static function registerXMLNamespace($prefix, $ns, $location = null) {
+		self::$xml_namespaces[$prefix] = array($ns, $location);
 	}
+
+	public static function set_external_entities($public, $system, $context) {
+        if (!isset(self::$xml_namespaces[$system]) || count(self::$xml_namespaces[$system]) < 2) {
+        	return;
+        }
+        $path = implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), "../../../../../../../../../..", strval(self::$xml_namespaces[$system][1])));
+        //$path = $_SERVER['DOCUMENT_ROOT'] . self::$xml_namespaces[$system][1];
+        
+        //$path = "/Users/madslundt/Library/Containers/com.bitnami.wordpress/Data/app-3_8_1/apache2/htdocs/BitBlueprint/DKA/" . self::$xml_namespaces[$system][1];
+        if (!file_exists($path)) {
+        	echo "error";
+        	throw new \InvalidArgumentException('File does not exist.');
+        }
+
+        $f = fopen($path, 'r+');
+        rewind($f);
+        return $f;
+    }
 	
 	/**
 	 * Returns the first match of occurance of $xpath in a metadata blob complient with the schema of GUID = $schema_guid.
@@ -158,7 +177,7 @@ class Object
 						if(!array_key_exists($schema_guid, $this->xml_cache)) {
 							$this->xml_cache[$schema_guid] = simplexml_load_string($metadata->MetadataXML);
 							foreach(self::$xml_namespaces as $prefix => $ns) {
-								if(!$this->xml_cache[$schema_guid]->registerXPathNamespace($prefix, $ns)) {
+								if(!$this->xml_cache[$schema_guid]->registerXPathNamespace($prefix, $ns[0])) {
 									throw new \RuntimeException("Failed to register namespace $ns at $prefix.");
 								}
 							}
