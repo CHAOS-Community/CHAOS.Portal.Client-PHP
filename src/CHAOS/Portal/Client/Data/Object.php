@@ -11,7 +11,6 @@ namespace CHAOS\Portal\Client\Data;
  * @author Kræn Hansen (kraen@opensourceshift.com)
  */
 // libxml_set_external_entity_loader(array('CHAOS\Portal\Client\Data\Object', 'set_external_entities'));
-// libxml_set_external_entity_loader('CHAOS\Portal\Client\Data\Object::set_external_entities');
 class Object
 {
 	/**
@@ -55,14 +54,16 @@ class Object
 		self::$xml_namespaces[$prefix] = array($ns, $location);
 	}
 
+	/**
+	 * Loads external entities with location
+	 */
 	public static function set_external_entities($public, $system, $context) {
+		// Only if we have a location for the external entity, we are using this function.
         if (!isset(self::$xml_namespaces[$system]) || count(self::$xml_namespaces[$system]) < 2) {
         	return;
         }
         $path = implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), "../../../../../../../../../..", strval(self::$xml_namespaces[$system][1])));
-        //$path = $_SERVER['DOCUMENT_ROOT'] . self::$xml_namespaces[$system][1];
         
-        //$path = "/Users/madslundt/Library/Containers/com.bitnami.wordpress/Data/app-3_8_1/apache2/htdocs/BitBlueprint/DKA/" . self::$xml_namespaces[$system][1];
         if (!file_exists($path)) {
         	echo "error";
         	throw new \InvalidArgumentException('File does not exist.');
