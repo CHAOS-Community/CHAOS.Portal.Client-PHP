@@ -18,7 +18,7 @@
 		 * @param bool $includeAccessPoints
 		 * @return \CHAOS\Portal\Client\Data\ServiceResult
 		 */
-		public function Get($query, $sort, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false, $includeAccessPoints = false);
+		public function Get($query, $sort, $accessPointGUID, $pageIndex, $pageSize, $includeMetadata = false, $includeFiles = false, $includeObjectRelations = false, $includeAccessPoints = false, $post = false);
 
 		/**
 		 * @param int $folderID

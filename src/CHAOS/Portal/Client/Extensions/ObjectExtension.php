@@ -12,9 +12,10 @@
 		                    $includeMetadata = false, 
 		                    $includeFiles = false, 
 		                    $includeObjectRelations = false, 
-		                    $includeAccessPoints = false)
+		                    $includeAccessPoints = false,
+		                    $post = false)
 		{
-			return $this->CallService("Get", IServiceCaller::GET, array("query" => $query,
+			return $this->CallService("Get", $post ? IServiceCaller::POST : IServiceCaller::GET, array("query" => $query,
 																		"sort" => $sort,
 																		"accessPointGUID" => $accessPointGUID,
 																		"includeMetadata" => $includeMetadata,
