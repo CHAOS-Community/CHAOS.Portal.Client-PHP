@@ -10,7 +10,7 @@ namespace CHAOS\Portal\Client\Data;
  *    expressions - in priority. (If the exact schema is unknown)
  * @author Kræn Hansen (kraen@opensourceshift.com)
  */
-// libxml_set_external_entity_loader(array('CHAOS\Portal\Client\Data\Object', 'set_external_entities'));
+libxml_set_external_entity_loader(array('CHAOS\Portal\Client\Data\Object', 'set_external_entities'));
 class Object
 {
 	/**
