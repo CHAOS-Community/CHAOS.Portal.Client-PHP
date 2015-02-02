@@ -29,6 +29,7 @@
 		const PROTOCOL_VERSION = 4;
 		const FORMAT = "json";
 		const USE_HTTP_STATUS_CODES = false;
+		const TIMEOUT = 10;
 
 		private $_servicePath = null;
 		private $_clientGUID = null;
@@ -138,6 +139,7 @@
 				if($this->_curlHandle === null) {
 					$this->_curlHandle = \curl_init();
 					\curl_setopt($this->_curlHandle, CURLOPT_RETURNTRANSFER, true);
+					\curl_setopt($this->_curlHandle, CURLOPT_TIMEOUT, self::TIMEOUT);
 				}
 
 				if($method == IServiceCaller::POST)
