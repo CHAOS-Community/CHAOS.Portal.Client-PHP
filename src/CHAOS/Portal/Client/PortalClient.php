@@ -139,6 +139,7 @@
 				if($this->_curlHandle === null) {
 					$this->_curlHandle = \curl_init();
 					\curl_setopt($this->_curlHandle, CURLOPT_RETURNTRANSFER, true);
+					\curl_setopt($this->_curlHandle, CURLOPT_FOLLOWLOCATION, true);
 					\curl_setopt($this->_curlHandle, CURLOPT_TIMEOUT, self::TIMEOUT);
 				}
 
@@ -153,8 +154,10 @@
 				\curl_setopt($this->_curlHandle, CURLOPT_URL, $path);
 
 				$data = \curl_exec($this->_curlHandle);
-				
-				if($data == null)
+
+				if($data === false)
+					$data = new Exception(curl_error($this->_curlHandle));
+				else if($data == null)
 					$data = new Exception("No data returned from service");
 				else
 				{
@@ -162,6 +165,7 @@
 						// Hotfixes a bug on v4 of the service.
 						$data = @iconv( "UTF-16LE", "UTF-8", $data);
 					}
+					
 					if($data === false || is_null($data) || $data == "")
 						$data = new Exception("Invalid data returned from service");
 					else
