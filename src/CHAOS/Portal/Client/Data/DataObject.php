@@ -10,15 +10,15 @@ namespace CHAOS\Portal\Client\Data;
  *    expressions - in priority. (If the exact schema is unknown)
  * @author Kræn Hansen (kraen@opensourceshift.com)
  */
-libxml_set_external_entity_loader(array('CHAOS\Portal\Client\Data\Object', 'set_external_entities'));
-class Object
+libxml_set_external_entity_loader(array('CHAOS\Portal\Client\Data\DataObject', 'set_external_entities'));
+class DataObject
 {
 	/**
 	 * The object returned from CHAOS.
 	 * @var stdClass
 	 */
 	protected $_object;
-	
+
 	/**
 	 * Create a wrapper that wraps an object from CHAOS.
 	 * @param \stdClass $object
@@ -26,25 +26,25 @@ class Object
 	public function __construct(\stdClass $object) {
 		$this->_object = $object;
 	}
-	
+
 	public function __get($name) {
 		return $this->_object->$name;
 	}
-	
+
 	public function __set($name, $value) {
 		$this->_object->$name = $value;
 	}
-	
+
 	public function getObject() {
 		return $this->_object;
 	}
-	
+
 	/**
 	 * An array holding the $prefix -> $ns.
 	 * @var string[string]
 	 */
 	protected static $xml_namespaces = array();
-	
+
 	/**
 	 * Register a namespace to use when initializing SimpleXMLDocuments.
 	 * @param string $prefix The prefix that the namespace should be registered under.
@@ -63,7 +63,7 @@ class Object
         	return;
         }
         $path = implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), "../../../../../../../../../..", strval(self::$xml_namespaces[$system][1])));
-        
+
         if (!file_exists($path)) {
         	echo "error";
         	throw new \InvalidArgumentException('File does not exist.');
@@ -73,7 +73,7 @@ class Object
         rewind($f);
         return $f;
     }
-	
+
 	/**
 	 * Returns the first match of occurance of $xpath in a metadata blob complient with the schema of GUID = $schema_guid.
 	 * @param string|string[] $schema_guids GUID(s) for schemas to search in.
@@ -89,17 +89,17 @@ class Object
 		} elseif(!is_array($schema_guids)) {
 			throw new \InvalidArgumentException('The $schema_guids argument should be a string or an array.');
 		}
-		
+
 		if(is_string($xpaths)) {
 			$xpaths = array($xpaths);
 		} elseif(!is_array($xpaths)) {
 			throw new \InvalidArgumentException('The $xpaths argument should be a string or an array.');
 		}
-		
+
 		if(count($schema_guids) != count($xpaths)) {
 			throw new \InvalidArgumentException('The cardinality of the $schema_guids and $xpaths arguments should be equal.');
 		}
-		
+
 		for($i = 0; $i < count($schema_guids); $i++) {
 			$value = $this->get_metadata($schema_guids[$i], $xpaths[$i], $seperator);
 			if(isset($value)) {
@@ -108,10 +108,10 @@ class Object
 		}
 		return null;
 	}
-	
+
 	// TODO: Consider having this in the database / memory.
 	static $metadata_schemas = array();
-	
+
 	public static function validate_metadata(\CHAOS\Portal\Client\PortalClient $client, \SimpleXMLElement $metadata, $metadata_schema_guid) {
 		if(!array_key_exists(strtolower($metadata_schema_guid), self::$metadata_schemas)) {
 			// Download the schema to the local cache.
@@ -126,13 +126,13 @@ class Object
 		$metadata = dom_import_simplexml($metadata)->ownerDocument;
 		return $metadata->schemaValidateSource($metadata_scehma);
 	}
-	
+
 	/**
 	 * A cache for parsed XML strings, keyed by the GUID of the metadata schema.
 	 * @var \SimpleXMLElement[string]
 	 */
 	protected $xml_cache = array();
-	
+
 	/**
 	 * Returns occurances of $xpath in a metadata blob complient with the schema of GUID = $schema_guid.
 	 * @param string $schema_guid GUID for schema to search in.
@@ -191,7 +191,7 @@ class Object
 		}
 		return null;
 	}
-	
+
 	public function get_metadata_revision_id($schema_guid) {
 		$schema_guid = strtolower($schema_guid);
 		if(isset($this->_object->Metadatas)) {
@@ -203,7 +203,7 @@ class Object
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Sets the metadata of an object on a specific schema, validating it first.
 	 * @param \CHAOS\Portal\Client\PortalClient $client The PortalCliet to use when communicating with CHAOS.
@@ -228,7 +228,7 @@ class Object
 			return false;
 		}
 	}
-	
+
 	public function has_metadata($schema_guid) {
 		foreach($this->_object->Metadatas as $metadata) {
 			if(strtolower($metadata->MetadataSchemaGUID) == $schema_guid) {
@@ -237,11 +237,11 @@ class Object
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Fetches an updated version of the CHAOS object from the webservice and invalidates all caches.
 	 * @param \CHAOS\Portal\Client\PortalClient $client The PortalCliet to use when communicating with CHAOS.
-	 */	
+	 */
 	public function refresh(\CHAOS\Portal\Client\PortalClient $client) {
 		$response = $client->Object()->Get($this->_object->GUID, null, null, 0, 1, true, true, true, true);
 		if($response->MCM()->TotalCount() != 1) {
