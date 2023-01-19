@@ -167,13 +167,15 @@
 					}
 					
 					if($data === false || is_null($data) || $data == "")
-						$data = new Exception("Invalid data returned from service");
+						$data = new Exception("Invalid (empty) data returned from service");
 					else
 					{
+						// We have some contaminated data in CHAOS.
+						$data = preg_replace('/"([^"]+)\.m3u8[[:cntrl:]]+"/', '"\1.m3u8"', $data);
 						$data = json_decode($data);
 						
 						if($data == null)
-							$data = new Exception("Invalid data returned from service");
+							$data = new Exception("Invalid (not JSON) data returned from service");
 					}
 				}
 
